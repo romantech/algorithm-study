@@ -1,3 +1,4 @@
+/* cSpell:disable */
 // participant 마라톤에 참여한 선수들의 이름이 담긴 배열
 // completion 완주한 선수들의 이름이 담긴 배열
 // 요구사항 : 완주하지 못한 선수의 이름 1개 return
@@ -35,6 +36,7 @@
 // }
 
 // * 레퍼런스2 (출처: http://yoonbumtae.com/?p=3578)
+// eslint-disable-next-line consistent-return
 function solution(participant, completion) {
   const obj = {};
 
