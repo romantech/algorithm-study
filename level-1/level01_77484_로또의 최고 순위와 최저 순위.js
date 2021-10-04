@@ -1,4 +1,3 @@
-/* cSpell:disable */
 /* eslint-disable */
   // 1부터 45까지 숫자중 6개를 찍어서 맞추는 로또
   // 6개 번호 일치 1등, 5개/2등, 4개/3등, 3개/4등, 2개/5등
@@ -9,15 +8,8 @@
 /* eslint-disable camelcase */
 
 function solution(lottos, win_nums) {
-  const winRanking = {
-    6: 1,
-    5: 2,
-    4: 3,
-    3: 4,
-    2: 5,
-    1: 6,
-    0: 6,
-  };
+  // [꽝, 1개 일치, 2개 일치, 3개 일치, 4개 일치, 5개 일치, 6개 일치]
+  const winRanking = [6, 6, 5, 4, 3, 2, 1];
 
   let winNum = 0;
   let zeroNum = 0;
@@ -45,3 +37,17 @@ const test1 = {
 };
 
 solution(test1.lottos, test1.win_nums); /* ? */
+
+// 다른 사람 풀이
+function solution2(lottos, win_nums) {
+  const rank = [6, 6, 5, 4, 3, 2, 1];
+
+  const minCount = lottos.filter(v => win_nums.includes(v)).length;
+  const zeroCount = lottos.filter(v => !v).length; // 0은 false !0은 true
+
+  const maxCount = minCount + zeroCount;
+
+  return [rank[maxCount], rank[minCount]];
+}
+
+solution2(test1.lottos, test1.win_nums); /* ? */
