@@ -17,8 +17,8 @@ function solution(new_id) {
   }
 
   const stepOne = new_id.toLowerCase();
-  const stepTwo = stepOne.replace(/[^a-z0-9\-_.]/gi, '');
-  const stepThree = stepTwo.replace(/\.{2,}/gi, '.');
+  const stepTwo = stepOne.replace(/[^a-z0-9\-_.]/g, '');
+  const stepThree = stepTwo.replace(/\.{2,}/g, '.');
 
   const removePeriod = str => {
     if (str[0] === '.') {
@@ -38,23 +38,13 @@ function solution(new_id) {
 
   const checkLength = str => {
     if (str.length < 3) {
-      if (str.length === 0) {
-        return 'aaa';
-      }
-      if (str.length === 1) {
-        return str + str[0] + str[0];
-      }
-      return str + str[1];
+      // 'aa' + 'a'
+      return str + str[str.length - 1].repeat(3 - str.length);
     }
     return str;
   };
 
   return checkLength(stepSix);
 }
-
-const test1 = {
-  new_id: '...!@BaT#*..y.abcdefghijklm',
-  result: 'bat.y.abcdefghi',
-};
 
 solution('=.=');
