@@ -51,3 +51,37 @@ function solution(s) {
 const s1 = 'one4seveneight'; // 1478
 const s2 = '23four5six77'; // 234567
 solution(s1);
+
+// * 레퍼런스
+function solution2(s) {
+  const numbers = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+  let answer = s;
+
+  for (let i = 0; i < numbers.length; i++) {
+    const arr = answer.split(numbers[i]);
+    answer = arr.join(i);
+  }
+
+  // split 메소드 인자(구분자)에 입력한 값을 기준으로 여러개의 문자열(요소)로 나눠진 배열 반환
+  // 구분자 값은 배열 요소에 포함되지 않음
+  // '23four5six77four89'.split('four') -> ['23', '5six77', '89']
+
+  // join 메소드 인자(구분자)에 입력한 값을 기준으로 각 요소를 연결시킴.
+  // 구분자에 4를 입력했다면 연결될 요소 사이에 4가 추가되면서 연결됨
+  // ['23', '5six77', '89'].join(4) -> 2345six77489
+
+  return Number(answer);
+}
+
+solution2(s2);
