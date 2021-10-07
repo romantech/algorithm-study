@@ -10,6 +10,7 @@
 // 바구니에 쌓인 인형중 연속적으로 같은 숫자(인형)이면 사라지고 count + 2
 /* eslint-enable */
 
+// eslint-disable-next-line no-unused-vars
 function solution(board, moves) {
   // moves 순회
   // moves 현재 요소의 숫자를 board의 인덱스로 검사
