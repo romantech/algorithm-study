@@ -1,5 +1,4 @@
 // 0~9 숫자중 없는 숫자의 합 리턴
-
 function solution(numbers) {
   const sorted = new Set(numbers.sort());
 
@@ -14,7 +13,6 @@ function solution(numbers) {
 solution([1, 2, 3, 4, 6, 7, 8, 0]); // 14
 
 // * 레퍼런스
-
 function solution2(numbers) {
   return 45 - numbers.reduce((cur, acc) => cur + acc, 0);
 }
