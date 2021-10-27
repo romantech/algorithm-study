@@ -8,17 +8,23 @@
 
 function solution(N, stages) {
   // 해당 스테이지를 도전중인 유저 수 -> 현재 N 숫자와 같거나 큰
-  const r = Array.from(Array(N).keys(), n => n + 1).reduce(
-    (result, stageNum) => {
-      const clearNum = stages.filter(n => n >= stageNum);
-      const unClearNum = clearNum.filter(n => stageNum + 1 > n);
-      const rate = unClearNum.length / clearNum.length;
+  return Array.from(Array(N).keys(), n => n + 1)
+    .reduce((result, stageNum) => {
+      const clear = [];
+      const unclear = [];
+      stages.forEach(n => {
+        if (n >= stageNum) {
+          clear.push(n);
+          if (stageNum + 1 > n) {
+            unclear.push(n);
+          }
+        }
+      });
+      const rate = unclear.length / clear.length;
       return result.concat({ stageNum, rate });
-    },
-    [],
-  );
-
-  return r.sort((a, b) => b.rate - a.rate).map(e => e.stageNum);
+    }, [])
+    .sort((a, b) => b.rate - a.rate)
+    .map(e => e.stageNum);
 }
 
 const case1 = {
