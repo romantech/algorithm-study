@@ -11,19 +11,15 @@ function solution1(n, arr1, arr2) {
   const map1 = converter(arr1); /* ? */
   const map2 = converter(arr2); /* ? */
 
-  const result = [];
-  for (let i = 0; i < n; i += 1) {
-    let el = '';
-    for (let j = 0; j < n; j += 1) {
-      if (map1[i][j] === '1' || map2[i][j] === '1') {
-        el += '#';
-      } else {
-        el += ' ';
-      }
-    }
-    result.push(el);
-  }
-  return result;
+  return map1.map((el, i1) =>
+    el
+      .split('')
+      .reduce(
+        (acc, cur, i2) =>
+          cur === '1' || map2[i1][i2] === '1' ? acc + '#' : acc + ' ',
+        '',
+      ),
+  );
 }
 
 const c1 = {
@@ -38,7 +34,7 @@ const c2 = {
   arr2: [27, 56, 19, 14, 14, 10],
 }; // ["######", "### #", "## ##", " #### ", " #####", "### # "]
 
-solution1(c2.n, c2.arr1, c2.arr2); /* ? */
+solution1(c1.n, c1.arr1, c1.arr2); /* ? */
 
 // * 레퍼런스
 
