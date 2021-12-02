@@ -40,7 +40,7 @@ solution1(c1.n, c1.arr1, c1.arr2); /* ? */
 
 function solution2(n, arr1, arr2) {
   /**
-   * v | arr2[i]는 비트연산자의 OR 논리연산자(bitwise; single vertical bar).
+   * v | arr2[i]는 OR(Single Vertical Bar) 비트연산자(Bitwise Operator).
    * 비교하는 이진수 숫자의 자리수가 하나라도 1이라면 1반환
    * 46의 2진수는 101110, 27의 2진수는 11011
    * 101110 (46)
@@ -59,8 +59,5 @@ function solution2(n, arr1, arr2) {
   );
 }
 
-const addZero = (n, s) => {
-  return '0'.repeat(n - s.length) + s;
-};
-
+const addZero = (n, s) => '0'.repeat(n - s.length) + s;
 solution2(c2.n, c2.arr1, c2.arr2); /* ? */
