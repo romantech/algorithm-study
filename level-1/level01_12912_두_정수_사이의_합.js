@@ -20,3 +20,13 @@ const c2 = { a: 3, b: 3 }; // 3
 const c3 = { a: 5, b: 3 }; // 5 + 4 + 3 = 12
 
 solution(c3.a, c3.b); /* ? */
+
+// 레퍼런스
+function adder(a, b) {
+  // 가우스 공식 : (첫번째 수 + 마지막 수) * (항의 개수 / 2)
+  // (a + b) -> 첫번째 수 + 마지막 수
+  // Math.abs(a - b) + 1  -> 항의 개수
+  return ((a + b) * (Math.abs(a - b) + 1)) / 2;
+}
+
+adder(c1.a, c1.b); /* ? */
