@@ -1,7 +1,7 @@
 // 시저암호
 // n === 1 이상 25 이하
 
-function solution(s, n) {
+function solution1(s, n) {
   const a = 'abcdefghijklmnopqrstuvwxyz';
 
   return s.split('').reduce((acc, cur) => {
@@ -9,7 +9,9 @@ function solution(s, n) {
     const curIdx = a.indexOf(cur.toLowerCase());
     const isLowerCase = a[curIdx] === cur;
     const encodedStr =
-      curIdx + n <= 25 ? a[curIdx + n] : a[Math.abs(curIdx + n - 25 - 1)];
+      curIdx + n < a.length
+        ? a[curIdx + n]
+        : a[Math.abs(curIdx + n - a.length)];
     return acc.concat(
       isLowerCase ? encodedStr.toLowerCase() : encodedStr.toUpperCase(),
     );
@@ -30,5 +32,22 @@ const c3 = {
   s: 'a B z',
   n: 4,
 }; // "e F d"
+const c4 = {
+  s: 'uy',
+  n: 25,
+}; // "e F d"
 
-solution(c3.s, c3.n); /* ? */
+solution1(c1.s, c1.n); /* ? */
+
+// 레퍼런스(가독성 좋게 조금 변형함)
+function solution2(s, n) {
+  const chars =
+    'abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+    ' '.repeat(26);
+  return s
+    .split('')
+    .map(e => chars[chars.indexOf(e) + n])
+    .join('');
+}
+
+solution2(c4.s, c4.n); /* ? */
