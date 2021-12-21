@@ -35,9 +35,9 @@ const c3 = {
 const c4 = {
   s: 'uy',
   n: 25,
-}; // "e F d"
+}; // "tx"
 
-solution1(c1.s, c1.n); /* ? */
+solution1(c4.s, c4.n); /* ? */
 
 // 레퍼런스(가독성 좋게 조금 변형함)
 function solution2(s, n) {
