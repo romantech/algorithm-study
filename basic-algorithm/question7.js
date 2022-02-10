@@ -1,9 +1,9 @@
 // 문제7. 친구 찾기, 이름이 4글자면 친구
-
 const findFriends = names => {
   return names.filter(name => name.length === 4);
 };
 
+// 문제7. 테스트
 const testCase7 = [
   {
     input: ['Ryan', 'Kieran', 'Mark'],
