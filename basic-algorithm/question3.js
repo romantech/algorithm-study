@@ -2,7 +2,7 @@
 const getGameScore = games => {
   const tenGames = games.slice(0, 10);
 
-  const score = tenGames.reduce((result, game) => {
+  return tenGames.reduce((result, game) => {
     let [home, away] = game.split(':');
     home = Number(home);
     away = Number(away);
@@ -15,22 +15,31 @@ const getGameScore = games => {
     }
     return result; // lose
   }, 0);
-
-  return score > 4 ? 4 : score;
 };
 
 // 문제3. 테스트
 const testCase3 = [
   {
-    input: ['3:1', '4:0', '0:0'],
+    input: [
+      '3:1', // 3
+      '4:0', // 3
+      '2:0', // 3
+      '1:1', // 1
+      '0:0', // 1
+      '0:1',
+      '0:1',
+      '1:0', // 3
+      '2:1', // 3
+      '1:0', // 3
+    ],
+    expectedResult: 20,
+  },
+  {
+    input: ['0:0', '1:1', '2:2', '3:3'],
     expectedResult: 4,
   },
   {
-    input: ['88:88', '100:101', '888:888', '0:0'],
-    expectedResult: 3,
-  },
-  {
-    input: ['0:0', '0:1', '0:1'],
+    input: ['0:0', '0:1'],
     expectedResult: 1,
   },
 ];
