@@ -20,20 +20,25 @@ function solution(num) {
   return -1;
 }
 
-const case1 = {
-  n: 6,
-  result: 8, // 6 > 3 > 10 > 5 > 16 > 8 > 4 > 2 > 1
-};
+const testCase = [
+  {
+    input: 6,
+    expectedResult: 8, // 6 > 3 > 10 > 5 > 16 > 8 > 4 > 2 > 1
+  },
+  {
+    input: 16,
+    expectedResult: 4,
+  },
+  {
+    input: 626331,
+    expectedResult: -1,
+  },
+];
 
-const case2 = {
-  n: 16,
-  result: 4,
-};
-
-const case3 = {
-  n: 626331,
-  result: -1,
-};
-
-console.log(solution(case3.n));
-solution(case1.n);
+testCase.forEach(({ input, expectedResult }) =>
+  console.log({
+    input,
+    output: solution(input),
+    passed: solution(input) === expectedResult,
+  }),
+);
