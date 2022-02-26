@@ -42,3 +42,12 @@ testCase.forEach(({ input, expectedResult }) =>
     passed: solution(input) === expectedResult,
   }),
 );
+
+// 레퍼런스 (재귀함수 활용)
+function collatz(num, count = 0) {
+  if (count > 500) return -1;
+
+  return num === 1
+    ? count
+    : collatz(num % 2 === 0 ? num / 2 : num * 3 + 1, ++count);
+}
