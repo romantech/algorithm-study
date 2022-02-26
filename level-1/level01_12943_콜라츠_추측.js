@@ -40,7 +40,7 @@ testCase.forEach(({ input, expectedResult }) =>
   }),
 );
 
-// 레퍼런스 (재귀함수 활용)
+// 레퍼런스1 (재귀함수 활용)
 function solution2(num, count = 0) {
   if (count > 500) return -1;
 
@@ -49,6 +49,7 @@ function solution2(num, count = 0) {
     : solution2(num % 2 === 0 ? num / 2 : num * 3 + 1, ++count);
 }
 
+// 레퍼런스2 (while 루프 활용)
 function solution3(num) {
   let answer = 0;
   while (num !== 1 && answer <= 500) {
