@@ -1,7 +1,7 @@
 // 문제8. 아이큐 테스트
 // 홀수 / 짝수 중에 하나만 존재하는 값의 순번을 출력하는 함수
 
-const findLonleyNumber = numbers => {
+const findLonelyNumber = numbers => {
   const numbersArray = numbers.split(' ').map(num => parseInt(num, 10));
   // solution 1
   // const odd = numbersArray.filter(number => number % 2 !== 0); // 홀수
@@ -39,7 +39,7 @@ const testCase8 = [
 testCase8.forEach(({ input, expectedResult }) =>
   console.log('문제8', {
     input,
-    output: findLonleyNumber(input),
-    passed: findLonleyNumber(input) === expectedResult,
+    output: findLonelyNumber(input),
+    passed: findLonelyNumber(input) === expectedResult,
   }),
 );
