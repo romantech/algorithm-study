@@ -6,6 +6,11 @@ function solution(arr1, arr2) {
   });
 }
 
+// 레퍼런스 (로직 똑같지만 화살표 함수 써서 더 간결함)
+function solution2(A, B) {
+  return A.map((a, i) => a.map((b, j) => b + B[i][j]));
+}
+
 const case1 = {
   arr1: [
     [1, 2],
