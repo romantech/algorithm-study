@@ -8,22 +8,34 @@ function solution(x, n) {
     }, []);
 }
 
-console.log(solution(-4, 2));
+// reference
+function solution2(x, n) {
+  return Array(n)
+    .fill(x)
+    .map((v, i) => (i + 1) * v); // 1 * 2 -> 2 * 2 -> 3 * 2 -> 4 * 2 -> 5 * 2
+}
 
-const case1 = {
-  x: 2,
-  n: 5,
-  result: [2, 4, 6, 8, 10],
-};
+const testCase = [
+  {
+    input: { x: 2, n: 5 },
+    expectedResult: [2, 4, 6, 8, 10],
+  },
+  {
+    input: { x: 4, n: 3 },
+    expectedResult: [4, 8, 12],
+  },
+  {
+    input: { x: -4, n: 2 },
+    expectedResult: [-4, -8],
+  },
+];
 
-const case2 = {
-  x: 4,
-  n: 3,
-  result: [4, 8, 12],
-};
-
-const case3 = {
-  x: -4,
-  n: 2,
-  result: [-4, -8],
-};
+testCase.forEach(({ input, expectedResult }) =>
+  console.log('level01_12954', {
+    input,
+    output: solution(input.x, input.n),
+    passed: solution(input.x, input.n).every(
+      (num, idx) => num === expectedResult[idx],
+    ),
+  }),
+);
