@@ -10,24 +10,50 @@
 // 각 유저별로 처리 결과 메일을 받은 횟수를 배열로 담아 return (id_list 순서대로)
 
 function solution(id_list, report, k) {
-  const list = id_list.reduce((acc, cur) => {
+  const reportList = id_list.reduce((acc, cur) => {
     acc[cur] = new Set();
     return acc;
   }, {});
 
-  report.forEach(el => {
-    const [id, target] = el.split(' ');
-    list[target].add(id);
+  report.forEach(ticket => {
+    const [id, target] = ticket.split(' ');
+    reportList[target].add(id);
   });
 
-  return id_list.map(id => {
-    return Object.values(list).reduce((acc, cur) => {
-      if ([...cur].length >= k && [...cur].includes(id)) {
-        return acc + 1;
-      }
-      return acc;
-    }, 0);
+  return id_list.map(id =>
+    Object.values(reportList).reduce(
+      (result, list) => (list.size >= k && list.has(id) ? result + 1 : result),
+      0,
+    ),
+  );
+}
+
+// 레퍼런스
+function solution2(id_list, report, k) {
+  const reports = [...new Set(report)].map(a => {
+    return a.split(' ');
   });
+  // 중복 신고 제거 ['ryan con', 'ryan con', 'ryan con', 'ryan con'] -> [['ryan', 'con']]
+  // [[ 'muzi', 'frodo' ], [ 'apeach', 'frodo' ], [ 'frodo', 'neo' ], [ 'muzi', 'neo' ], [ 'apeach', 'muzi' ]]
+
+  const counts = new Map(); // 신고된 ID
+  for (const bad of reports) {
+    counts.set(bad[1], counts.get(bad[1]) + 1 || 1);
+  }
+  // 신고를 받은 ID와 해당 ID의 신고 받은 횟수
+  // Map { 'frodo' => 2, 'neo' => 2, 'muzi' => 1 }
+
+  const good = new Map(); // 신고자 ID
+  // eslint-disable-next-line no-shadow
+  for (const report of reports) {
+    if (counts.get(report[1]) >= k) {
+      // k번 이상 신고를 받은 ID를 신고했던 (신고자)ID 횟수 (안내 메일 발송 횟수)
+      // Map { 'muzi' => 2, 'apeach' => 1, 'frodo' => 1 }
+      good.set(report[0], good.get(report[0]) + 1 || 1);
+    }
+  }
+
+  return id_list.map(a => good.get(a) || 0);
 }
 
 const case1 = {
@@ -58,3 +84,4 @@ const case2 = {
 }; // [0,0]
 
 solution(case1.id_list, case1.report, case1.k);
+solution2(case2.id_list, case2.report, case2.k);
