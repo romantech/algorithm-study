@@ -1,6 +1,6 @@
-/* eslint-disable no-param-reassign */
-
-import { Compare, defaultCompare, makeRandomArr } from '../utils';
+/* eslint-disable no-param-reassign,import/extensions */
+// 노션 노트 : https://www.notion.so/colorfilter/TIL-6b2c98fc9bfa4f8b901d21c988917707
+import { Compare, defaultCompare, makeRandomArr } from '../utils.js';
 
 const merge = (left, right, compare) => {
   let i = 0;
@@ -8,8 +8,7 @@ const merge = (left, right, compare) => {
   const result = [];
   while (i < left.length && j < right.length) {
     const isLeft = compare(left[i], right[j]) === Compare.LESS_THAN;
-    const num = isLeft ? left[i++] : right[j++];
-    result.push(num);
+    result.push(isLeft ? left[i++] : right[j++]);
   }
   return result.concat(i < left.length ? left.slice(i) : right.slice(j));
 };
