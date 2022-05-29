@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 // 노션 노트 : https://www.notion.so/colorfilter/TIL-f439f36939b747a890774560b333f7f6
 
 import { swap } from '../utils.js';

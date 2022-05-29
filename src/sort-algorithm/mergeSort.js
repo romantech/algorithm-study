@@ -1,4 +1,4 @@
-/* eslint-disable no-param-reassign,import/extensions */
+/* eslint-disable no-param-reassign */
 // 노션 노트 : https://www.notion.so/colorfilter/TIL-6b2c98fc9bfa4f8b901d21c988917707
 import { Compare, defaultCompare, makeRandomArr } from '../utils.js';
 
