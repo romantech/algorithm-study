@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
 
+import { Compare, defaultCompare, makeRandomArr } from '../utils';
+
 const merge = (left, right, compare) => {
   let i = 0;
   let j = 0;
@@ -23,4 +25,5 @@ const mergeSort = (arr, compare = defaultCompare) => {
   return arr;
 };
 
-console.log(mergeSort([10, 7, 9, 5, 1]));
+const randomArr = makeRandomArr(20, 20);
+mergeSort(randomArr);

@@ -1,0 +1,21 @@
+{
+  "name": "algorithm-study",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "알고리즘 스터디",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/romantech/programmers-study.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/romantech/programmers-study/issues"
+  },
+  "homepage": "https://github.com/romantech/programmers-study#readme"
+}
