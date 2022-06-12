@@ -6,19 +6,19 @@ import { swap } from '../utils.js';
 const quickSort1 = array => {
   if (array.length <= 1) return array; // Base Case
 
-  // 배열을 분할하기 위한 기준 요소 선택 및 left, right 하위 배열 생성
+  // 배열 분할을 위한 기준 요소 선택 및 left, right 하위 배열 생성
   const pivotIndex = Math.floor(array.length / 2);
   const pivot = array.splice(pivotIndex, 1)[0];
   const left = [];
   const right = [];
 
-  // 피벗 요소보다 작으면 left 하위 배열에, 피벗 요소보다 크면 right 하위 배열에 추가
+  // 피벗 요소보다 작으면 left 하위 배열에 추가, 피벗 요소보다 크면 right 하위 배열에 추가
   for (let i = 0; i < array.length; i++) {
     if (array[i] < pivot) left.push(array[i]);
     else right.push(array[i]);
   }
 
-  // 재귀 호출로 위 과정 반복해서 정렬된 배열 획득
+  // 정렬된 배열을 얻기 위해 재귀 호출로 위 과정 반복
   return quickSort1(left).concat(pivot, quickSort1(right));
 };
 
