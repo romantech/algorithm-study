@@ -1,7 +1,9 @@
+/* eslint-disable consistent-return */
 // Basic Quick Sort (not in place / stable)
 // 구현하기 쉽지만 메모리 공간 낭비 심함 / 중복 데이터 순서 안바뀜
 // via https://bit.ly/3zwcIPq
-import { swap } from '../utils.js';
+
+import { makeRandomArr, swap } from '../utils.js';
 
 const quickSort1 = array => {
   if (array.length <= 1) return array; // Base Case
@@ -67,40 +69,44 @@ return [85, 96]
 
 // In place Quick Sort (in place / unstable)
 // 메모리 공간 절약 / 중복 데이터 순서 바뀔 수 있음
-// via https://www.guru99.com/quicksort-in-javascript.html
-function quickSort2(arr) {
-  return quick(arr, 0, arr.length - 1);
-}
+// reference1: https://www.guru99.com/quicksort-in-javascript.html
+// reference2: https://bit.ly/3QjduFC
+function quickSort2(arr, start = 0, end = arr.length - 1) {
+  if (start >= end) return; // Base Case
 
-function quick(arr, left, right) {
-  let i;
-  if (arr.length > 1) {
-    i = partition(arr, left, right); // index returned from partition
-    if (left < i - 1) quick(arr, left, i - 1); // more elements on the left side of the pivot
-    if (i < right) quick(arr, i, right); // more elements on the right side of the pivot
-  }
+  const borderIndex = partition(arr, start, end); // 배열을 나누는 경계 인덱스
+  quickSort2(arr, start, borderIndex - 1); // borderIndex 왼쪽 요소
+  quickSort2(arr, borderIndex, end); // borderIndex 오른쪽 요소
+
   return arr;
 }
 
-function partition(arr, left, right) {
-  const pivot = arr[Math.floor((left + right) / 2)]; // Middle element
+function partition(arr, start, end) {
+  const pivot = arr[Math.floor((start + end) / 2)]; // 가운데 요소를 피벗으로 설정
 
-  let i = left; // left pointer
-  let j = right; // right pointer
+  let i = start; // start(왼쪽 끝) 포인터
+  let j = end; // end(오른쪽 끝) 포인터
 
+  // i/j 포인터가 교차해서 순서 바뀔때까지 반복(pivot 왼쪽에 아직 pivot 보다 큰 값이 있다면)
   while (i <= j) {
-    while (arr[i] < pivot) i++;
-    while (arr[j] > pivot) j--;
+    while (arr[i] < pivot) i++; // 배열 왼쪽부터 pivot 값 보다 큰 요소의 인덱스 검색
+    while (arr[j] > pivot) j--; // 배열 오른쪽부터 pivot 값 보다 작은 요소의 인덱스 검색
 
+    // i/j 아직 교차전이라면(pivot 왼쪽에 아직 pivot 보다 큰 값이 있다면)
     if (i <= j) {
-      swap(arr, i, j);
-      i++;
-      j--;
+      swap(arr, i, j); // i가 j보다 작다면 i가 더 큰 값이므로 swap
+      i++; // 다음 검색을 위해 i + 1
+      j--; // 다음 검색을 위해 i - 1
     }
   }
-  return i;
+
+  return i; // 교차 후의 i 인덱스를(pivot 인덱스 + 1) 다음 경계 인덱스로 사용하기 위해 리턴
 }
 
-console.time('quickSort');
-quickSort2([5, 3, 8, 4, 9, 1, 6, 2, 7]);
-console.timeEnd('quickSort');
+console.time('quickSort1');
+quickSort1(makeRandomArr(10000, 10000));
+console.timeEnd('quickSort1');
+
+console.time('quickSort2');
+quickSort2(makeRandomArr(10000, 10000));
+console.timeEnd('quickSort2');
