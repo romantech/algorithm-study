@@ -14,7 +14,7 @@
 // 숫자 1 중복 개수 : X 2개, Y 1개 -> Y의 중복 개수가 더 적으므로 '1'.repeat(1)
 // 숫자 4 중복 개수 : X 0개, Y 1개 -> X의 중복 개수가 더 적으므로 '0'.repeat(0) -> 반복 안함
 
-function solution(X, Y) {
+function solution1(X, Y) {
   const xMap = {};
   const yMap = {};
   const splitedX = X.split('');
@@ -37,4 +37,28 @@ function solution(X, Y) {
   return '0';
 }
 
-console.log(solution('100', '203045'));
+console.log(solution1('100', '203045')); // '0'
+
+// 레퍼런스 Map 객체 활용 방법
+function solution2(X, Y) {
+  const hashX = new Map();
+  const hashY = new Map();
+
+  for (const digit of X) {
+    hashX.set(digit, (hashX.get(digit) || 0) + 1);
+  }
+  for (const digit of Y) {
+    hashY.set(digit, (hashY.get(digit) || 0) + 1);
+  }
+
+  let answer = '';
+  for (let i = 9; i >= 0; i--) {
+    const char = String(i);
+    const count = Math.min(hashX.get(char), hashY.get(char));
+    answer += char.repeat(count);
+  }
+
+  return answer ? (Number(answer) ? answer : '0') : '-1';
+}
+
+console.log(solution2('100', '203045')); // '0'
