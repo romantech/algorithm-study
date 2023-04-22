@@ -31,7 +31,7 @@
 // 4번 지표 : A 0 | N 0
 // 사전 순서대로 반환해서 RCJA
 
-function solution(survey, choices) {
+function solution1(survey, choices) {
   const metrics = [
     { R: 0, T: 0 }, // 지표 1
     { C: 0, F: 0 }, // 지표 2
@@ -60,5 +60,27 @@ function solution(survey, choices) {
   }, '');
 }
 
-const r = solution(['TR', 'RT', 'TR'], [7, 1, 3]);
-console.log(r);
+solution1(['TR', 'RT', 'TR'], [7, 1, 3]);
+
+// 레퍼런스
+function solution2(survey, choices) {
+  const MBTI = {};
+  const types = ['RT', 'CF', 'JM', 'AN'];
+
+  // MBTI 객체 초기화 // { R: 0, T: 0, C: 0, F: 0, J: 0, M: 0, A: 0, N: 0 }
+  types.forEach(type =>
+    type.split('').forEach(char => {
+      MBTI[char] = 0;
+    }),
+  );
+
+  choices.forEach((choice, index) => {
+    const [disagree, agree] = survey[index];
+
+    MBTI[choice > 4 ? agree : disagree] += Math.abs(choice - 4);
+  });
+
+  return types.map(([a, b]) => (MBTI[b] > MBTI[a] ? b : a)).join('');
+}
+
+solution2(['TR', 'RT', 'TR'], [7, 1, 3]);
