@@ -20,7 +20,7 @@ const cases = [
   },
 ];
 
-/* ========================================================= */
+/* ====================== 코드 ====================== */
 
 function solution(k, score) {
   const temp = [[score[0]]];
@@ -35,3 +35,19 @@ function solution(k, score) {
 }
 
 solution(...cases[1].input);
+
+/* ====================== 레퍼런스(코드 조금 수정함) ====================== */
+
+function solution2(k, score) {
+  const stack = [];
+  const sortByAscending = arr => arr.sort((a, b) => a - b);
+
+  return score.reduce((a, c) => {
+    stack.push(c);
+    sortByAscending(stack);
+    if (stack.length > k) stack.shift();
+    return a.concat(stack.at(0));
+  }, []);
+}
+
+console.log(solution2(...cases[1].input));
