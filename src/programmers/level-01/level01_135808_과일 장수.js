@@ -19,4 +19,15 @@ const cases = [
   { input: [4, 3, [4, 1, 2, 2, 4, 4, 4, 4, 1, 2, 4, 2]], output: 33 },
 ];
 
-solution(...cases[0].input);
+solution(...cases[1].input);
+
+// 레퍼런스
+const solution2 = (_, m, score) =>
+  // 오름차순 [(1), 1, 2, (2), 2, 2, (4), 4, 4, (4), 4, 4]
+  score
+    .sort()
+    // 12 - 0 % 3 = 0(1), ..., 12 - 3 % 3 = 0(2), ... -> m자리로 끊었을 때 가장 작은 숫자만 필터
+    .filter((_el, i) => !((score.length - i) % m))
+    .reduce((a, v) => a + v, 0) * m;
+
+solution2(...cases[1].input);
