@@ -18,7 +18,7 @@ function solution(s) {
   const result = [];
   for (let i = 0; i < s.length; i++) {
     if (!stringMap.has(s[i])) result.push(-1);
-    else result.push(Math.abs(stringMap.get(s[i]) - i));
+    else result.push(i - stringMap.get(s[i]));
     stringMap.set(s[i], i);
   }
 
@@ -26,3 +26,16 @@ function solution(s) {
 }
 
 solution(cases[1].input);
+
+/* ============================ 레퍼런스 ============================ */
+function solution2(s) {
+  const hash = {};
+
+  return [...s].map((v, i) => {
+    const result = hash[v] !== undefined ? i - hash[v] : -1;
+    hash[v] = i;
+    return result;
+  });
+}
+
+solution2(cases[1].input);
