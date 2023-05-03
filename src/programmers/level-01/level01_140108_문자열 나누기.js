@@ -55,3 +55,25 @@ function solution(s) {
 }
 
 solution(cases[3].input);
+
+/* ====================== 레퍼런스 ====================== */
+function solution2(s) {
+  let answer = 0;
+  let current;
+  let count = 0;
+
+  // 첫번째를 제외하고 count가 0이 되면 다음 current 문자열로 변경
+  // ex) (aaabbacc)(ccab)(ba) -> aaabbacc 까지 count 변화:  1 > 2 > 3 > 2 > 1 > 2 > 1 > 0
+  for (let i = 0; i < s.length; i++) {
+    if (count === 0) {
+      answer++;
+      current = s[i];
+      count = 1;
+    } else if (current !== s[i]) count--;
+    else count++;
+  }
+
+  return answer;
+}
+
+solution2(cases[1].input);
