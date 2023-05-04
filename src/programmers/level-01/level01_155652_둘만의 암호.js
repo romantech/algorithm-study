@@ -13,7 +13,8 @@ const cases = [
 ];
 
 // 마지막 인덱스 + skip이 알파벳 길이를 넘는다면 알파벳.length 나눈 후 나머지 값을 인덱스로 사용
-// ex) 28 / 26
+// ex) 28(마지막 인덱스+skip) % 26(알파벳 길이) -> 2
+// ex) 24(마지막 인덱스+skip) % 26(알파벳 길이) -> 24 (피제수가 제수보다 작으므로 피제수 그대로 반환)
 function solution(s, skip, index) {
   const answer = [];
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
