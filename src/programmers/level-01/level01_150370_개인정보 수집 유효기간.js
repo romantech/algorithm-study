@@ -37,10 +37,9 @@ const cases = [
 
 function solution(today, terms, privacies) {
   const dateToday = new Date(today);
-  const termsMap = terms.reduce((acc, cur) => {
-    const [t, m] = cur.split(' ');
-    acc[t] = Number(m);
-    return acc;
+  const termsMap = terms.reduce((r, c) => {
+    const [t, m] = c.split(' ');
+    return { ...r, [t]: parseInt(m, 10) };
   }, {});
 
   const getExpDate = (d, t) => {
@@ -57,11 +56,8 @@ function solution(today, terms, privacies) {
     return expDate;
   };
 
-  return privacies.reduce((acc, cur, i) => {
-    const [d, t] = cur.split(' ');
-    const expDate = getExpDate(d, t);
-    if (expDate < dateToday) return acc.concat(i + 1);
-    return acc;
+  return privacies.reduce((r, c, i) => {
+    return getExpDate(...c.split(' ')) < dateToday ? r.concat(i + 1) : r;
   }, []);
 }
 
