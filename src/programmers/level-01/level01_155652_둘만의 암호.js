@@ -13,8 +13,8 @@ const cases = [
 ];
 
 // 마지막 인덱스 + skip이 알파벳 길이를 넘는다면 알파벳.length 나눈 후 나머지 값을 인덱스로 사용
-// ex) 28(마지막 인덱스+skip) % 26(알파벳 길이) -> 2
-// ex) 24(마지막 인덱스+skip) % 26(알파벳 길이) -> 24 (피제수가 제수보다 작으므로 피제수 그대로 반환)
+// ex) 28(마지막 인덱스 + skip) % 26(알파벳 길이) -> 2
+// ex) 24(마지막 인덱스 + skip) % 26(알파벳 길이) -> 24 (피제수가 제수보다 작으므로 피제수 그대로 반환)
 function solution(s, skip, index) {
   const answer = [];
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
@@ -38,3 +38,25 @@ function solution(s, skip, index) {
 }
 
 solution(...cases[2].input);
+
+// 레퍼런스
+const solution2 = (s, skip, index) => {
+  let ans = '';
+
+  // 문자 그룹을 사용해서 skip은 제외 ex) 'abcd'.match(/[^ac]/g) -> 'b', 'd']
+  // ['a', 'c', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z'] (22)
+  const matched = 'abcdefghijklmnopqrstuvwxyz'.match(
+    new RegExp(`[^${skip}]`, 'g'),
+  );
+
+  for (const c of s) {
+    const newIdx = matched.indexOf(c) + index;
+    // a -> (0 + 5) % 22 -> 5
+    // u -> (17 + 5) % 22 -> 0
+    // ...
+    ans += matched[newIdx % matched.length];
+  }
+  return ans;
+};
+
+solution2(...cases[0].input);
