@@ -68,3 +68,5 @@ function solution(keymap, targets) {
 }
 
 solution(...cases[3].input);
+
+export { cases, solution };

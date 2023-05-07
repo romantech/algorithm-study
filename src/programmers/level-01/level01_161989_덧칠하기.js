@@ -19,7 +19,7 @@ const cases = [
 ];
 
 // 현재 섹션 + m(롤러)) - 1 >= 섹션 마지막 = 롤러가 커버 가능
-export default function solution(n, m, section) {
+function solution(n, m, section) {
   if (m === 1) return section.length;
   let answer = 0;
   let max = 0;
@@ -39,3 +39,5 @@ export default function solution(n, m, section) {
 }
 
 solution(...cases[0].input);
+
+export { cases, solution };
