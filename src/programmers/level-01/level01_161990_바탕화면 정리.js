@@ -75,3 +75,35 @@ function solution(wallpaper) {
 }
 
 solution(cases[1].input);
+
+// 레퍼런스
+function solution2(wallpaper) {
+  const left = [];
+  const top = [];
+  const right = [];
+  const bottom = [];
+  wallpaper.forEach((v, i) => {
+    [...v].forEach((val, ind) => {
+      if (val === '#') {
+        left.push(i);
+        top.push(ind);
+        right.push(i + 1);
+        bottom.push(ind + 1);
+      }
+    });
+  });
+  return [
+    Math.min(...left),
+    Math.min(...top),
+    Math.max(...right),
+    Math.max(...bottom),
+  ];
+}
+
+cases.forEach(({ input, expectedResult }, i) =>
+  console.log({
+    index: i,
+    output: solution2(input),
+    passed: solution2(input).every((el, idx) => el === expectedResult[idx]),
+  }),
+);
