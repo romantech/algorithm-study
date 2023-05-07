@@ -6,15 +6,15 @@
 const cases = [
   {
     input: [8, 4, [2, 3, 6]], // n, m, section
-    output: 2,
+    expectedResult: 2,
   },
   {
     input: [5, 4, [1, 3]], // n, m, section
-    output: 1,
+    expectedResult: 1,
   },
   {
     input: [4, 1, [1, 2, 3, 4]], // n, m, section
-    output: 4,
+    expectedResult: 4,
   },
 ];
 

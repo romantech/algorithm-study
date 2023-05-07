@@ -9,16 +9,16 @@ import {
 
 describe('프로그래머스 레벨 01', () => {
   test.each(c161989)(
-    '덧칠하기 - 입력값: $input 예상값: $output',
-    ({ input, output }) => {
-      expect(s161989(...input)).toEqual(output);
+    '덧칠하기 - 입력값: $input 예상값: $expectedResult',
+    ({ input, expectedResult }) => {
+      expect(s161989(...input)).toEqual(expectedResult);
     },
   );
 
   test.each(c160586)(
-    '대충 만든 자판 - 입력값: $input 예상값: $output',
-    ({ input, output }) => {
-      expect(s160586(...input)).toEqual(output);
+    '대충 만든 자판 - 입력값: $input 예상값: $expectedResult',
+    ({ input, expectedResult }) => {
+      expect(s160586(...input)).toEqual(expectedResult);
     },
   );
 });

@@ -6,35 +6,35 @@ const cases = [
       ['ABACD', 'BCEFD'], // keymap
       ['ABCD', 'AABB'], // targets
     ],
-    output: [9, 4],
+    expectedResult: [9, 4],
   },
   {
     input: [
       ['AA'], // keymap
       ['B'], // targets
     ],
-    output: [-1],
+    expectedResult: [-1],
   },
   {
     input: [
       ['AGZ', 'BSSS'], // keymap
       ['ASA', 'BGZ'], // targets
     ],
-    output: [4, 6],
+    expectedResult: [4, 6],
   },
   {
     input: [
       ['FFF', 'FFF'], // keymap
       ['CCC', 'CCC'], // targets
     ],
-    output: [-1, -1],
+    expectedResult: [-1, -1],
   },
   {
     input: [
       ['ABCDE', 'ABBCE'], // keymap
       ['ABBEF'], // targets
     ],
-    output: [-1],
+    expectedResult: [-1],
   },
 ];
 
