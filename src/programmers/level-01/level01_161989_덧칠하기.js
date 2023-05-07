@@ -19,10 +19,10 @@ const cases = [
 ];
 
 // 현재 섹션 + m(롤러)) - 1 >= 섹션 마지막 = 롤러가 커버 가능
-function solution(n, m, section) {
+export default function solution(n, m, section) {
   if (m === 1) return section.length;
   let answer = 0;
-  let max = section[0];
+  let max = 0;
 
   // 2(section) > 0(max) --> max = 5 (2~5번까지 칠함)
   // 3(section) < 5(max) --> 3번 섹션은 이전에 칠함
