@@ -86,3 +86,38 @@ function solution(park, routes) {
 }
 
 solution(...cases[2].input);
+
+// 레퍼런스 (GPT가 리팩토링)
+function solution2(park, routes) {
+  const directions = {
+    E: [0, 1], // 동
+    W: [0, -1], // 서
+    S: [1, 0], // 남
+    N: [-1, 0], // 북
+  };
+  let [x, y] = [0, 0];
+  for (const [i, row] of park.entries()) {
+    // Object.entries(park) -> [['0', 'S00'], ['1', '000'], ...]
+    const yIdx = row.indexOf('S');
+    if (yIdx !== -1) {
+      [x, y] = [i, yIdx];
+      break;
+    }
+  }
+
+  for (const route of routes) {
+    const [direction, distance] = route.split(' ');
+    let [nx, ny] = [x, y];
+    let cnt = 0;
+    while (cnt < +distance) {
+      [nx, ny] = [nx + directions[direction][0], ny + directions[direction][1]];
+      if (!park[nx]?.[ny] || park[nx][ny] === 'X') break;
+      cnt++;
+    }
+    if (cnt === +distance) [x, y] = [nx, ny];
+  }
+
+  return [x, y];
+}
+
+solution2(...cases[0].input);
