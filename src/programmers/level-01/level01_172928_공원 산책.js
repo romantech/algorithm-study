@@ -71,13 +71,14 @@ function solution(park, routes) {
     return true;
   };
 
+  const dirMatcher = (curDir, target) => target.some(dir => dir === curDir);
+
   routes.forEach(route => {
     const [dir, count] = route.split(' ');
-    const isIncrease = dir === 'E' || dir === 'S';
-    const isHorizontal = dir === 'E' || dir === 'W';
-    const axis = isHorizontal ? 'x' : 'y';
+    const isIncrease = dirMatcher(dir, ['E', 'S']);
+    const axis = dirMatcher(dir, ['E', 'W']) ? 'x' : 'y';
     const toAxis = current[axis] + (isIncrease ? +count : -+count);
-    const target = isHorizontal ? park[current.y] : park;
+    const target = axis === 'x' ? park[current.y] : park;
     if (validator(target, axis, toAxis, isIncrease)) current[axis] = toAxis;
   });
 
