@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 /**
  * 공원을 나타내는 문자열 배열 park, 수행할 명령이 담긴 routes를 받아 모든 명령 수행 후 놓인 위치 [y, x] 반환
  * 명령 수행 결과가 공원을 벗어나거나 장애물을 만나면 건너뛰고 다음 명령 수행
@@ -9,33 +10,25 @@
  * W 1 -> 서쪽으로 1칸 -> [0, 0]
  */
 
-const cases = [
+export const cases = [
   {
-    input: [
-      ['SOO', 'OOO', 'OOO'], // park
-      ['E 2', 'S 2', 'W 1'], // routes
-    ],
+    park: ['SOO', 'OOO', 'OOO'],
+    routes: ['E 2', 'S 2', 'W 1'],
     output: [2, 1],
   },
   {
-    input: [
-      ['SOO', 'OXX', 'OOO'], // park
-      ['E 2', 'S 2', 'W 1'], // routes
-    ],
+    park: ['SOO', 'OXX', 'OOO'],
+    routes: ['E 2', 'S 2', 'W 1'],
     output: [0, 1],
   },
   {
-    input: [
-      ['OSO', 'OOO', 'OXO', 'OOO'], // park
-      ['E 2', 'S 3', 'W 1'], // routes
-    ],
+    park: ['OSO', 'OOO', 'OXO', 'OOO'],
+    routes: ['E 2', 'S 3', 'W 1'],
     output: [0, 0],
   },
   {
-    input: [
-      ['SOXO', 'OOOO', 'OOOO'], // park
-      ['E 1', 'S 1', 'E 2'], // routes
-    ],
+    park: ['SOXO', 'OOOO', 'OOOO'],
+    routes: ['E 1', 'S 1', 'E 2'],
     output: [1, 3],
   },
 ];
@@ -46,7 +39,7 @@ const cases = [
 // E(+) | W(-) = x 이동,
 // S(+) | N(-) = y 이동
 
-function solution(park, routes) {
+export function solution(park, routes) {
   const current = { x: 0, y: 0 };
 
   park.some((block, y) => {
@@ -85,10 +78,10 @@ function solution(park, routes) {
   return [current.y, current.x];
 }
 
-solution(...cases[2].input);
+solution(cases[0].park, cases[0].routes);
 
 // 레퍼런스 (GPT가 리팩토링)
-function solution2(park, routes) {
+export function solution2(park, routes) {
   const directions = {
     E: [0, 1], // 동
     W: [0, -1], // 서
@@ -120,4 +113,4 @@ function solution2(park, routes) {
   return [x, y];
 }
 
-solution2(...cases[0].input);
+solution2(cases[0].park, cases[0].routes);
