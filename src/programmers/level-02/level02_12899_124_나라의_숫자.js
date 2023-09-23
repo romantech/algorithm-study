@@ -23,19 +23,19 @@
 // 3 / 3 = 0 (0) -> 4
 
 function solution(n) {
-  const result = [];
-  let num = n;
+  let result = '';
+  let currentNumber = n;
 
-  while (num > 0) {
-    const remainder = num % 3;
-    const isZero = remainder === 0;
-    result.push(isZero ? 4 : remainder);
+  while (currentNumber > 0) {
+    const remainder = currentNumber % 3;
+    const isRemainderZero = remainder === 0;
+    result = `${isRemainderZero ? 4 : remainder}${result}`;
 
-    num = Math.floor(num / 3);
-    if (isZero) num--;
+    currentNumber = Math.floor(currentNumber / 3);
+    if (isRemainderZero) currentNumber--;
   }
 
-  return result.reverse().join('');
+  return result;
 }
 
 const testCase = [
