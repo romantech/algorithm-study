@@ -11,16 +11,16 @@
 // n === 5 -> 경우의 수 8 (n4 + n3의 합)
 // 즉, 경우의 수는 n에 대한 피보나치 수열과 동일
 
-function solution(n) {
-  const MODULO = 1_000_000_007;
+const MODULO = 1_000_000_007;
 
+function solution(n) {
   if (n <= 3) return n;
 
-  let prevPrev = 2;
-  let prev = 3;
+  let prevPrev = 1;
+  let prev = 2;
   let current;
 
-  for (let i = 4; i <= n; i++) {
+  for (let i = 3; i <= n; i++) {
     current = (prevPrev + prev) % MODULO;
     prevPrev = prev;
     prev = current;
@@ -55,5 +55,15 @@ const cases = [
     output: 8,
   },
 ];
+
+// 레퍼런스
+function solution2(n) {
+  const arr = [0, 1, 2];
+  for (let i = 3; i <= n; i++) {
+    arr[i] = (arr[i - 2] + arr[i - 1]) % MODULO;
+  }
+
+  return arr[n];
+}
 
 export { cases, solution };
