@@ -10,7 +10,7 @@ function solution(land) {
 
   // DP 배열 초기화 O(4n) -> 최고 차수의 항만 표시하므로 O(n)
   const dp = Array.from({ length: row }, () => Array(column).fill(0));
-  [dp[0]] = land;
+  dp[0] = land[0].slice();
 
   // 하드 코딩 버전
   // for (let i = 1; i < row; i++) {
@@ -77,4 +77,4 @@ const cases = [
   },
 ];
 
-console.log(solution(cases[0].input));
+console.log(solution(cases[1].input));
