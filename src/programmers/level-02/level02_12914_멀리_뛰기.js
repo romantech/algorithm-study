@@ -14,9 +14,10 @@ MOD로 나누면 연산 결과는 항상 0~ MOD - 1 값을 가지게 됨
 
 function solution(n) {
   const memo = [1, 1];
+  const MOD = 1234567;
 
   for (let i = 2; i <= n; i += 1) {
-    memo[i] = (memo[i - 1] + memo[i - 2]) % 1234567;
+    memo[i] = (memo[i - 1] + memo[i - 2]) % MOD;
   }
 
   return memo[n];
