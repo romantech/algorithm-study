@@ -30,6 +30,23 @@ function solution(n) {
   return answer;
 }
 
+// n의 약수 중 홀수의 개수를 계산해서 푸는 방법
+// 연속된 숫자 k의 평균값을 m이라고 가정하면 m * k = n이 됨
+// n이 15라고 가정하고...
+// 1, 2, 3, 4, 5 -> 3(m) * 5(k) = 15
+// 4, 5, 6 -> 5(m) * 3(k) = 15
+// 7, 8 -> 7.5(m) * 2(k) = 15 (k가 2일땐 특수 케이스로 n으로 취급)
+// 15 -> 15(m) * 1(k) = 15
+// k는 항상 홀수이고 15의 약수인 것을 알 수 있음
+// 따라서 n의 약수 중 홀수의 개수가 연속된 자연수의 합으로 n을 나타내는 방법의 수가 됨
+const reference = n => {
+  let answer = 0;
+  for (let i = 1; i <= n; i++) {
+    if (n % i === 0 && i % 2 === 1) answer++;
+  }
+  return answer;
+};
+
 const cases = [
   {
     input: 1,
@@ -55,4 +72,5 @@ const cases = [
 
 cases.forEach(({ input, output }) => {
   console.log(solution(input) === output);
+  console.log(reference(input) === output);
 });
