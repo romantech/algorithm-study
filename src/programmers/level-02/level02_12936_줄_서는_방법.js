@@ -6,7 +6,7 @@ const memo = [1, 1]; // [0!, 1!]
 const factorial = num => {
   if (memo[num] !== undefined) return memo[num];
 
-  memo[num] = factorial(num - 1) * num;
+  memo[num] = num * factorial(num - 1);
   return memo[num];
 };
 
@@ -40,6 +40,8 @@ const cases = [
     output: [1, 2, 4, 3], // [1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2], [1, 4, 2, 3], [1, 4, 3, 2], ... 24가지(4!)
   },
 ];
+
+export { solution, cases };
 
 cases.forEach(({ input, output }) => {
   const result = solution(...input);
