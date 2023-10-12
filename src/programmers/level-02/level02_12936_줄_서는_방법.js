@@ -1,9 +1,29 @@
 // 사람 수 n과 자연수 k가 주어지고, 사전 순으로 사람을 나열했을 때 k번째 방법 반환
 // n <= 20, k <= n!
 
+const memo = [1, 1]; // [0!, 1!]
+
+const factorial = num => {
+  if (memo[num] !== undefined) return memo[num];
+
+  memo[num] = factorial(num - 1) * num;
+  return memo[num];
+};
+
 function solution(n, k) {
-  const answer = [];
-  return answer;
+  const numbers = Array.from({ length: n }, (_, i) => i + 1);
+  const result = [];
+
+  let nth = k - 1; // 인자로 받은 k는 1부터 시작하므로 인덱스 계산을 위해 - 1
+
+  for (let i = n; i > 0; i -= 1) {
+    const permutationCounts = factorial(i - 1);
+    const index = Math.floor(nth / permutationCounts);
+    nth %= permutationCounts;
+    result.push(numbers.splice(index, 1)[0]);
+  }
+
+  return result;
 }
 
 const cases = [
@@ -20,6 +40,11 @@ const cases = [
     output: [1, 2, 4, 3], // [1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2], [1, 4, 2, 3], [1, 4, 3, 2], ... 24가지(4!)
   },
 ];
+
+cases.forEach(({ input, output }) => {
+  const result = solution(...input);
+  console.log(result.every((n, i) => n === output[i]));
+});
 
 // 순열에 대한 기본 개념:
 // 0! = 1! = 1 (팩토리얼의 기본 정의)
