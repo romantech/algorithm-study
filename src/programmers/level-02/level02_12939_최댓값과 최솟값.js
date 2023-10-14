@@ -7,6 +7,12 @@ function solution(s) {
   return `${min} ${max}`;
 }
 
+function reference(s) {
+  const arr = s.split(' ');
+  // Math.max|min 인자로 문자열을 전달하면, 숫자로 변환해서 작업
+  return Math.min(...arr) + ' ' + Math.max(...arr);
+}
+
 const cases = [
   {
     input: '1 2 3 4',
@@ -22,4 +28,7 @@ const cases = [
   },
 ];
 
-console.log(solution(cases[2].input));
+cases.forEach(({ input, output }) => {
+  console.log(solution(input) === output);
+  console.log(reference(input) === output);
+});
