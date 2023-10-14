@@ -10,6 +10,7 @@ function solution(s) {
 function reference(s) {
   const arr = s.split(' ');
   // Math.max|min 인자로 문자열을 전달하면, 숫자로 변환해서 작업
+  // e.g. Math.max(1, 2, '-1', '10') -> 10
   return Math.min(...arr) + ' ' + Math.max(...arr);
 }
 
