@@ -17,6 +17,13 @@ function solution(A, B) {
   return result;
 }
 
+function reference(A, B) {
+  A.sort((a, b) => a - b);
+  B.sort((a, b) => b - a);
+
+  return A.reduce((acc, a, i) => acc + a * B[i], 0);
+}
+
 const cases = [
   {
     input: [
@@ -35,5 +42,7 @@ const cases = [
 ];
 
 cases.forEach(({ input, output }) => {
-  console.log(solution(...input) === output);
+  const [A, B] = input;
+  console.log(solution(A.slice(), B.slice()) === output);
+  console.log(reference(A.slice(), B.slice()) === output);
 });
