@@ -62,7 +62,7 @@ const cases = [
   },
 ];
 
-console.log(solution(3));
+// console.log(solution(4));
 cases.forEach(({ input, output }) => {
   const isPassed = solution(input).every(([from, to], i) => {
     const [expectedFrom, expectedTo] = output[i];
