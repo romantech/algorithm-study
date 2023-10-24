@@ -18,10 +18,10 @@
 
 /**
  * @param {number} n - 옮겨야 할 원판의 개수
- * @param {string} from - 원판의 현재 위치
- * @param {string} to - 원판을 옮겨야 할 목적지 위치
+ * @param {string} from - 원판이 위치한 현재 기둥
+ * @param {string} to - 목적지 기둥
  * @param {string} aux - 보조 기둥
- * @param {Array<Array<number>>} answer - 원판의 이동 순서
+ * @param {Array<Array<number>>} answer - 원판의 이동 순서 [from, to]
  */
 function hanoi(n, from, to, aux, answer) {
   // 원판이 1개만 남았을 때 from -> to 기둥으로 이동
