@@ -4,7 +4,7 @@
  * s 문자열 길이 1~200, 알파벳/숫자/공백 문자(" ")로 이뤄져 있음
  */
 
-function solution(s) {
+export function solution(s) {
   const splitted = s.split(' ');
 
   return splitted.reduce((acc, cur, i, { length }) => {
@@ -22,7 +22,7 @@ function solution(s) {
   }, '');
 }
 
-const cases = [
+export const cases = [
   {
     input: '3people unFollowed me',
     output: '3people Unfollowed Me',
@@ -32,11 +32,11 @@ const cases = [
     output: 'For The Last Week',
   },
   {
-    input: 'a   b',
+    input: 'a   b', // 반례 (특정 알고리즘이나 함수가 제대로 동작하지 않는 특별한 경우나 조건)
     output: 'A   B',
   },
   {
-    input: '1HELLO 1WORLD',
+    input: '1HELLO 1WORLD', // 반례
     output: '1hello 1world',
   },
 ];
