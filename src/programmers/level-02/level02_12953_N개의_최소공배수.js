@@ -7,23 +7,23 @@
  */
 
 function solution(arr) {
-  const desc = arr.sort((a, b) => b - a);
-  const [biggest, ...rest] = desc;
+  const sortedArray = arr.sort((a, b) => b - a);
+  const [biggest, ...rest] = sortedArray;
 
-  const checker = target => rest.every(n => target % n === 0);
+  const isDivisible = target => rest.every(n => target % n === 0);
 
-  let found = false;
-  let i = 1;
-  let result = -1;
+  let lcmFound = false;
+  let multiplier = 1;
+  let leastCommonMultiple = -1;
 
-  while (!found) {
-    const num = biggest * i;
-    found = checker(num);
-    if (found) result = num;
-    i++;
+  while (!lcmFound) {
+    const currentNum = biggest * multiplier;
+    lcmFound = isDivisible(currentNum);
+    if (lcmFound) leastCommonMultiple = currentNum;
+    multiplier++;
   }
 
-  return result;
+  return leastCommonMultiple;
 }
 
 const cases = [
@@ -36,5 +36,39 @@ const cases = [
     output: 6,
   },
 ];
+
+/**
+ * 최대공약수(Greatest Common Divisor)는 두 개 이상의 정수가 공통으로 가지는 약수 중 가장 큰 수
+ * 약수는 어떤 수를 나누어 떨어지게 하는 수(나머지 0)
+ * 12의 약수: 1, 2, 3, 4, 6, 12
+ * 15의 약수: 1, 3, 5, 15
+ * 12, 15의 공통 약수는 1, 3이고, 가장 큰 수는 3이므로 최대공약수는 3
+ *
+ * 유클리드 알고리즘은 최대공약수를 찾는 효율적인 알고리즘
+ * a, b 두 수가 주어졌을 때 b와 a를 b로 나눈 나머지의 최대 공약수는 a, b의 최대공약수와 동일하다는 특성
+ * 예를들어 a = 48, b = 18이 주어졌을 때
+ * f(48, 18) -> 18(b), 12(48 mod 18)의 최대 공약수는 48(a)와 18(b)의 최대 공약수와 동일하다
+ * f(18, 12) -> 12(b), 6(18 mod 12)의 최대 공약수는 18(a)와 12(b)의 최대 공약수와 동일하다
+ * f(12, 6) -> 6(b), 0(12 mod 6)이므로 b가 0이 되어 최대 공약수는 6이다
+ */
+function gcd(a, b) {
+  if (b === 0) return a;
+  return gcd(b, a % b);
+}
+
+// 최소공배수 찾기
+function lcm(a, b) {
+  return (a * b) / gcd(a, b);
+}
+
+function reference(arr) {
+  let result = arr[0];
+
+  for (let i = 1; i < arr.length; i++) {
+    result = lcm(result, arr[i]);
+  }
+
+  return result;
+}
 
 console.log(solution(cases[1].input));
