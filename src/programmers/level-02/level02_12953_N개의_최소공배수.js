@@ -38,7 +38,7 @@ const cases = [
 ];
 
 /**
- * 최대공약수(Greatest Common Divisor)는 두 개 이상의 정수가 공통으로 가지는 약수 중 가장 큰 수
+ * 최대공약수(Greatest Common Divisor, GCD)는 두 개 이상의 정수가 공통으로 가지는 약수 중 가장 큰 수
  * 약수는 어떤 수를 나누어 떨어지게 하는 수(나머지 0)
  * 12의 약수: 1, 2, 3, 4, 6, 12
  * 15의 약수: 1, 3, 5, 15
@@ -62,7 +62,8 @@ function gcd(a, b) {
   return gcd(b, a % b);
 }
 
-// 최소공배수 찾기
+// 최소공배수(Least Common Multiple, LCM) 찾기
+// a, b 두 수의 곱을 a, b 최대공약수로 나누면, 두 수의 최소공배수를 계산할 수 있다
 function lcm(a, b) {
   return (a * b) / gcd(a, b);
 }
@@ -77,4 +78,5 @@ function reference(arr) {
   return result;
 }
 
+console.log(reference(cases[0].input));
 console.log(solution(cases[1].input));
