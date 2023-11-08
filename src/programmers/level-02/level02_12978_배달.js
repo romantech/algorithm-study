@@ -15,11 +15,11 @@
  * N = 5, road = [[1,2,1],[2,3,3],[5,2,2],[1,4,2],[5,3,1],[5,4,2]], K = 3
  *
  * road를 인접리스트로 나타내면...
- * 1: [{to: 2, weight: 1}, {to: 4, weight: 2}]
- * 2: [{to: 1, weight: 1}, {to: 3, weight: 3}, {to: 5, weight: 2}]
- * 3: [{to: 2, weight: 3}, {to: 5, weight: 1}]
- * 4: [{to: 1, weight: 2}, {to: 5, weight: 2}]
- * 5: [{to: 2, weight: 2}, {to: 3, weight: 1}, {to: 4, weight: 2}]
+ * 1: [{node: 2, dist: 1}, {node: 4, dist: 2}]
+ * 2: [{node: 1, dist: 1}, {node: 3, dist: 3}, {node: 5, dist: 2}]
+ * 3: [{node: 2, dist: 3}, {node: 5, dist: 1}]
+ * 4: [{node: 1, dist: 2}, {node: 5, dist: 2}]
+ * 5: [{node: 2, dist: 2}, {node: 3, dist: 1}, {node: 4, dist: 2}]
  *
  * 1번 마을 : 0
  * 2번 마을 : 1
@@ -34,12 +34,12 @@
  * N = 6, road = [[1,2,1],[1,3,2],[2,3,2],[3,4,3],[3,5,2],[3,5,3],[5,6,1]], K = 4
  *
  * road를 인접리스트로 나타내면...
- * 1: [{to: 2, weight: 1}, {to: 3, weight: 2}]
- * 2: [{to: 1, weight: 1}, {to: 3, weight: 2}]
- * 3: [{to: 1, weight: 2}, {to: 2, weight: 2}, {to: 4, weight: 3}, {to: 5, weight: 2}, {to: 5, weight: 3}]
- * 4: [{to: 3, weight: 3}]
- * 5: [{to: 3, weight: 2}, {to: 3, weight: 3}, {to: 6, weight: 1}]
- * 6: [{to: 5, weight: 1}]
+ * 1: [{node: 2, dist: 1}, {node: 3, dist: 2}]
+ * 2: [{node: 1, dist: 1}, {node: 3, dist: 2}]
+ * 3: [{node: 1, dist: 2}, {node: 2, dist: 2}, {node: 4, dist: 3}, {node: 5, dist: 2}, {node: 5, dist: 3}]
+ * 4: [{node: 3, dist: 3}]
+ * 5: [{node: 3, dist: 2}, {node: 3, dist: 3}, {node: 6, dist: 1}]
+ * 6: [{node: 5, dist: 1}]
  *
  * 1번 마을 : 0
  * 2번 마을 : 1
@@ -55,28 +55,28 @@ function solution(N, road, K) {
   const graph = Array.from({ length: N + 1 }, () => []);
   // road에 대한 인접리스트 생성
   // 인접리스트는 그래프의 각 정점에 대해, 해당 정점에 인접한 정점들의 목록을 리스트로 표현한 자료구조
-  // [[], [{ to: 2, weight: 1 }, { to: 4, weight: 2 }], ...]
+  // [[], [{ node: 2, dist: 1 }, { node: 4, dist: 2 }], ...]
   road.forEach(([a, b, c]) => {
-    graph[a].push({ to: b, weight: c });
-    graph[b].push({ to: a, weight: c });
+    graph[a].push({ node: b, dist: c });
+    graph[b].push({ node: a, dist: c });
   });
 
   // 하나의 시작점부터 다른 모든 정점까지의 최단 거리를 구하는 다익스트라 알고리즘 활용
-  const queue = [{ to: 1, weight: 0 }]; // 탐색할 정점 목록
+  const queue = [{ node: 1, dist: 0 }]; // 탐색할 정점 목록
   const distances = Array(N + 1).fill(Number.MAX_SAFE_INTEGER); // 최단 경로 목록
   // 1번은 출발 지점이므로 0으로 처리 [ Max, 0, Max, Max, Max, Max ]
   distances[1] = 0;
 
   while (queue.length > 0) {
-    const { to: current, weight: currentWeight } = queue.shift();
+    const { node: currentNode, dist: currentDist } = queue.shift();
     // 현재 노드의 최단 거리를 이미 계산했다면 건너뛰기
-    if (distances[current] < currentWeight) continue;
+    if (distances[currentNode] < currentDist) continue;
 
-    graph[current].forEach(next => {
-      if (distances[next.to] > currentWeight + next.weight) {
-        distances[next.to] = currentWeight + next.weight;
+    graph[currentNode].forEach(next => {
+      if (distances[next.node] > currentDist + next.dist) {
+        distances[next.node] = currentDist + next.dist;
         // 최소 거리로 업데이트 되는 노드만 queue에 추가
-        queue.push({ to: next.to, weight: distances[next.to] });
+        queue.push({ node: next.node, dist: distances[next.node] });
       }
     });
   }
