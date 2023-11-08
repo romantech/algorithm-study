@@ -63,12 +63,15 @@ function solution(N, road, K) {
 
   // 하나의 시작점부터 다른 모든 정점까지의 최단 거리를 구하는 다익스트라 알고리즘 활용
   const queue = [{ to: 1, weight: 0 }]; // 탐색할 정점 목록
-  const distances = Array(N + 1).fill(Infinity); // 최단 경로 목록
-  // 1번은 출발 지점이므로 0으로 처리 [ Infinity, 0, Infinity, Infinity, Infinity, Infinity ]
+  const distances = Array(N + 1).fill(Number.MAX_SAFE_INTEGER); // 최단 경로 목록
+  // 1번은 출발 지점이므로 0으로 처리 [ Max, 0, Max, Max, Max, Max ]
   distances[1] = 0;
 
   while (queue.length > 0) {
     const { to: current, weight: currentWeight } = queue.shift();
+    // 해당 노드의 최단 거리를 이미 계산했다면 건너띄기
+    if (distances[current] < currentWeight) continue;
+
     graph[current].forEach(next => {
       if (distances[next.to] > currentWeight + next.weight) {
         distances[next.to] = currentWeight + next.weight;
