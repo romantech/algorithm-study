@@ -97,7 +97,7 @@ const createGraph = (N, road) => {
 
 const dijkstraBasic = (N, graph, start) => {
   const distances = Array(N + 1).fill(Number.MAX_SAFE_INTEGER); // 최단 경로 목록
-  const queue = [{ node: 1, dist: 0 }]; // 탐색할 정점 목록
+  const queue = [{ node: start, dist: 0 }]; // 탐색할 정점 목록
 
   distances[start] = 0; // 1번은 출발 지점이므로 0으로 처리 [ Max, 0, Max, Max, Max, Max ]
 
