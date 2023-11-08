@@ -69,7 +69,7 @@ function solution(N, road, K) {
 
   while (queue.length > 0) {
     const { to: current, weight: currentWeight } = queue.shift();
-    // 해당 노드의 최단 거리를 이미 계산했다면 건너띄기
+    // 현재 노드의 최단 거리를 이미 계산했다면 건너뛰기
     if (distances[current] < currentWeight) continue;
 
     graph[current].forEach(next => {
