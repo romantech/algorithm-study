@@ -11,8 +11,13 @@
 
 ## 정렬 알고리즘
 
-- 버블 정렬
-- 선택 정렬
-- 삽입 정렬
-- 병합 정렬
-- 퀵 정렬
+- [버블 정렬](/src/sort-algorithm/bubbleSort.js)
+- [선택 정렬](/src/sort-algorithm/selectionSort.js)
+- [삽입 정렬](/src/sort-algorithm/insertionSort.js)
+- [병합 정렬](/src/sort-algorithm/mergeSort.js)
+- [퀵 정렬](/src/sort-algorithm/quickSort.js)
+
+## 자료 구조
+
+- [우선순위 큐](/src/data-structure/priority-queue.js)
+- [최소 힙](/src/data-structure/min-heap.js)
