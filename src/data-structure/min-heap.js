@@ -27,8 +27,8 @@ class MinHeap {
     return Math.floor((childIdx - 1) / 2);
   }
 
-  // 주어진 인덱스에 위치한 노드에 대해 왼쪽 자식 노드가 존재하는지 확인
-  // 왼쪽 잣기 노드의 인덱스가 노드 갯수보다 작을 경우에만 자식 노드가 존재한다고 간주
+  // 주어진 인덱스에 위치한 (부모)노드에 왼쪽 자식 노드가 있는지 확인
+  // 왼쪽 자식 노드의 인덱스가 전체 노드 갯수보다 작을 경우에만 자식 노드가 존재한다고 간주
   hasLeftChild(idx) {
     return this.getLeftChildIndex(idx) < this.heap.length;
   }

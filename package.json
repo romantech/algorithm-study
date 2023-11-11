@@ -19,8 +19,8 @@
   },
   "homepage": "https://github.com/romantech/programmers-study#readme",
   "devDependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.23.2",
+    "@babel/core": "^7.23.3",
+    "@babel/preset-env": "^7.23.3",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0"
   }
