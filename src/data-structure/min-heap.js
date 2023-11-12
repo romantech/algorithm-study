@@ -1,3 +1,5 @@
+import { swap } from '../utils.js';
+
 /* eslint-disable class-methods-use-this */
 
 /**
@@ -59,11 +61,6 @@ class MinHeap {
     return this.heap[this.getParentIndex(idx)];
   }
 
-  // Swaps the elements at the two given indexes
-  swap(a, b) {
-    [this.heap[a], this.heap[b]] = [this.heap[b], this.heap[a]];
-  }
-
   // Returns the minimum element without removing it
   peek() {
     return this.heap.length === 0 ? null : this.heap[0];
@@ -71,17 +68,17 @@ class MinHeap {
 
   // Removes and returns the minimum element from the heap
   remove() {
-    if (this.heap.length === 0) return null;
-    if (this.heap.length === 1) return this.heap.pop();
-    const rootNode = this.heap[0];
+    if (this.heap.length === 0) return null; // 힙에 노드가 없을 때
+    if (this.heap.length === 1) return this.heap.pop(); // 힙에 루트 노드만 있을 때
+    const rootNode = this.heap[0]; // 현재 루트 노드 임시 저장
     this.heap[0] = this.heap.pop(); // 가장 마지막에 있는 노드를 루트 노드로 만들고
     this.heapifyDown(); // 다시 Min Heap 속성을 갖도록 조정
-    return rootNode;
+    return rootNode; // 임시 저장한 루트 노드 반환
   }
 
   // Adds a new element to the heap
   add(priority, value) {
-    this.heap.push({ priority, value });
+    this.heap.push({ priority, value: !value ? priority : value });
     this.heapifyUp();
   }
 
@@ -93,7 +90,7 @@ class MinHeap {
     while (this.parent(idx)?.priority > this.heap[idx].priority) {
       const parentIdx = this.getParentIndex(idx);
 
-      this.swap(parentIdx, idx);
+      swap(this.heap, parentIdx, idx);
       idx = parentIdx;
     }
   }
@@ -101,7 +98,6 @@ class MinHeap {
   // Moves the root element down to its correct position in the heap
   heapifyDown() {
     let idx = 0;
-    console.log(this.getLeftChildIndex(idx));
 
     while (this.hasLeftChild(idx)) {
       let smallestIdx = this.getLeftChildIndex(idx);
@@ -113,7 +109,7 @@ class MinHeap {
       // 부모 노드가 자식 노드보다 더 작으면 heapifyDown 중지
       if (this.heap[idx].priority <= this.heap[smallestIdx].priority) break;
 
-      this.swap(idx, smallestIdx);
+      swap(this.heap, idx, smallestIdx);
       idx = smallestIdx;
     }
   }

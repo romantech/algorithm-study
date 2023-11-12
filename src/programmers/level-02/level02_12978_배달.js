@@ -1,4 +1,5 @@
 /* eslint-disable no-continue */
+import { PriorityQueue } from '../../data-structure/index.js';
 
 /**
  * [요구사항]
@@ -59,25 +60,25 @@
  * 노드를 추가할 때마다 모든 요소를 순회하므로 비효율적임.
  * 힙(Heap)을 이용해 구현하는게 효율 훨씬 좋음
  */
-class PriorityQueue {
+class PseudoPriorityQueue {
   constructor() {
     this.nodes = [];
   }
 
-  enqueue(node, priority) {
-    this.nodes.push({ node, priority });
-    this.sort();
+  enqueue(priority, value) {
+    this.nodes.push({ priority, value });
+    this.#sort();
   }
 
   dequeue() {
     return this.nodes.shift();
   }
 
-  sort() {
+  #sort() {
     this.nodes.sort((a, b) => a.priority - b.priority);
   }
 
-  isEmpty() {
+  get isEmpty() {
     return this.nodes.length === 0;
   }
 }
@@ -117,15 +118,17 @@ const dijkstraBasic = (N, graph, start) => {
   return distances;
 };
 
-const dijkstraEnhanced = (N, graph, start) => {
+const dijkstraEnhanced = (N, graph, start, usePriorityQueue = true) => {
   const distances = Array(N + 1).fill(Number.MAX_SAFE_INTEGER); // 각 노드의 최단 경로 초기화
-  const queue = new PriorityQueue(); // 노드의 탐색 순서를 관리할 우선순위 큐 생성
+  const queue = usePriorityQueue // 노드의 탐색 순서를 관리할 우선순위 큐 생성
+    ? new PriorityQueue()
+    : new PseudoPriorityQueue();
 
   distances[start] = 0; // 1번 출발 노드의 최단 경로는 0으로 지정 [ Max, 0, Max, Max, Max, Max ]
-  queue.enqueue(start, 0); // 출발 노드를 우선순위 큐에 추가
+  queue.enqueue(0, start); // 출발 노드를 우선순위 큐에 추가
 
-  while (!queue.isEmpty()) {
-    const { node: currentNode, priority: currentDist } = queue.dequeue();
+  while (!queue.isEmpty) {
+    const { value: currentNode, priority: currentDist } = queue.dequeue();
     if (distances[currentNode] < currentDist) continue; // 현재 노드의 최단 경로를 이미 계산했다면 건너뛰기
 
     graph[currentNode].forEach(({ node: nextNode, dist: nextDist }) => {
@@ -133,7 +136,7 @@ const dijkstraEnhanced = (N, graph, start) => {
       // 새로 계산한 거리가 기존에 알려진 거리보다 짧을 때만 업데이트
       if (newDist < distances[nextNode]) {
         distances[nextNode] = newDist;
-        queue.enqueue(nextNode, newDist); // 최소 거리로 업데이트한 노드만 큐에 추가
+        queue.enqueue(newDist, nextNode); // 최소 거리로 업데이트한 노드만 큐에 추가
       }
     });
   }
@@ -142,7 +145,7 @@ const dijkstraEnhanced = (N, graph, start) => {
 
 function solution(N, road, K) {
   const graph = createGraph(N, road); // road 거리 정보를 사용해서 인접리스트 생성
-  const distances = dijkstraEnhanced(N, graph, 1); // 시작 노드에서 각 노드까지의 최단 거리 계산
+  const distances = dijkstraEnhanced(N, graph, 1, false); // 시작 노드에서 각 노드까지의 최단 거리 계산
   return distances.filter(distance => distance <= K).length; // 최단 거리가 K 이하인 마을의 수 계산
 }
 
@@ -180,4 +183,4 @@ const cases = [
   },
 ];
 
-console.log(solution(...cases[1].input));
+console.log(solution(...cases[0].input));
