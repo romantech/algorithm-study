@@ -14,14 +14,13 @@
 
 function solution(n, words) {
   const usedWords = new Set();
-  const { length: len } = words;
 
-  for (let i = 0; i < len; i += 1) {
+  for (let i = 0; i < words.length; i += 1) {
     const word = words[i];
     const firstChar = words[i].at(0);
-    const lastChar = i === 0 ? firstChar : words[i - 1].at(-1);
+    const prevWordLastChar = i === 0 ? firstChar : words[i - 1].at(-1);
 
-    if (usedWords.has(word) || firstChar !== lastChar) {
+    if (usedWords.has(word) || firstChar !== prevWordLastChar) {
       const round = Math.ceil((i + 1) / n); // 몇번째 탈락하는지
       const player = (i % n) + 1; // 탈락하는 사람 번호
       return [player, round];
@@ -31,6 +30,24 @@ function solution(n, words) {
   }
 
   return [0, 0];
+}
+
+function solution2(n, words) {
+  let firstInvalidWordIdx = 0;
+
+  words.reduce((prevWordLastChar, curWord, idx) => {
+    const isDuplicated = words.slice(0, idx).includes(curWord);
+    const notMatching = prevWordLastChar !== curWord.at(0);
+    const isFailed = isDuplicated || notMatching;
+
+    // 가장 먼저 탈락한 사람에 대한 인덱스 정보를 저장하기 위해 firstInvalidWordIdx === 0 조건 추가
+    if (firstInvalidWordIdx === 0 && isFailed) firstInvalidWordIdx = idx;
+    return curWord.at(-1);
+  }, '');
+
+  return firstInvalidWordIdx
+    ? [(firstInvalidWordIdx % n) + 1, Math.floor(firstInvalidWordIdx / n) + 1]
+    : [0, 0];
 }
 
 const cases = [
@@ -80,4 +97,5 @@ const cases = [
   },
 ];
 
-console.log(solution(...cases[2].input));
+console.log(solution(...cases[0].input));
+console.log(solution2(...cases[0].input));
