@@ -21,32 +21,28 @@
 
 function solution(n, a, b) {
   const totalRounds = Math.log2(n);
+  const players = { p1: a, p2: b };
+  const divider = num => Math.ceil(num / 2);
 
   // 라운드 수 만큼 n을 2로 나누면 해당 번호가 몇 번째 팀인지 확인 가능
   // e.g. 1라운드에선 2를 한 번 나누고, 2라운드에선 2로 두 번 나누고...
-  const getGroupNumber = (p, round) => {
-    let result = p;
-    for (let i = round; i > 0; i--) result = Math.ceil(result / 2);
-    return result;
-  };
-
-  for (let i = 1; i <= totalRounds; i += 1) {
-    const groupA = getGroupNumber(a, i);
-    const groupB = getGroupNumber(b, i);
-    if (groupA === groupB) return i;
+  for (let round = 1; round <= totalRounds; round += 1) {
+    players.p1 = divider(players.p1);
+    players.p2 = divider(players.p2);
+    if (players.p1 === players.p2) return round;
   }
 
   return -1;
 }
 
-function reference(n, a, b) {
+function reference(_n, a, b) {
   let answer = 0;
   let groupA = a;
   let groupB = b;
 
   while (groupA !== groupB) {
-    groupA = Math.ceil(a / 2);
-    groupB = Math.ceil(b / 2);
+    groupA = Math.ceil(groupA / 2);
+    groupB = Math.ceil(groupB / 2);
     answer++;
   }
 
@@ -55,9 +51,10 @@ function reference(n, a, b) {
 
 const cases = [
   {
-    input: [8, 4, 7], // N, A, B
+    input: [8, 4, 7], // [N, A, B]
     output: 3,
   },
 ];
 
 console.log(solution(...cases[0].input));
+console.log(reference(...cases[0].input));
