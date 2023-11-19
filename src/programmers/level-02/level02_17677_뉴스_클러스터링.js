@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * 유사한 기사를 묶는 기준을 정하기 위해 자카드 유사도 사용
@@ -113,22 +115,10 @@ function reference(str1, str2) {
 }
 
 const cases = [
-  {
-    input: ['FRANCE', 'french'],
-    output: 16384,
-  },
-  {
-    input: ['handshake', 'shake hands'],
-    output: 65536,
-  },
-  {
-    input: ['aa1+aa2', 'AAAA12'],
-    output: 43690,
-  },
-  {
-    input: ['E=M*C^2', 'e=m*c^2'],
-    output: 65536,
-  },
+  generateTestPair(['FRANCE', 'french'], 16384),
+  generateTestPair(['handshake', 'shake hands'], 65536),
+  generateTestPair(['aa1+aa2', 'AAAA12'], 43690),
+  generateTestPair(['E=M*C^2', 'e=m*c^2'], 65536),
 ];
 
 /**

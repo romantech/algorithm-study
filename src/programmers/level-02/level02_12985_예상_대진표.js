@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * N명의 참가자 1번부터 N번 차례대로 배정 받은 후 1<>2, 3<>4, ... N-1<>N번의 참가자끼리 게임 진행
@@ -50,10 +52,7 @@ function reference(_n, a, b) {
 }
 
 const cases = [
-  {
-    input: [8, 4, 7], // [N, A, B]
-    output: 3,
-  },
+  generateTestPair([8, 4, 7], 3), // input [N, A, B], output 3
 ];
 
 console.log(solution(...cases[0].input));

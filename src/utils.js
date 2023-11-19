@@ -24,3 +24,19 @@ export const measureExecutionTime = (fn, ...args) => {
   const executionTime = (end - start).toFixed(2);
   return { result, executionTime };
 };
+
+/**
+ * Generates a test pair object that includes an input, an output.
+ * Each element of the input array represents a separate parameter for the test case.
+ *
+ * @param {Array} input - The input array, where each element represents a distinct parameter of the test case.
+ * @param {any} output - The output value, which can be of any type.
+ * @throws {Error} If the input is not an array.
+ * @throws {Error} If the output is undefined.
+ * @return {Object} The test pair object containing the input, output.
+ */
+export const generateTestPair = (input, output) => {
+  if (!Array.isArray(input)) throw new Error('Input must be an array');
+  if (output === undefined) throw new Error('Output must not be undefined');
+  return { input, output };
+};
