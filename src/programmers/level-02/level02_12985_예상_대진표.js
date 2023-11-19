@@ -39,6 +39,20 @@ function solution(n, a, b) {
   return -1;
 }
 
+function reference(n, a, b) {
+  let answer = 0;
+  let groupA = a;
+  let groupB = b;
+
+  while (groupA !== groupB) {
+    groupA = Math.ceil(a / 2);
+    groupB = Math.ceil(b / 2);
+    answer++;
+  }
+
+  return answer;
+}
+
 const cases = [
   {
     input: [8, 4, 7], // N, A, B
