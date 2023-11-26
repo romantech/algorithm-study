@@ -21,3 +21,4 @@
 
 - [우선순위 큐](/src/data-structure/priority-queue.js)
 - [최소 힙](/src/data-structure/min-heap.js)
+- [LRU 캐시](/src/data-structure/lru-cache.js)
