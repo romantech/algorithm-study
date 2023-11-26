@@ -140,6 +140,6 @@ const cases = [
 ];
 
 cases.forEach(({ input, output }) => {
-  const result = solution(...input);
-  console.log(result === output);
+  console.log(solution(...input) === output);
+  console.log(reference(...input) === output);
 });
