@@ -49,3 +49,5 @@ cache.put('b', 2); // 캐시: {'a'=1, 'b'=2}
 console.log(cache.get('a')); // 1 반환, 캐시: {'b'=2, 'a'=1}
 cache.put('c', 3); // 가장 오래 사용하지 않은 'b'키 삭제, 캐시: {'a'=1, 'c'=3}
 console.log(cache.get('b')); // -1 ('b'키 캐시에서 삭제됨)
+
+export default LRUCache;
