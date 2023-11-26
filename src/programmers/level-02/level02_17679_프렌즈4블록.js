@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * 같은 모양의 블록이 2x2 형태로 4개가 붙어있으면 사라지면서 점수를 얻는 게임
@@ -5,8 +7,6 @@
  * 빈 공간을 채운 후 다시 2x2 형태로 같은 모양의 블록이 모이면 다시 지워지고 떨어지는 과정 반복
  * 블록이 주어졌을 때 지워지는 블록은 모두 몇 개인지 반환하는 함수 작성
  */
-
-import { generateTestPair } from '../../utils.js';
 
 /**
  * [파라미터]
@@ -63,75 +63,66 @@ const DX = [0, 1, 1];
 const DY = [1, 0, 1];
 
 const checkSameBlock = (x, y, target, board) => {
-  const saved = [target];
-
   for (let i = 0; i < DX.length; i += 1) {
     const nx = DX[i] + x;
     const ny = DY[i] + y;
-    if (nx < board.length && ny < board[i].length) {
-      const nt = board[nx][ny];
-      if (target === nt) saved.push(nt);
-    }
+
+    // 범위 벗어나면 undefined 이므로 조건 통과 안함
+    if (board[nx]?.[ny] !== target) return false;
   }
 
-  return saved.length === 4;
+  return true;
 };
 
-const removeSameBlock = (clearMap, board) => {
-  for (let i = 0; i < clearMap.length; i++) {
-    const [x, y] = clearMap[i];
-    board[x][y] = null;
+const removeSameBlock = (toRemove, board) => {
+  toRemove.forEach(([row, col]) => {
+    board[row][col] = null;
 
-    for (let j = 0; j < DX.length; j++) {
-      const nx = x + DX[j];
-      const ny = y + DY[j];
+    for (let i = 0; i < DX.length; i += 1) {
+      const nx = row + DX[i];
+      const ny = col + DY[i];
       board[nx][ny] = null;
     }
-  }
+  });
 };
 
-const cleanBlock = board => {
-  const swap = (x, y) => {
-    for (let i = x - 1; i >= 0; i--) {
-      const target = board[i][y];
+const dropBlocks = board => {
+  const swap = (row, col) => {
+    for (let newRow = row - 1; newRow >= 0; newRow--) {
+      const target = board[newRow][col];
       if (target) {
-        board[x][y] = target;
-        board[i][y] = null;
+        board[row][col] = target;
+        board[newRow][col] = null;
         break;
       }
     }
   };
 
-  for (let i = board.length - 1; i >= 0; i--) {
-    const hasNull = board[i].some(n => n === null);
-    if (hasNull) {
-      for (let j = 0; j < board[i].length; j++) {
-        if (board[i][j] === null) swap(i, j);
-      }
+  for (let row = board.length - 1; row >= 0; row--) {
+    for (let col = 0; col < board[row].length; col++) {
+      if (board[row][col] === null) swap(row, col);
     }
   }
 };
 
 function solution(m, n, board) {
-  const gameBoard = Array.from({ length: m }, (_, i) => board[i].split(''));
+  const gameBoard = board.map(row => row.split(''));
 
   const processBoard = () => {
-    const clearMap = [];
+    const toRemove = [];
 
-    for (let i = 0; i < m; i++) {
-      for (let j = 0; j < n; j++) {
-        const target = gameBoard[i][j];
-        if (target) {
-          const shouldRemove = checkSameBlock(i, j, target, gameBoard);
-          if (shouldRemove) clearMap.push([i, j]);
-        }
+    for (let row = 0; row < m; row++) {
+      for (let col = 0; col < n; col++) {
+        const block = gameBoard[row][col];
+        const hasSameBlock = checkSameBlock(row, col, block, gameBoard);
+        if (block && hasSameBlock) toRemove.push([row, col]);
       }
     }
 
-    if (!clearMap.length) return;
+    if (!toRemove.length) return;
 
-    removeSameBlock(clearMap, gameBoard);
-    cleanBlock(gameBoard);
+    removeSameBlock(toRemove, gameBoard);
+    dropBlocks(gameBoard);
     processBoard();
   };
 
