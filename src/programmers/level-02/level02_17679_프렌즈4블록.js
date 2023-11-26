@@ -6,7 +6,7 @@
  * 블록이 주어졌을 때 지워지는 블록은 모두 몇 개인지 반환하는 함수 작성
  */
 
-import { generateTestPair } from '../../utils';
+import { generateTestPair } from '../../utils.js';
 
 /**
  * [파라미터]
@@ -26,70 +26,154 @@ import { generateTestPair } from '../../utils';
  *
  * [11개 지워진 후]
  * TTTANT
- *   FA
- *    F
- * T  RAA
+ * --FA--
+ * ---F--
+ * T--RAA
  * TTMMMF
  * TMMTTJ
  *
  * [내려간 후]
- *    A
- *    A
- * T TFNT
+ * ---A--
+ * ---A--
+ * T-TFNT
  * TTFRAA
  * TTMMMF
  * TMMTTJ
  *
  * [4개 지워진 후]
- *    A
- *    A
- * T TFNT
- *   FRAA
- *   MMMF
+ * ---A--
+ * ---A--
+ * T-TFNT
+ * --FRAA
+ * --MMMF
  * TMMTTJ
  *
  * [내려간 후]
- *    A
- *    A
- *   TFNT
- *   FRAA
- * T MMMF
+ * ---A--
+ * ---A--
+ * --TFNT
+ * --FRAA
+ * T-MMMF
  * TMMTTJ
  *
  * 정답 15개
  */
 
+const DX = [0, 1, 1];
+const DY = [1, 0, 1];
+
+const checkSameBlock = (x, y, target, board) => {
+  const saved = [target];
+
+  for (let i = 0; i < DX.length; i += 1) {
+    const nx = DX[i] + x;
+    const ny = DY[i] + y;
+    if (nx < board.length && ny < board[i].length) {
+      const nt = board[nx][ny];
+      if (target === nt) saved.push(nt);
+    }
+  }
+
+  return saved.length === 4;
+};
+
+const removeSameBlock = (clearMap, board) => {
+  for (let i = 0; i < clearMap.length; i++) {
+    const [x, y] = clearMap[i];
+    board[x][y] = null;
+
+    for (let j = 0; j < DX.length; j++) {
+      const nx = x + DX[j];
+      const ny = y + DY[j];
+      board[nx][ny] = null;
+    }
+  }
+};
+
+const cleanBlock = board => {
+  const swap = (x, y) => {
+    for (let i = x - 1; i >= 0; i--) {
+      const target = board[i][y];
+      if (target) {
+        board[x][y] = target;
+        board[i][y] = null;
+        break;
+      }
+    }
+  };
+
+  for (let i = board.length - 1; i >= 0; i--) {
+    const hasNull = board[i].some(n => n === null);
+    if (hasNull) {
+      for (let j = 0; j < board[i].length; j++) {
+        if (board[i][j] === null) swap(i, j);
+      }
+    }
+  }
+};
+
 function solution(m, n, board) {
-  const answer = 0;
-  return answer;
+  const gameBoard = Array.from({ length: m }, (_, i) => board[i].split(''));
+
+  const processBoard = () => {
+    const clearMap = [];
+
+    for (let i = 0; i < m; i++) {
+      for (let j = 0; j < n; j++) {
+        const target = gameBoard[i][j];
+        if (target) {
+          const shouldRemove = checkSameBlock(i, j, target, gameBoard);
+          if (shouldRemove) clearMap.push([i, j]);
+        }
+      }
+    }
+
+    if (!clearMap.length) return;
+
+    removeSameBlock(clearMap, gameBoard);
+    cleanBlock(gameBoard);
+    processBoard();
+  };
+
+  processBoard();
+
+  return gameBoard.reduce((acc, cur) => {
+    return acc + cur.filter(e => e === null).length;
+  }, 0);
 }
 
 /**
  * [시뮬레이션]
  * m=4, n=5, board=['CCBDE', 'AAADE', 'AAABF', 'CCBBF'], output=14
+ *
+ * CCBDE
+ * AAADE
+ * AAABF
+ * CCBBF
+ *
  * [6개 지워진 후]
  * CCBDE
- *    DE
- *    BF
+ * ---DE
+ * ---BF
  * CCBBF
  *
  * [내려온 후]
- *    DE
- *    DE
+ * ---DE
+ * ---DE
  * CCBBF
  * CCBBF
  *
  * [8개 지워진 후]
- *    DE
- *    DE
- *     F
- *     F
+ * ---DE
+ * ---DE
+ * ----F
+ * ----F
  *
  * [내려온 후]
- *     E
- *     E
- *    DF
- *    DF
+ * ----E
+ * ----E
+ * ---DF
+ * ---DF
  */
 
 const cases = [
@@ -100,4 +184,4 @@ const cases = [
   ),
 ];
 
-console.log(...cases[0].input);
+console.log(solution(...cases[0].input));
