@@ -6,27 +6,27 @@ class LRUCache {
   constructor(capacity) {
     /** 캐시 최대 용량 설정 */
     this.capacity = capacity;
-    /** 삽입 순서를 기억하는 Map으로 캐시 관리, 가장 최근에 사용한 키가 뒤에 위치 */
+    /** 삽입 순서를 기억하는 Map으로 캐시 관리, 가장 최근에 사용한 key가 뒤에 위치 */
     this.cache = new Map();
   }
 
   /**
-   * 주어진 키에 해당하는 값을 캐시에서 가져오는 메서드
-   * 값이 존재하면 키를 캐시의 끝으로 이동시켜서 가장 최근에 사용한 것으로 표시 (LRU 캐시 특징)
+   * 캐시에서 주어진 key에 해당하는 값을 가져오는 메서드
+   * 값이 존재하면 key를 캐시의 끝으로 위치시켜서 가장 최근에 사용한 것으로 표시 (LRU 캐시 특징)
    */
   get(key) {
     if (!this.cache.has(key)) return -1;
 
     const value = this.cache.get(key);
     this.cache.delete(key);
-    this.cache.set(key, value); // 조회한 키를 캐시 가장 마지막에 위치 시킴
+    this.cache.set(key, value); // 조회한 key를 캐시 가장 마지막에 위치 시킴
     return value;
   }
 
   /**
-   * 새로운 키-값 쌍을 캐시에 추가
-   * 키가 존재하면 해당 키를 삭제하고 새 값을 캐시 마지막에 추가
-   * 캐시가 가득 찼다면, 가장 오래 사용하지 않은 앞쪽 키를 제거하고, 새 항목을 캐시 마지막에 추가
+   * 새로운 key-value 쌍을 캐시에 추가하는 메서드
+   * key가 존재하면 해당 key를 삭제하고 캐시 마지막에 새 항목으로 추가
+   * 캐시가 가득 찼다면, 가장 오래된 앞쪽 key를 제거하고, 캐시 마지막에 새 항목 추가
    */
   put(key, value) {
     if (this.cache.has(key)) {
@@ -40,7 +40,7 @@ class LRUCache {
        * 즉, next() 메서드를 호출할 때마다 value 프로퍼티를 통해 this.cache 값을 순차적으로 가져올 수 있음
        * 참고로 for of 문으로 값을 순회할 때도 next() 메서드를 호출해서 value 값을 가져오는 것
        */
-      const oldestKey = this.cache.keys().next().value; // this.cache의 첫번째 값(가장 오래 사용하지 않은 키)
+      const oldestKey = this.cache.keys().next().value; // this.cache의 첫번째 값(사용한지 가장 오래된 키)
       this.cache.delete(oldestKey);
     }
     this.cache.set(key, value); // 새 항목을 캐시 마지막에 추가
