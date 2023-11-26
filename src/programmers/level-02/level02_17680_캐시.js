@@ -16,7 +16,7 @@ function solution(cacheSize, cities) {
   const MISS = 5;
   const HIT = 1;
 
-  if (cacheSize === 0) return cities.reduce(acc => acc + MISS, 0);
+  if (cacheSize === 0) return MISS * cities.length;
 
   const cache = new LRUCache(cacheSize);
 
@@ -30,10 +30,34 @@ function solution(cacheSize, cities) {
   }, 0);
 }
 
-const cache = new LRUCache(3);
-cache.put('Jeju', 'Jeju'); // 5
-cache.put('Pangyo', 'Pangyo'); // 5
-cache.put('Seoul', 'Seoul'); // 5
+function reference(cacheSize, cities) {
+  const MISS = 5;
+  const HIT = 1;
+
+  if (cacheSize === 0) return MISS * cities.length;
+
+  let answer = 0;
+  const cache = [];
+
+  cities.forEach(city => {
+    city = city.toUpperCase();
+    const idx = cache.indexOf(city);
+
+    if (idx > -1) {
+      // 캐시에 존재할 때
+      cache.splice(idx, 1);
+      answer += HIT;
+    } else {
+      // 캐시에 존재하지 않고, 캐시가 꽉 찾을 때
+      if (cache.length >= cacheSize) cache.shift(); // 오래된 캐시 제거
+      answer += MISS;
+    }
+
+    cache.push(city);
+  });
+
+  return answer;
+}
 
 const cases = [
   generateTestPair(
