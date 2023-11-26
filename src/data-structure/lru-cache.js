@@ -1,3 +1,7 @@
+/**
+ * LRU 캐시는 제한된 저장 공간을 관리하기 위해 가장 오래전에 사용한 데이터를 제거하는 알고리즘
+ * LRU는 Least Recently Used의 약자로 "사용한지 가장 오래된" 정도로 해석
+ * */
 class LRUCache {
   constructor(capacity) {
     /** 캐시 최대 용량 설정 */
@@ -43,11 +47,11 @@ class LRUCache {
   }
 }
 
-const cache = new LRUCache(2);
-cache.put('a', 1); // 캐시: {'a'=1}
-cache.put('b', 2); // 캐시: {'a'=1, 'b'=2}
-console.log(cache.get('a')); // 1 반환, 캐시: {'b'=2, 'a'=1}
-cache.put('c', 3); // 가장 오래 사용하지 않은 'b'키 삭제, 캐시: {'a'=1, 'c'=3}
-console.log(cache.get('b')); // -1 ('b'키 캐시에서 삭제됨)
+// const cache = new LRUCache(2);
+// cache.put('a', 1); // 캐시: {'a'=1}
+// cache.put('b', 2); // 캐시: {'a'=1, 'b'=2}
+// console.log(cache.get('a')); // 1 반환, 캐시: {'b'=2, 'a'=1}
+// cache.put('c', 3); // 가장 오래 사용하지 않은 'b'키 삭제, 캐시: {'a'=1, 'c'=3}
+// console.log(cache.get('b')); // -1 ('b'키 캐시에서 삭제됨)
 
 export default LRUCache;
