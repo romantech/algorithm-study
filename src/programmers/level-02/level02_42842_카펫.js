@@ -18,25 +18,26 @@ import { generateTestPair } from '../../utils.js';
  * 갈색 타일의 좌/우 높이 = 노란색 영역 높이 * 2
  */
 
-const getBrownTotal = (yellowWidth, yellowHeight) => {
-  const w = (yellowWidth + 2) * 2;
-  const h = yellowHeight * 2;
+const getBrownTotal = (width, height) => {
+  const w = (width + 2) * 2;
+  const h = height * 2;
 
   return w + h;
 };
 
 function solution(brown, yellow) {
-  let yellowHeight = 0;
-  let yellowWidth = 0;
+  let height = 0; // 노란색 타일 높이
+  let width = 0; // 노란색 타일 너비
 
-  while (yellowHeight < yellow) {
-    yellowHeight++;
-    yellowWidth = Math.ceil(yellow / yellowHeight);
+  while (height < yellow) {
+    height++;
+    width = Math.ceil(yellow / height);
 
-    if (getBrownTotal(yellowWidth, yellowHeight) === brown) break;
+    if (getBrownTotal(width, height) === brown) break; // 방법 1
+    // if ((height + 2) * (width + 2) === brown + yellow) break; // 방법 2
   }
 
-  return [yellowWidth + 2, yellowHeight + 2];
+  return [width + 2, height + 2];
 }
 
 function reference(brown, yellow) {
