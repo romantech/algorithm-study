@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import { generateTestPair } from '../../utils.js';
 
 /**
@@ -11,28 +12,37 @@ import { generateTestPair } from '../../utils.js';
  * k: 1이상 number.length 미만의 자연수
  */
 
-function solution(number, k) {
-  const answer = '';
-  return answer;
-}
+function solution(number, k) {}
 
 const cases = [
   generateTestPair(['1924', 2], '94'),
   generateTestPair(['1231234', 3], '3234'),
   generateTestPair(['4177252841', 4], '775841'),
+  generateTestPair(['54321', 2], '543'),
 ];
+
+console.log(solution(...cases[0].input));
 
 /**
  * [시뮬레이션]
  * number='1231234', k=3
- * 정답 length = number.length(7) - k(3) = 4
- * 가장 큰 첫번째 자리수 : '31234' / 남은 k = 1
- * 작은 숫자대로 정렬 : ['1', '2', '3', '3', '4']
- * 남은 숫자의 앞에서부터 가장 작은 수를 남은 k(1)번 만큼 제거한다: 3234
+ * stack = []
+ * i0(1) 스택 비어있음 | push(1) -> [1]
+ * i1(2) 스택 마지막 숫자보다 큼 | pop() 1회 -> [] | k - 1(2) | push(2) -> [2]
+ * i2(3) 스택 마지막 숫자보다 큼 | pop() 1회 -> [] | k - 1(1) | push(3) -> [3]
+ * i3(1) 스택 마지막 숫자보다 크지 않음 | push(1) -> [3, 1]
+ * i4(2) 스택 마지막 숫자보다 큼 | pop() 1회 -> [3] | k - 1(0) | push(2) -> [3, 2]
+ * 나머지 push -> [3, 2, 3, 4]
  *
  * number='4177252841', k=4
- * 정답 length = number.length(10) - k(4) = 6
- * 가장 큰 첫번째 자리수 : '77252841' / 남은 k = 2
- * 작은 숫자대로 정렬 : ['1', '2', '2', '4', '5', '7', '7', '8']
- * 남은 숫자의 앞에서부터 가장 작은 수를 남은 k(2)번 만큼 제거한다: '775841'
+ * stack = []
+ * i0(4) 스택 비어있음 | push(4) -> [4]
+ * i1(1) 스택 마지막 숫자보다 크지 않음 | push(1) -> [4, 1]
+ * i2(7) 스택 마지막 숫자보다 큼 | pop() 2회 -> [] | k - 2(2) | push(7) -> [7]
+ * i3(7) 스택 마지막 숫자보다 크지 않음 | push(7) -> [7, 7]
+ * i4(2) 스택 마지막 숫자보다 크지 않음 | push(2) -> [7, 7, 2]
+ * i5(5) 스택 마지막 숫자보다 큼 | pop() 1회 -> [7, 7] | k - 1(1) | push(5) -> [7, 7, 5]
+ * i6(2) 스택 마지막 숫자보다 크지 않음 | push(2) -> [7, 7, 5, 2]
+ * i7(8) 스택 마지막 숫자보다 큼 | pop() 1회 -> [7, 7, 5] | k - 1(0) | push(8) -> [7, 7, 5, 8]
+ * 나머지 push -> [7, 7, 5, 8, 4, 1]
  */
