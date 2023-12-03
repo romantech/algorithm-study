@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { generateTestPair } from '../../utils.js';
 
 /**
@@ -8,11 +7,34 @@ import { generateTestPair } from '../../utils.js';
  * 문자열 형식의 숫자 number와 제거할 수의 개수 k가 주어졌을 때 number에서 k개의 수를 제거했을 때
  * 만들 수 있는 가장 큰 숫자를 문자열 형태로 반환
  *
+ * [파라미터]
  * number: 2자리 이상, 1,000,000자리 이하 숫자
  * k: 1이상 number.length 미만의 자연수
+ *
+ * [해결방법]
+ * 원본 숫자를 순회하면서 현재 숫자가 stack의 마지막 숫자보다 크면,
+ * stack의 마지막 숫자를 제거한 후 현재 숫자 push
+ * 이 방식으로 큰 숫자가 앞에 위치하도록 조정하고, 숫자를 제거할 때마다 k--
+ * 현재 순회하는 숫자가 stack의 마지막 숫자보다 크지 않다면 stack에 그냥 push
  */
 
-function solution(number, k) {}
+function solution(number, k) {
+  const stack = [];
+  let count = k;
+
+  for (const num of number) {
+    // stack 배열의 마지막 숫자가 현재 숫자보다 작으면 제거 후 k--
+    // 큰 숫자가 앞에 위치하도록 하기 위해 k번 만큼 반복
+    while (count > 0 && stack.length > 0 && stack.at(-1) < num) {
+      stack.pop();
+      count--;
+    }
+    stack.push(num);
+  }
+
+  // k가 아직 남아 있다면, 끝에서부터 k만큼 제거
+  return stack.slice(0, stack.length - count).join('');
+}
 
 const cases = [
   generateTestPair(['1924', 2], '94'),
@@ -21,7 +43,9 @@ const cases = [
   generateTestPair(['54321', 2], '543'),
 ];
 
-console.log(solution(...cases[0].input));
+cases.forEach(({ input, output }) => {
+  console.log(solution(...input) === output);
+});
 
 /**
  * [시뮬레이션]
