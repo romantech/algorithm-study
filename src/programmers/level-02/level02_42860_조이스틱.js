@@ -20,7 +20,7 @@ import { generateTestPair } from '../../utils.js';
  *
  * [참고]
  * 알파벳 UTF-16 코드포인트 (str.charCodeAt() 반환값)
- * A: 65, Z: 90
+ * 'A' 코드포인트 65, 'Z' 코드포인트 90
  */
 
 function getJoystickMove(char) {
@@ -55,7 +55,7 @@ function solution(name) {
     // --> ①
     // <-- ②     <-- ③
     // ------name------
-    // i * 2 : 시작점(0) ~ 현재 위치(i)까지의 왕복 거리
+    // i * 2 : 시작점(0) ~ 현재 위치(i) 까지의 왕복 거리
     // name.length - nextIndex : 문자열 끝에서 nextIndex 까지의 거리
     minMove = Math.min(minMove, i * 2 + name.length - nextIndex);
 
@@ -64,7 +64,7 @@ function solution(name) {
     // --> ③     --> ②
     // ------name------
     // (name.length - nextIndex) * 2 : 문자열 끝에서 nextIndex 까지의 왕복 거리
-    // + i : 시작점(0) ~ 현재 위치(i)까지의 거리
+    // i : 시작점(0) ~ 현재 위치(i)까지의 거리
     minMove = Math.min(minMove, (name.length - nextIndex) * 2 + i);
   }
 
