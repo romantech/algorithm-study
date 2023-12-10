@@ -19,14 +19,56 @@ import { generateTestPair } from '../../utils.js';
  * name: 만들고자 하는 이름, 대문자, 1 이상 20 이하
  *
  * [참고]
- * N = 13
- * N 이전은 A부터
- * N 이후는 Z부터
+ * 알파벳 UTF-16 코드포인트 (str.charCodeAt() 반환값)
+ * A: 65, Z: 90
  */
 
+function getJoystickMove(char) {
+  // char === 'B'라면 moveUp = 66 - 65 = 1, moveDown = 90 - 66 + 1 = 25
+  // char에 도달하기 위해 A부터 오른쪽으로 이동한 거리
+  const moveUp = char.charCodeAt() - 'A'.charCodeAt();
+  // char에 도달하기 위해 A부터 왼쪽으로 이동(순환)한 거리. Z가 아닌 A부터 왼쪽으로 이동하므로 + 1
+  const moveDown = 'Z'.charCodeAt() - char.charCodeAt() + 1;
+  return Math.min(moveUp, moveDown);
+}
+
+// 다른 사람 풀이 참고해서 작성
 function solution(name) {
-  const answer = 0;
-  return answer;
+  let answer = 0;
+
+  // 문자열 처음~마지막까지 순서대로 이동할 때 필요한 최대 거리
+  let minMove = name.length - 1;
+
+  for (let i = 0; i < name.length; i++) {
+    // 상하이동
+    // 각 문자까지 이동하는데 필요한 최소 조이스틱 이동 수
+    answer += getJoystickMove(name[i]);
+
+    // 좌우이동
+    // 'A'가 아닌 문자까지의 인덱스
+    let nextIndex = i + 1;
+    while (nextIndex < name.length && name[nextIndex] === 'A') {
+      nextIndex++;
+    }
+
+    // 오른쪽으로 이동 후 다시 왼쪽으로 이동하는 경우 : 시작점(0) -> 현재 인덱스 -> (turn) 시작점 -> nextIndex
+    // --> ①
+    // <-- ②     <-- ③
+    // ------name------
+    // i * 2 : 시작점(0) ~ 현재 위치(i)까지의 왕복 거리
+    // name.length - nextIndex : 문자열 끝에서 nextIndex 까지의 거리
+    minMove = Math.min(minMove, i * 2 + name.length - nextIndex);
+
+    // 왼쪽으로 이동 후 다시 오른쪽으로 이동하는 경우 : 문자열 마지막 -> nextIndex -> (turn) 문자열 마지막 -> 현재 인덱스
+    //            <-- ①
+    // --> ③     --> ②
+    // ------name------
+    // (name.length - nextIndex) * 2 : 문자열 끝에서 nextIndex 까지의 왕복 거리
+    // + i : 시작점(0) ~ 현재 위치(i)까지의 거리
+    minMove = Math.min(minMove, (name.length - nextIndex) * 2 + i);
+  }
+
+  return answer + minMove;
 }
 
 const cases = [
@@ -34,7 +76,13 @@ const cases = [
   generateTestPair(['JAN'], 23),
   generateTestPair(['ABAAB'], 5),
   generateTestPair(['AAAAABBAAAAAAABAAA'], 16),
+  generateTestPair(['AABAAAAAAABBB'], 11),
+  generateTestPair(['CANAAAAANAN'], 48),
 ];
+
+cases.forEach(({ input, output }) => {
+  console.log(solution(...input) === output);
+});
 
 /**
  * [시뮬레이션]
@@ -51,4 +99,8 @@ const cases = [
  *
  * 문자열 : AAAAABBAAAAAAABAAA
  * 4(lm) + 1(c) + 8(lm) + 1(c) + 1(lm) + 1(c) = 16
+ *
+ * 문자열 : AABAAAAAAABBB
+ * 2(rm) + 1(c) + 3(lm) + 1(c) + 1(lm) + 1(c) + 1(lm) + 1(c)
+ * 주의! 처음 시작시 오른쪽으로 이동하는게 더 거리 짧음
  */
