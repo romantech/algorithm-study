@@ -17,6 +17,11 @@ import { generateTestPair } from '../../utils.js';
  *
  * [매개변수]
  * name: 만들고자 하는 이름, 대문자, 1 이상 20 이하
+ *
+ * [참고]
+ * N = 13
+ * N 이전은 A부터
+ * N 이후는 Z부터
  */
 
 function solution(name) {
@@ -24,4 +29,26 @@ function solution(name) {
   return answer;
 }
 
-const cases = [generateTestPair(['JEROEN'], 56), generateTestPair(['JAN'], 23)];
+const cases = [
+  generateTestPair(['JEROEN'], 56),
+  generateTestPair(['JAN'], 23),
+  generateTestPair(['ABAAB'], 5),
+  generateTestPair(['AAAAABBAAAAAAABAAA'], 16),
+];
+
+/**
+ * [시뮬레이션]
+ * rm: 오른쪽으로 이동, lm: 왼쪽으로 이동, c: 알파벳 획득
+ *
+ * 문자열 : JEROEN
+ * 9(c) + 1(rm) + 4(c) + 1(rm) + 9(c) + 1(rm) + 12(c) + 1(rm) + 4(c) + 1(rm) + 13(c) = 56
+ *
+ * 문자열 : JAN
+ * 9(c) + 1(lm) + 13(c) = 23
+ *
+ * 문자열 : ABAAB
+ * 1(rm) + 1(c) + 2(lm) + 1(c) = 5
+ *
+ * 문자열 : AAAAABBAAAAAAABAAA
+ * 4(lm) + 1(c) + 8(lm) + 1(c) + 1(lm) + 1(c) = 16
+ */
