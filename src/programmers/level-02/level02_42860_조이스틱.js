@@ -18,9 +18,13 @@ import { generateTestPair } from '../../utils.js';
  * [매개변수]
  * name: 만들고자 하는 이름, 대문자, 1 이상 20 이하
  *
- * [참고]
+ * [코드 포인트]
  * 알파벳 UTF-16 코드포인트 (str.charCodeAt() 반환값)
  * 'A' 코드포인트 65, 'Z' 코드포인트 90
+ *
+ * [참고 링크]
+ * @see https://leeeehhjj.tistory.com/83
+ * @see https://velog.io/@jqdjhy/프로그래머스-파이썬-조이스틱-Greedy
  */
 
 function getJoystickMove(char) {
@@ -45,7 +49,7 @@ function solution(name) {
     answer += getJoystickMove(name[i]);
 
     // 좌우이동
-    // 'A'가 아닌 문자까지의 인덱스
+    // 'A'가 아닌 문자까지의 인덱스 (A의 가중치는 항상 0이어서 방문할 필요 없으므로)
     let nextIndex = i + 1;
     while (nextIndex < name.length && name[nextIndex] === 'A') {
       nextIndex++;
@@ -59,7 +63,7 @@ function solution(name) {
     // name.length - nextIndex : 문자열 끝에서 nextIndex 까지의 거리
     minMove = Math.min(minMove, i * 2 + name.length - nextIndex);
 
-    // 왼쪽으로 이동 후 다시 오른쪽으로 이동하는 경우 : 문자열 마지막 -> nextIndex -> (turn) 문자열 마지막 -> 현재 인덱스
+    // 왼쪽으로 이동 후 다시 오른쪽으로 이동하는 경우 : 문자열 마지막(이동 거리 1) -> nextIndex -> (turn) 문자열 마지막 -> 현재 인덱스
     //            <-- ①
     // --> ③     --> ②
     // ------name------
