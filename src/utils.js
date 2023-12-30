@@ -42,19 +42,21 @@ export const generateTestPair = (input, output) => {
 };
 
 /**
- * Generates all possible permutations of the given elements.
+ * Generates permutations of an array.
  *
- * @param {Array} elements - The elements to generate permutations for.
- * @param {Array} permutation - The current permutation being built. (Optional)
- * @return {Array} An array of all possible permutations.
+ * @param {Array} arr - The array to generate permutations from.
+ * @param {number} [permSize=arr.length] - The size of each permutation.
+ * @param {Array} [curPerm=[]] - The current permutation being built.
+ * @returns {Array} An array of permutations.
  */
-export const getPermutations = (elements, permutation = []) => {
-  if (elements.length === 0) return [permutation];
+export const getPermutations = (arr, permSize = arr.length, curPerm = []) => {
+  if (curPerm.length === permSize) return [curPerm];
+  if (arr.length === 0 || permSize === 0) return [];
 
-  return elements.reduce((results, currentEl, i) => {
-    const remaining = elements.slice(0, i).concat(elements.slice(i + 1));
-    const newPermutation = permutation.concat(currentEl);
-    return results.concat(getPermutations(remaining, newPermutation));
+  return arr.reduce((allPerms, item, i) => {
+    const restItems = arr.slice(0, i).concat(arr.slice(i + 1));
+    const nextPerm = curPerm.concat(item);
+    return allPerms.concat(getPermutations(restItems, permSize, nextPerm));
   }, []);
 };
 
