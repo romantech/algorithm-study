@@ -40,3 +40,40 @@ export const generateTestPair = (input, output) => {
   if (output === undefined) throw new Error('Output must not be undefined');
   return { input, output };
 };
+
+/**
+ * Generates all possible permutations of the given elements.
+ *
+ * @param {Array} elements - The elements to generate permutations for.
+ * @param {Array} permutation - The current permutation being built. (Optional)
+ * @return {Array} An array of all possible permutations.
+ */
+export const getPermutations = (elements, permutation = []) => {
+  if (elements.length === 0) return [permutation];
+
+  return elements.reduce((results, currentEl, i) => {
+    const remaining = elements.slice(0, i).concat(elements.slice(i + 1));
+    const newPermutation = permutation.concat(currentEl);
+    return results.concat(getPermutations(remaining, newPermutation));
+  }, []);
+};
+
+/*
+p([1, 2, 3], [])
+i = 0, c = 1 -> [1], r = [2, 3]
+i = 1, c = 2 -> [2], r = [1, 3]
+i = 2, c = 3 -> [3], r = [1, 2]
+
+p([2, 3], [1])
+i = 0, c = 2 -> [1, 2], r = [3] -> ... -> return [1, 2, 3]
+i = 1, c = 3 -> [1, 3], r = [2] -> ... -> return [1, 3, 2]
+
+p([1, 3], [2])
+i = 0, c = 1 -> [2, 1], r = [3] -> ... -> return [2, 1, 3]
+i = 1, c = 3 -> [2, 3], r = [1] -> ... -> return [2, 3, 1]
+
+p([1, 2], [3])
+i = 0, c = 1 -> [3, 1], r = [2] -> ... -> return [3, 1, 2]
+i = 1, c = 2 -> [3, 2], r = [1] -> ... -> return [3, 2, 1]
+
+*/

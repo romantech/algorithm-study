@@ -1,4 +1,4 @@
-import { generateTestPair } from '../../utils.js';
+import { generateTestPair, getPermutations } from '../../utils.js';
 
 /**
  * [요구사항]
@@ -17,8 +17,13 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(numbers) {
+  const numArr = numbers.split('');
+  const permutations = getPermutations(numArr);
+  console.log(permutations);
+
   const answer = 0;
   return answer;
 }
 
 const cases = [generateTestPair(['17'], 3), generateTestPair(['011'], 2)];
+console.log(solution(...cases[0].input));
