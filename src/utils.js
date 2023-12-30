@@ -41,6 +41,19 @@ export const generateTestPair = (input, output) => {
   return { input, output };
 };
 
+export const isPrime = num => {
+  if (num <= 1) return false; // 소수는 1보다 큰 자연수이므로 1은 소수가 아님
+  if (num === 2) return true; // 2는 짝수중 유일하게 소수
+  if (num % 2 === 0) return false; // 모든 짝수는 2로 나누어 떨어지기 때문에 소수가 아님
+
+  // 1, 2, 짝수는 위에서 검사했으므로 3부터 2씩 증가하면서 검사
+  for (let i = 3; i <= Math.sqrt(num); i += 2) {
+    if (num % i === 0) return false;
+  }
+
+  return true;
+};
+
 /**
  * Generates permutations of an array.
  *
