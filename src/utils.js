@@ -65,30 +65,35 @@ r = [2, 3], p = [1]
   getPermutations([2, 3], [1])
   r = [3], p = [1, 2]
     getPermutations([3], [1, 2])
-    r = [], p = [1, 2, 3] --> return [[1, 2, 3]]
+    r = [], p = [1, 2, 3]
+      getPermutations([], [1, 2, 3]) -> return [[1, 2, 3]]
   r = [2], p = [1, 3]
     getPermutations([2], [1, 3])
-    r = [], p = [1, 3, 2] --> return [[1, 3, 2]]
+    r = [], p = [1, 3, 2]
+      getPermutations([], [1, 3, 2]) -> return [[1, 3, 2]]
   return [[1, 2, 3], [1, 3, 2]]
 
 r = [1, 3], p = [2]
   getPermutations([1, 3], [2])
   r = [3], p = [2, 1]
     getPermutations([3], [2, 1])
-    r = [], p = [2, 1, 3] --> return [[2, 1, 3]]
+    r = [], p = [2, 1, 3]
+      getPermutations([], [2, 1, 3]) -> return [[2, 1, 3]]
   r = [1], p = [2, 3]
     getPermutations([1], [2, 3])
-    r = [], p = [2, 3, 1] --> return [[2, 3, 1]]
+    r = [], p = [2, 3, 1]
+      getPermutations([], [2, 3, 1]) -> return [[2, 3, 1]]
   return [[2, 1, 3], [2, 3, 1]]
 
 r = [1, 2], p = [3]
   getPermutations([1, 2], [3])
   r = [2], p = [3, 1]
     getPermutations([2], [3, 1])
-    r = [], [3, 1, 2] --> return [[3, 1, 2]]
+    r = [], p = [3, 1, 2]
+      getPermutations([], [3, 1, 2]) -> return [[3, 1, 2]]
   r = [1], p = [3, 2]
     getPermutations([1], [3, 2])
-    r = [], [3, 2, 1] --> return [[3, 2, 1]]
+    r = [], p = [3, 2, 1]
+      getPermutations([], [3, 2, 1]) -> return [[3, 2, 1]]
   return [[3, 1, 2], [3, 2, 1]]
-
 */
