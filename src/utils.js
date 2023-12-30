@@ -59,21 +59,36 @@ export const getPermutations = (elements, permutation = []) => {
 };
 
 /*
-p([1, 2, 3], [])
-i = 0, c = 1 -> [1], r = [2, 3]
-i = 1, c = 2 -> [2], r = [1, 3]
-i = 2, c = 3 -> [3], r = [1, 2]
+getPermutations([1, 2, 3], [])
 
-p([2, 3], [1])
-i = 0, c = 2 -> [1, 2], r = [3] -> ... -> return [1, 2, 3]
-i = 1, c = 3 -> [1, 3], r = [2] -> ... -> return [1, 3, 2]
+r = [2, 3], p = [1]
+  getPermutations([2, 3], [1])
+  r = [3], p = [1, 2]
+    getPermutations([3], [1, 2])
+    r = [], p = [1, 2, 3] --> return [[1, 2, 3]]
+  r = [2], p = [1, 3]
+    getPermutations([2], [1, 3])
+    r = [], p = [1, 3, 2] --> return [[1, 3, 2]]
+  return [[1, 2, 3], [1, 3, 2]]
 
-p([1, 3], [2])
-i = 0, c = 1 -> [2, 1], r = [3] -> ... -> return [2, 1, 3]
-i = 1, c = 3 -> [2, 3], r = [1] -> ... -> return [2, 3, 1]
+r = [1, 3], p = [2]
+  getPermutations([1, 3], [2])
+  r = [3], p = [2, 1]
+    getPermutations([3], [2, 1])
+    r = [], p = [2, 1, 3] --> return [[2, 1, 3]]
+  r = [1], p = [2, 3]
+    getPermutations([1], [2, 3])
+    r = [], p = [2, 3, 1] --> return [[2, 3, 1]]
+  return [[2, 1, 3], [2, 3, 1]]
 
-p([1, 2], [3])
-i = 0, c = 1 -> [3, 1], r = [2] -> ... -> return [3, 1, 2]
-i = 1, c = 2 -> [3, 2], r = [1] -> ... -> return [3, 2, 1]
+r = [1, 2], p = [3]
+  getPermutations([1, 2], [3])
+  r = [2], p = [3, 1]
+    getPermutations([2], [3, 1])
+    r = [], [3, 1, 2] --> return [[3, 1, 2]]
+  r = [1], p = [3, 2]
+    getPermutations([1], [3, 2])
+    r = [], [3, 2, 1] --> return [[3, 2, 1]]
+  return [[3, 1, 2], [3, 2, 1]]
 
 */
