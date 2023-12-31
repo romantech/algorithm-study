@@ -1,4 +1,4 @@
-import { isPrime } from '../../utils.js';
+import { isPrime } from '../../math.js';
 
 // 주어진 숫자 중 3개의 수를 더했을 때 소수가 되는 경우의 수 구하기
 // nums에 들어있는 숫자의 개수 : 3~50
