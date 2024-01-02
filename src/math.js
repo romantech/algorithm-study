@@ -12,13 +12,13 @@ export const isPrime = num => {
 };
 
 /**
- * Generate all possible combinations of a given size from an array.
+ * Generates all combinations of a given array with a specified combination size.
  *
- * @param {Array} arr - the input array from which combinations will be generated
- * @param {number} combSize - the size of each combination
- * @param {number} start - the starting index for generating combinations (default is 0)
- * @param {Array} curComb - the current combination being built (default is an empty array)
- * @return {Array} - an array containing all possible combinations of the given size
+ * @param {Array} arr - The array from which to generate combinations.
+ * @param {number} combSize - The size of each combination.
+ * @param {number} start - The index to start generating combinations from. Defaults to 0.
+ * @param {Array} curComb - The current combination being generated. Defaults to an empty array.
+ * @return {Array} - An array containing all combinations of the given array with the specified combination size.
  */
 export const getCombinations = (arr, combSize, start = 0, curComb = []) => {
   if (curComb.length === combSize) return [curComb]; // 목표 크기의 조합을 완성했을 때
@@ -54,12 +54,12 @@ sliced = [1, 2, 3], i2, nextComb = [3], nextStart = (0 + 2 + 1) = 3
 */
 
 /**
- * Generates permutations of an array.
+ * Generates all possible permutations of an array.
  *
- * @param {Array} arr - The array to generate permutations from.
- * @param {number} [permSize=arr.length] - The size of each permutation.
- * @param {Array} [curPerm=[]] - The current permutation being built.
- * @returns {Array} An array of permutations.
+ * @param {Array} arr - The input array.
+ * @param {number} permSize - The size of each permutation (default: length of array).
+ * @param {Array} curPerm - The current permutation being built (default: empty array).
+ * @return {Array} An array of all possible permutations.
  */
 export const getPermutations = (arr, permSize = arr.length, curPerm = []) => {
   if (curPerm.length === permSize) return [curPerm];
