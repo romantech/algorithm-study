@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * H-Index는 과학자의 생산성과 영향력을 나타내는 지표.
@@ -10,7 +12,7 @@
  * 과학자가 발표한 논문의 수(n)은 1 이상 1,000이하
  *
  * [예시]
- * citations : [3, 0, 6, 1, 5]
+ * citations : [3, 0, 6, 1, 5] -> 내림차순 정렬 [6, 5, 3, 1, 0]
  * 발표한 논문의 수 : 5 (ciatations.length)
  * 0회 이상 인용된 논문 5편 : 인용 횟수가 h보다 적음
  * 1회 이상 인용된 논문 4편 : 인용 횟수가 h보다 적음
@@ -20,6 +22,21 @@
  */
 
 function solution(citations) {
-  const answer = 0;
-  return answer;
+  // H-Index는 H의 최대값을 찾아야 하기 때문에 인용된 횟수로 내림차순 정렬
+  const sortedCites = citations.sort((a, b) => b - a);
+
+  return sortedCites.reduce((maxHIndex, cites, idx) => {
+    const paperCount = idx + 1;
+    const hIndex = Math.min(cites, paperCount);
+    return Math.max(maxHIndex, hIndex);
+  }, 0);
 }
+
+const cases = [
+  generateTestPair([[3, 0, 6, 1, 5]], 3),
+  generateTestPair([[1, 9, 6, 2, 7]], 3),
+];
+
+cases.forEach(({ input, output }) => {
+  console.log(solution(...input) === output);
+});
