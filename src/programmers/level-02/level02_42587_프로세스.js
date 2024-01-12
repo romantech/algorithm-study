@@ -20,21 +20,21 @@ import { generateTestPair } from '../../utils.js';
  * */
 
 function solution(priorities, location) {
-  const mapped = priorities.map((priority, index) => ({ priority, index }));
-  const descP = priorities.sort((a, b) => b - a);
+  const queue = priorities.map((priority, index) => ({ priority, index }));
+  const sortedPriorities = priorities.sort((a, b) => b - a);
 
   let seq = 0;
 
-  while (true) {
-    const cur = mapped.shift();
-    const [maxP] = descP;
+  while (queue.length > 0) {
+    const cur = queue.shift();
+    const [maxPriority] = sortedPriorities;
 
-    if (cur.priority >= maxP) {
+    if (cur.priority >= maxPriority) {
       seq++;
-      if (maxP === cur.priority) descP.shift();
+      if (maxPriority === cur.priority) sortedPriorities.shift();
       if (cur.index === location) break;
     } else {
-      mapped.push(cur);
+      queue.push(cur);
     }
   }
 
