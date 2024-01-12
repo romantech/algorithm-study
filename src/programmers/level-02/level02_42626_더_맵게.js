@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { generateTestPair } from '../../utils.js';
 
 /**
@@ -21,29 +22,116 @@ import { generateTestPair } from '../../utils.js';
  * 섞은 음식의 스코빌 지수 = 3 + (5 * 2) = 13 -> [13, 9, 10, 12]
  * 모든 음식의 스코빌 지수가 7 이상이므로 섞은 횟수 2 반환
  *
+ * 매번 음식을 섞을 때마다 전체 배열을 정렬하면 비효율적이므로,
+ * 가장 낮은 스코빌 지수를 효율적으로 찾기 위해 최소 힙 사용
+ * 최소 힙은 부모 노드가 항상 자식 노드보다 작으므로 루트 노트에서 최소 값을 빠르게 찾을 수 있다
  */
 
 class MinHeap {
-  constructor(initialValues) {
-    this.heap = initialValues ?? [];
+  constructor() {
+    this.heap = [];
+  }
+
+  // 부모 노드 인덱스 * 2 + 1
+  getLeftChildIdx = parentIdx => parentIdx * 2 + 1;
+
+  // 부모 노드 인덱스 * 2 + 1
+  getRightChildIdx = parentIdx => this.getLeftChildIdx(parentIdx) + 1;
+
+  // 부모 노드 인덱스
+  getParentIdx = idx => Math.floor((idx - 1) / 2);
+
+  hasLeftChild = idx => this.getLeftChildIdx(idx) < this.heap.length;
+
+  swap(from, to) {
+    [this.heap[from], this.heap[to]] = [this.heap[to], this.heap[from]];
+  }
+
+  // 힙 가장 마지막에 새로운 노드 추가
+  enqueue(node) {
+    if (node === undefined) return;
+
+    this.heap.push(node);
+    this.heapifyUp();
+  }
+
+  // 새로 추가한 노드를 부모 노드와 비교하여 더 작다면 위치 교환
+  // 새로 추가한 노드가 부모 노드보다 크거나 루트에 도달할 때까지 이 과정 반복
+  heapifyUp() {
+    let idx = this.heap.length - 1;
+
+    while (idx > 0) {
+      const parentIdx = this.getParentIdx(idx);
+      if (this.heap[idx] > this.heap[parentIdx]) break;
+
+      this.swap(idx, parentIdx);
+      idx = parentIdx;
+    }
+  }
+
+  // 힙의 루트 노드를 제거하고, 마지막 노드를 루트로 이동시킨다
+  // 루트로 이동한 노드를 자식 노드와 비교하여 더 작다면 위치를 바꾼다
+  // 루트로 이동한 노드가 자식 노드보다 작거나, 리프 노드에 도달할 때까지 이 과정 반복
+  dequeue() {
+    if (this.heap.length === 0) return null;
+    if (this.heap.length === 1) return this.heap.pop();
+
+    const root = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    this.heapifyDown();
+
+    return root;
+  }
+
+  heapifyDown() {
+    let idx = 0;
+
+    // 최소 힙은 왼쪽 자식부터 채워지므로 왼쪽 자식이 없다면 leaf에 도달했다고 볼 수 있다
+    while (this.hasLeftChild(idx)) {
+      const leftIdx = this.getLeftChildIdx(idx);
+      const rightIdx = this.getRightChildIdx(idx);
+
+      let smallestIdx = leftIdx;
+
+      if (this.heap[leftIdx] > this.heap[rightIdx]) smallestIdx = rightIdx;
+      if (this.heap[idx] < this.heap[smallestIdx]) break;
+
+      this.swap(idx, smallestIdx);
+      idx = smallestIdx;
+    }
+  }
+
+  get peak() {
+    return this.heap[0];
+  }
+
+  get size() {
+    return this.heap.length;
   }
 }
 
 function solution(scoville, K) {
-  // const sortByAsc = arr => arr.sort((a, b) => a - b);
-  // const checkShouldMix = () => scoville.some(s => s < K);
-  // sortByAsc(scoville);
-  // const mixer = (count = 0) => {
-  //   if (scoville[scoville.length - 1] < K) return -1;
-  //   if (!checkShouldMix()) return count;
-  //   scoville.splice(0, 2);
-  //   scoville.push(scoville[0] + scoville[1]);
-  //   sortByAsc(scoville);
-  //   return mixer(count + 1);
-  // };
-  // return mixer();
+  const heap = new MinHeap();
+  scoville.forEach(heap.enqueue.bind(heap));
+
+  let count = 0;
+
+  while (heap.peak < K && heap.size > 1) {
+    const first = heap.dequeue();
+    const second = heap.dequeue();
+
+    heap.enqueue(first + second * 2);
+    count++;
+  }
+
+  return heap.peak >= K ? count : -1;
 }
 
-const cases = [generateTestPair([[1, 2, 3, 9, 10, 12], 7], 2)];
+const cases = [
+  generateTestPair([[1, 2, 3, 9, 10, 12], 7], 2),
+  generateTestPair([[1, 2, 3], 15], -1),
+];
 
-solution(...cases[0].input);
+cases.forEach(({ input, output }) => {
+  console.log(solution(...input) === output);
+});
