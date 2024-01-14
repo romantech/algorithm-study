@@ -38,6 +38,33 @@ function solution(prices) {
   return answer;
 }
 
-const cases = [generateTestPair([[1, 2, 3, 2, 3]], [4, 3, 1, 1, 0])];
+/** 시간 복잡도 O(n) */
+function reference(prices) {
+  const len = prices.length;
+  const answer = new Array(len).fill(0);
+  const stack = []; // 떨어지지 않은 주식 가격의 인덱스를 추적할 스택
 
-console.log(solution(...cases[0].input));
+  for (let i = 0; i < len; i++) {
+    // 현재 주식 가격이 이전 주식 가격보다 떨어졌을 때
+    while (stack.length > 0 && prices[i] < prices[stack.at(-1)]) {
+      const top = stack.pop();
+      answer[top] = i - top; // 가격이 유지된 시간 저장
+    }
+
+    stack.push(i); // 현재 가격의 인덱스를 stack에 저장
+  }
+
+  // 가격이 떨어지지 않아서 스택에 남아있는 요소 처리
+  while (stack.length > 0) {
+    const top = stack.pop();
+    answer[top] = len - 1 - top;
+  }
+
+  return answer;
+}
+
+const cases = [
+  generateTestPair([[1, 2, 3, 2, 3]], [4, 3, 1, 1, 0]), // 랜덤한 가격 변동
+];
+
+console.log(reference(...cases[2].input));
