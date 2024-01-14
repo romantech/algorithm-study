@@ -38,7 +38,10 @@ function solution(prices) {
   return answer;
 }
 
-/** 시간 복잡도 O(n) */
+/**
+ * for 문에서 각 요소를 1번씩 순회하고, 최대 1회 while문 의해 처리되므로
+ * 시간 복잡도는 O(2n) -> 상수항 무시해서 O(n)
+ */
 function reference(prices) {
   const len = prices.length;
   const answer = new Array(len).fill(0); // 각 주식 가격이 떨어지지 않은 시간을 저장할 배열
