@@ -21,7 +21,24 @@ import { generateTestPair } from '../../utils.js';
 
 function solution(prices) {
   const answer = [];
+  const len = prices.length;
+
+  for (let i = 0; i < len; i += 1) {
+    let count = 0;
+
+    for (let j = i + 1; j < len; j += 1) {
+      if (prices[j] < prices[i]) {
+        count++;
+        break;
+      } else count++;
+    }
+
+    answer.push(count);
+  }
+
   return answer;
 }
 
 const cases = [generateTestPair([[1, 2, 3, 2, 3]], [4, 3, 1, 1, 0])];
+
+console.log(solution(...cases[0].input));
