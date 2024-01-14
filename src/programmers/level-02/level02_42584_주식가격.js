@@ -19,6 +19,7 @@ import { generateTestPair } from '../../utils.js';
  * -> [4, 3, 1 ,1, 0]
  */
 
+/** 시간 복잡도 O(n²) */
 function solution(prices) {
   const answer = [];
   const len = prices.length;
@@ -27,10 +28,8 @@ function solution(prices) {
     let count = 0;
 
     for (let j = i + 1; j < len; j += 1) {
-      if (prices[j] < prices[i]) {
-        count++;
-        break;
-      } else count++;
+      count++;
+      if (prices[j] < prices[i]) break;
     }
 
     answer.push(count);
