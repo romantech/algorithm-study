@@ -41,7 +41,7 @@ function solution(prices) {
 /** 시간 복잡도 O(n) */
 function reference(prices) {
   const len = prices.length;
-  const answer = new Array(len).fill(0);
+  const answer = new Array(len).fill(0); // 각 주식 가격이 떨어지지 않은 시간을 저장할 배열
   const stack = []; // 떨어지지 않은 주식 가격의 인덱스를 추적할 스택
 
   for (let i = 0; i < len; i++) {
@@ -65,6 +65,14 @@ function reference(prices) {
 
 const cases = [
   generateTestPair([[1, 2, 3, 2, 3]], [4, 3, 1, 1, 0]), // 랜덤한 가격 변동
+  generateTestPair([[3, 8, 6, 2, 5, 7]], [3, 1, 1, 2, 1, 0]), // 랜덤한 가격 변동
+  generateTestPair([[5, 4, 3, 2, 1]], [1, 1, 1, 1, 0]), // 가격이 지속적으로 하락하는 경우
+  generateTestPair([[1, 2, 3, 4, 5]], [4, 3, 2, 1, 0]), // 가격이 지속적으로 상승하는 경우
+  generateTestPair([[5, 5, 5, 5, 5]], [4, 3, 2, 1, 0]), // 모든 가격이 동일한 경우
 ];
 
-console.log(reference(...cases[2].input));
+// cases.forEach(({ input, output }) => {
+//   console.log(solution(...input).every((p, i) => p === output[i]));
+// });
+
+export { solution, reference, cases };
