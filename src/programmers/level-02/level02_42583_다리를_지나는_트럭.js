@@ -66,6 +66,34 @@ function solution(bridge_length, weight, truck_weights) {
   return elapsedTime;
 }
 
+function reference(bridge_length, weight, truck_weights) {
+  let elapsedTime = 0;
+  let totalWeightOnBridge = 0;
+  const trucksOnBridge = new Array(bridge_length).fill(0); // [0, 0]
+
+  // 대기 트럭이 없어도 다리를 건너고 있는 케이스가 있으므로 totalWeightOnBridge > 0 조건 추가
+  while (truck_weights.length > 0 || totalWeightOnBridge > 0) {
+    elapsedTime++;
+
+    // 다리를 건넌 트럭 처리
+    totalWeightOnBridge -= trucksOnBridge.shift();
+
+    // 가능시 새로운 트럭을 다리 위로 이동
+    if (
+      truck_weights.length &&
+      totalWeightOnBridge + truck_weights[0] <= weight
+    ) {
+      const nextTruckWeight = truck_weights.shift();
+      trucksOnBridge.push(nextTruckWeight);
+      totalWeightOnBridge += nextTruckWeight;
+    } else {
+      trucksOnBridge.push(0); // 다리 길이를 유지하기 위해 0 push
+    }
+  }
+
+  return elapsedTime;
+}
+
 const cases = [
   generateTestPair([2, 10, [7, 4, 5, 6]], 8), // bridge_length, weight, truck_weights, return
   generateTestPair([100, 100, [10]], 101),
