@@ -13,7 +13,6 @@ import { generateTestPair } from '../../utils.js';
  *
  * [예제]
  * clothes: [["yellow_hat", "headgear"], ["blue_sunglasses", "eyewear"], ["green_turban", "headgear"]]
- *
  * headgear: yellow_hat, green_turban
  * eyewear: blue_sunglasses
  * 1. yellow_hat + blue_sunglasses (모자, 안경 둘다 선택)
@@ -25,7 +24,7 @@ import { generateTestPair } from '../../utils.js';
  * headgear 카테고리 경우의 수: 2(아이템 개수) + 1(선택안함) = 3
  * eyewear 카테고리 경우의 수: 1(아이템 개수) + 1(선택안함) = 2
  * 모든 경우의 수 = 3 * 2 = 6
- * 최소 1개 의상을 착용해야 하므로 둘다 선택 안한 경우의 1을 빼서 6 - 1 = 5
+ * 최소 1개 의상을 착용해야 하므로 아무것도 선택하지 않은 경우의 수인 1을 빼서 6 - 1 = 5
  *
  * [참고]
  * 각 단계의 선택지가 독립적일 때 각 단계의 선택지 수를 곱해서 경우의 수를 계산할 수 있다(곱셈 원칙)
@@ -36,8 +35,14 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(clothes) {
-  const answer = 0;
-  return answer;
+  const clothesMap = clothes.reduce((acc, [, category]) => {
+    // 각 카테고리별 옷의 개수 계ㄴ. 선택하지 않은 경우를 고려해서 초기값을 1로 설정
+    return acc.set(category, (acc.get(category) ?? 1) + 1);
+  }, new Map());
+
+  // 모든 카테고리에서 옷을 선택하는 경우의 수 계산
+  // 모든 카테고리에서 아무것도 선택하지 않는 경우를 제외하기 위해 결과에서 1을 뺌
+  return [...clothesMap.values()].reduce((acc, cur) => acc * cur) - 1;
 }
 
 const cases = [
@@ -59,7 +64,7 @@ const cases = [
         ['smoky_makeup', 'face'],
       ],
     ],
-    5,
+    3,
   ),
 ];
 
