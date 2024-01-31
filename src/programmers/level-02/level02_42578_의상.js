@@ -36,7 +36,7 @@ import { generateTestPair } from '../../utils.js';
 
 function solution(clothes) {
   const clothesMap = clothes.reduce((acc, [, category]) => {
-    // 각 카테고리별 옷의 개수 계ㄴ. 선택하지 않은 경우를 고려해서 초기값을 1로 설정
+    // 각 카테고리별 옷의 개수 계산. 선택하지 않은 경우를 고려해서 초기값을 1로 설정
     return acc.set(category, (acc.get(category) ?? 1) + 1);
   }, new Map());
 
