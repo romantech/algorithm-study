@@ -16,10 +16,16 @@ import { generateTestPair } from '../../utils.js';
  *
  * headgear: yellow_hat, green_turban
  * eyewear: blue_sunglasses
- * - headgear를 선택하는 경우의 수 = 2
- * - eyewear를 선택하는 경우의 = 1
- * - headgear + eyewear 조합으로 선택하는 경우의 수 = 2 * 1 = 2
- * - 전체 경우의 수 = 2 + 1 + 2 = 5
+ * 1. yellow_hat + blue_sunglasses (모자, 안경 둘다 선택)
+ * 2. yellow_hat + 선택하지 않음 (모자만 선택)
+ * 3. green_turban + blue_sunglasses (모자, 안경 둘다 선택)
+ * 4. green_turban + 선택하지 않음 (모자만 선택)
+ * 5. 선택하지 않음 + blue_sunglasses (안경만 선택)
+ *
+ * headgear 카테고리 경우의 수: 2(아이템 개수) + 1(선택안함) = 3
+ * eyewear 카테고리 경우의 수: 1(아이템 개수) + 1(선택안함) = 2
+ * 모든 경우의 수 = 3 * 2 = 6
+ * 최소 1개 의상을 착용해야 하므로 둘다 선택 안한 경우의 1을 빼서 6 - 1 = 5
  *
  * [참고]
  * 각 단계의 선택지가 독립적일 때 각 단계의 선택지 수를 곱해서 경우의 수를 계산할 수 있다(곱셈 원칙)
