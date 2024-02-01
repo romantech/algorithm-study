@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { generateTestPair } from '../../utils.js';
 
 /**
@@ -20,8 +21,18 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(phone_book) {
-  const answer = true;
-  return answer;
+  phone_book.sort(); // 사전순으로 정렬 (알파벳, 숫자 등의 순서로 정렬)
+
+  const hasPrefix = phone_book.some((n, i) => {
+    // 전화번호를 사전순으로 정렬하면 접두어 관계에 있는 문자열들이 서로 가까운 위치에 놓이게 됨
+    // 예를들어 A 번호(12)가 B 번호(123)의 접두어인 경우, 정렬후엔 A, B 순서로 위치하게 됨
+    // ["9", "97", "123", "1234", "12"] -> ["12", "123", "1234", "9", "97"]
+    // 이런 원리로 전체 목록을 순회할 필요 없이 인접한 숫자만 검사해서 접두어 관계를 효율적으로 파악 가능
+    if (i === phone_book.length - 1) return false;
+    return phone_book[i + 1].startsWith(n);
+  });
+
+  return !hasPrefix;
 }
 
 const cases = [
@@ -29,3 +40,5 @@ const cases = [
   generateTestPair([['123', '456', '789']], true),
   generateTestPair([['12', '123', '1235', '567', '88']], false),
 ];
+
+console.log(solution(...cases[2].input));
