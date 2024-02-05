@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * 1. 숫자를 0부터 시작해서 차례대로 말한다 (첫번째 사람 0, 두번째 사람 1, ..., 열번째 사람 9)
@@ -33,3 +35,9 @@ function solution(n, t, m, p) {
   const answer = '';
   return answer;
 }
+
+const cases = [
+  generateTestPair([2, 5, 2, 1], '0111'),
+  generateTestPair([16, 16, 2, 1], '02468ACE11111111'),
+  generateTestPair([16, 16, 2, 2], '13579BDF01234567'),
+];
