@@ -32,12 +32,34 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(n, t, m, p) {
-  const answer = '';
-  return answer;
+  const numList = [];
+  const result = [];
+  const digits = [];
+
+  let num = 0;
+  let idx = p - 1;
+
+  while (result.length < t) {
+    if (digits.length === 0) {
+      digits.push(...num.toString(n).toUpperCase());
+      num++;
+    }
+
+    numList.push(digits.shift());
+
+    if (idx <= numList.length - 1) {
+      result.push(numList[idx]);
+      idx += m;
+    }
+  }
+
+  return result.join('');
 }
 
 const cases = [
-  generateTestPair([2, 5, 2, 1], '0111'),
+  generateTestPair([2, 4, 2, 1], '0111'),
   generateTestPair([16, 16, 2, 1], '02468ACE11111111'),
   generateTestPair([16, 16, 2, 2], '13579BDF01234567'),
 ];
+
+console.log(solution(...cases[1].input));
