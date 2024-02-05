@@ -32,12 +32,11 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(n, t, m, p) {
-  const numList = [];
   const result = [];
   const digits = [];
 
   let num = 0;
-  let idx = p - 1;
+  let idx = 0;
 
   while (result.length < t) {
     if (digits.length === 0) {
@@ -45,12 +44,18 @@ function solution(n, t, m, p) {
       num++;
     }
 
-    numList.push(digits.shift());
+    const digit = digits.shift(); // idx와 맞추기 위해 매 차례마다 shift
 
-    if (idx <= numList.length - 1) {
-      result.push(numList[idx]);
-      idx += m;
-    }
+    // 0 mod 2 = 0 (피제수 idx % 제수 m)
+    // 1 mod 2 = 1
+    // 2 mod 2 = 0
+    // 3 mod 2 = 1
+    // 4 mod 2 = 0
+    // ...
+    // p = 1은 0번 인덱스를 가리키므로 1을 빼줘서 인덱스를 맞춘다
+    // 나머지 연산자의 결과는 항상 제수(위 예시에서 2) 미만이 된다
+    if (idx % m === p - 1) result.push(digit);
+    idx++;
   }
 
   return result.join('');
