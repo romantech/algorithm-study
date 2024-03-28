@@ -1,8 +1,7 @@
 // 문제4. 더하고 빼기
 // 각 자리의 숫자를 더한 값을 원래 숫자에서 빼고, 숫자에 해당하는 과일코드가 나올때까지 계산하는 함수
 
-const subtractTheSum = num =>
-  [...String(num)].reduce((acc, digit) => acc - digit, num);
+const subtractTheSum = num => [...String(num)].reduce((acc, digit) => acc - digit, num);
 // [...'325'] -> ['3', '2', '5']
 // 325 : 325 - '3' - '2' - '5' = 315
 // 315 : 315 - '3' - '1' - '5' = 306
@@ -143,8 +142,6 @@ const inputFruitMappingString = `1-kiwi
 98-pineapple
 99-apple
 100-pineapple`;
-const entries = inputFruitMappingString
-  .split('\n')
-  .map(line => line.split('-'));
+const entries = inputFruitMappingString.split('\n').map(line => line.split('-'));
 const baseFruitMapping = Object.fromEntries(entries);
 console.log(baseFruitMapping);

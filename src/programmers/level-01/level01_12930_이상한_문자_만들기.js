@@ -8,9 +8,7 @@ function solution(s) {
     .map(word =>
       word
         .split('')
-        .map((str, idx) =>
-          idx % 2 === 0 ? str.toUpperCase() : str.toLowerCase(),
-        )
+        .map((str, idx) => (idx % 2 === 0 ? str.toUpperCase() : str.toLowerCase()))
         .join(''),
     )
     .join(' ');

@@ -55,10 +55,7 @@ function solution(numbers, hand) {
       if (leftDistance === rightDistance) {
         setHand(hand, numbers[i]);
       } else {
-        const handType =
-          Math.min(leftDistance, rightDistance) === leftDistance
-            ? 'left'
-            : 'right';
+        const handType = Math.min(leftDistance, rightDistance) === leftDistance ? 'left' : 'right';
         setHand(handType, numbers[i]);
       }
 

@@ -52,20 +52,7 @@ function solution2(n, words) {
 
 const cases = [
   {
-    input: [
-      3,
-      [
-        'tank',
-        'kick',
-        'know',
-        'wheel',
-        'land',
-        'dream',
-        'mother',
-        'robot',
-        'tank',
-      ],
-    ],
+    input: [3, ['tank', 'kick', 'know', 'wheel', 'land', 'dream', 'mother', 'robot', 'tank']],
     output: [3, 3],
   },
   {

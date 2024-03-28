@@ -15,9 +15,7 @@ function solution(n, m) {
   });
   const minIdx = Math.min(n, m) === n ? 0 : 1;
   const maxIdx = minIdx === 0 ? 1 : 0;
-  const gcd = factors[minIdx].reduce((acc, cur) =>
-    factors[maxIdx].includes(cur) ? cur : acc,
-  );
+  const gcd = factors[minIdx].reduce((acc, cur) => (factors[maxIdx].includes(cur) ? cur : acc));
   return [gcd, (n * m) / gcd];
 }
 

@@ -45,9 +45,7 @@ const solution2 = (s, skip, index) => {
 
   // 문자 그룹을 사용해서 skip은 제외 ex) 'abcd'.match(/[^ac]/g) -> 'b', 'd']
   // ['a', 'c', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z'] (22)
-  const matched = 'abcdefghijklmnopqrstuvwxyz'.match(
-    new RegExp(`[^${skip}]`, 'g'),
-  );
+  const matched = 'abcdefghijklmnopqrstuvwxyz'.match(new RegExp(`[^${skip}]`, 'g'));
 
   for (const c of s) {
     const newIdx = matched.indexOf(c) + index;

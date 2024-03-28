@@ -79,10 +79,7 @@ function reference(bridge_length, weight, truck_weights) {
     totalWeightOnBridge -= trucksOnBridge.shift();
 
     // 가능시 새로운 트럭을 다리 위로 이동
-    if (
-      truck_weights.length &&
-      totalWeightOnBridge + truck_weights[0] <= weight
-    ) {
+    if (truck_weights.length && totalWeightOnBridge + truck_weights[0] <= weight) {
       const nextTruckWeight = truck_weights.shift();
       trucksOnBridge.push(nextTruckWeight);
       totalWeightOnBridge += nextTruckWeight;
