@@ -63,36 +63,12 @@ const cases = [
   generateTestPair(
     [
       3, // cacheSize
-      [
-        'Jeju',
-        'Pangyo',
-        'Seoul',
-        'NewYork',
-        'LA',
-        'Jeju',
-        'Pangyo',
-        'Seoul',
-        'NewYork',
-        'LA',
-      ], // cities
+      ['Jeju', 'Pangyo', 'Seoul', 'NewYork', 'LA', 'Jeju', 'Pangyo', 'Seoul', 'NewYork', 'LA'], // cities
     ],
     50, // 실행시간
   ),
   generateTestPair(
-    [
-      3,
-      [
-        'Jeju',
-        'Pangyo',
-        'Seoul',
-        'Jeju',
-        'Pangyo',
-        'Seoul',
-        'Jeju',
-        'Pangyo',
-        'Seoul',
-      ],
-    ],
+    [3, ['Jeju', 'Pangyo', 'Seoul', 'Jeju', 'Pangyo', 'Seoul', 'Jeju', 'Pangyo', 'Seoul']],
     21,
   ),
   generateTestPair(

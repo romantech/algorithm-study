@@ -2,11 +2,11 @@
 // * 문제 설명
 // board 배열은 2차원 배열 크기로 5*5 이상 30*30 이하
 // board 각 칸에는 0 이상 100이하 정수
-  // 0은 빈칸을 나타냄
-  // 1~100의 각 숫자는 다른 인형 모양을 의미하며, 숫자 같으면 인형 모양도 같음
+// 0은 빈칸을 나타냄
+// 1~100의 각 숫자는 다른 인형 모양을 의미하며, 숫자 같으면 인형 모양도 같음
 // moves 배열 크기는 1이상 1000이하
 // moves 배열 각 원소들의 값은 1이상, board 배열의 가로 크기 이하인 자연수
-// 바구니 배열의 길이 제한은 없으며 stack 형태로 쌓임. 
+// 바구니 배열의 길이 제한은 없으며 stack 형태로 쌓임.
 // 바구니에 쌓인 인형중 연속적으로 같은 숫자(인형)이면 사라지고 count + 2
 /* eslint-enable */
 
@@ -55,15 +55,12 @@ function solution(board, moves) {
 // [3, 4], [5, 2, 2], [1, 4, 5, 1], [3, 4], [1, 2, 1, 3] 이런 모양이 된다
 // moves가 1이면 (1 - 1)번 컬럼인 [3, 4], moves가 2면 (2 -1)번 컬럼 배열에 접근한 후
 // 해당 배열의 마지막 요소 pop
-  // pop한 요소 숫자와 basket 배열의 마지막 요소가 같지 않으면, pop한 숫자는 basket 배열에 push
-  // 같다면 basket 배열의 마지막 요소를 pop하고
-  // result + 2
+// pop한 요소 숫자와 basket 배열의 마지막 요소가 같지 않으면, pop한 숫자는 basket 배열에 push
+// 같다면 basket 배열의 마지막 요소를 pop하고
+// result + 2
 /* eslint-enable */
 const transpose = matrix =>
-  matrix.reduce(
-    (result, row) => row.map((_, i) => [...(result[i] || []), row[i]]),
-    [],
-  );
+  matrix.reduce((result, row) => row.map((_, i) => [...(result[i] || []), row[i]]), []);
 
 /* transpose 함수를 거친 후 배열
   [
@@ -77,9 +74,7 @@ const transpose = matrix =>
 
 /* eslint-disable no-continue */
 const solution2 = (board, moves) => {
-  const stacks = transpose(board).map(row =>
-    row.reverse().filter(el => el !== 0),
-  );
+  const stacks = transpose(board).map(row => row.reverse().filter(el => el !== 0));
 
   /* stacks 배열
   [

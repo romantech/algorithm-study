@@ -26,14 +26,7 @@ function solution(maps) {
       const nx = x + dx;
       const ny = y + dy;
 
-      if (
-        nx >= 0 &&
-        ny >= 0 &&
-        nx < rows &&
-        ny < cols &&
-        !visited[nx][ny] &&
-        maps[nx][ny] !== 0
-      ) {
+      if (nx >= 0 && ny >= 0 && nx < rows && ny < cols && !visited[nx][ny] && maps[nx][ny] !== 0) {
         visited[nx][ny] = true;
         queue.push([nx, ny, distance + 1]);
       }

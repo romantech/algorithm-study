@@ -3,10 +3,7 @@
 
 function solution1(sizes) {
   // 최소 단위 구하기
-  const maxNum = sizes.reduce(
-    (acc, [a, b]) => Math.max(acc, Math.max(a, b)),
-    0,
-  );
+  const maxNum = sizes.reduce((acc, [a, b]) => Math.max(acc, Math.max(a, b)), 0);
   const result = [maxNum, 0];
 
   sizes.forEach(([s1, s2]) => {

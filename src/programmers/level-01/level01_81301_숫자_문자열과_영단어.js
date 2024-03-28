@@ -33,9 +33,7 @@ function solution(s) {
       answer += numWords[matchedIdx][0];
     } else {
       const step1 = numWords.filter(
-        el =>
-          el[1][0] === s[i] &&
-          el[1][el[1].length - 1] === s[i + el[1].length - 1],
+        el => el[1][0] === s[i] && el[1][el[1].length - 1] === s[i + el[1].length - 1],
       );
 
       if (step1.length) {
@@ -54,18 +52,7 @@ solution(s1);
 
 // * 레퍼런스
 function solution2(s) {
-  const numbers = [
-    'zero',
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'six',
-    'seven',
-    'eight',
-    'nine',
-  ];
+  const numbers = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
   let answer = s;
 
   for (let i = 0; i < numbers.length; i++) {

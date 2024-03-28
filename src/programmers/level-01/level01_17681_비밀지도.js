@@ -14,11 +14,7 @@ function solution1(n, arr1, arr2) {
   return map1.map((el, i1) =>
     el
       .split('')
-      .reduce(
-        (acc, cur, i2) =>
-          cur === '1' || map2[i1][i2] === '1' ? acc + '#' : acc + ' ',
-        '',
-      ),
+      .reduce((acc, cur, i2) => (cur === '1' || map2[i1][i2] === '1' ? acc + '#' : acc + ' '), ''),
   );
 }
 
@@ -53,9 +49,7 @@ function solution2(n, arr1, arr2) {
   return arr1.map((v, i) =>
     // +a는 문자열을 숫자로 변경해줌. +'0' -> 0
     // 정규식에서 | 교체구문은 OR 연산자와 동일. 현재 문자열이 1이나 0이면 replace 진행
-    addZero(n, (v | arr2[i]).toString(2)).replace(/1|0/g, a =>
-      +a ? '#' : ' ',
-    ),
+    addZero(n, (v | arr2[i]).toString(2)).replace(/1|0/g, a => (+a ? '#' : ' ')),
   );
 }
 

@@ -32,10 +32,7 @@ function solution(citations) {
   }, 0);
 }
 
-const cases = [
-  generateTestPair([[3, 0, 6, 1, 5]], 3),
-  generateTestPair([[1, 9, 6, 2, 7]], 3),
-];
+const cases = [generateTestPair([[3, 0, 6, 1, 5]], 3), generateTestPair([[1, 9, 6, 2, 7]], 3)];
 
 cases.forEach(({ input, output }) => {
   console.log(solution(...input) === output);

@@ -25,13 +25,7 @@ const cases = [
     expectedResult: [0, 1, 3, 4],
   },
   {
-    input: [
-      '..........',
-      '.....#....',
-      '......##..',
-      '...##.....',
-      '....#.....',
-    ],
+    input: ['..........', '.....#....', '......##..', '...##.....', '....#.....'],
     expectedResult: [1, 3, 5, 8],
   },
   {
@@ -92,12 +86,7 @@ function solution2(wallpaper) {
       }
     });
   });
-  return [
-    Math.min(...left),
-    Math.min(...top),
-    Math.max(...right),
-    Math.max(...bottom),
-  ];
+  return [Math.min(...left), Math.min(...top), Math.max(...right), Math.max(...bottom)];
 }
 
 cases.forEach(({ input, expectedResult }, i) =>

@@ -23,8 +23,6 @@ testCase7.forEach(({ input, expectedResult }) =>
   console.log('문제7', {
     input,
     output: findFriends(input),
-    passed: findFriends(input).every(
-      (name, idx) => name === expectedResult[idx],
-    ),
+    passed: findFriends(input).every((name, idx) => name === expectedResult[idx]),
   }),
 );

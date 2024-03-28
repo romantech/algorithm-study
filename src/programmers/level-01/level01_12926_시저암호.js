@@ -8,13 +8,8 @@ function solution1(s, n) {
     if (cur === ' ') return acc.concat(' ');
     const curIdx = a.indexOf(cur.toLowerCase());
     const isLowerCase = a[curIdx] === cur;
-    const encodedStr =
-      curIdx + n < a.length
-        ? a[curIdx + n]
-        : a[Math.abs(curIdx + n - a.length)];
-    return acc.concat(
-      isLowerCase ? encodedStr.toLowerCase() : encodedStr.toUpperCase(),
-    );
+    const encodedStr = curIdx + n < a.length ? a[curIdx + n] : a[Math.abs(curIdx + n - a.length)];
+    return acc.concat(isLowerCase ? encodedStr.toLowerCase() : encodedStr.toUpperCase());
   }, '');
 }
 

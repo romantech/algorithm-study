@@ -3,10 +3,7 @@
 // signs를 적용한 숫자 합 리턴
 
 function solution(absolutes, signs) {
-  return absolutes.reduce(
-    (acc, cur, idx) => acc + Number(`${signs[idx] ? '+' : '-'}${cur}`),
-    0,
-  );
+  return absolutes.reduce((acc, cur, idx) => acc + Number(`${signs[idx] ? '+' : '-'}${cur}`), 0);
 }
 
 solution([4, 7, 12], [true, false, true]); // 9

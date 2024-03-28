@@ -25,9 +25,7 @@ import { generateTestPair } from '../../utils.js';
 // [3, 7, 9]
 
 function solution(progresses, speeds) {
-  const daysToComplete = progresses.map((p, i) =>
-    Math.ceil((100 - p) / speeds[i]),
-  );
+  const daysToComplete = progresses.map((p, i) => Math.ceil((100 - p) / speeds[i]));
 
   let last = daysToComplete[0];
   const result = [1];

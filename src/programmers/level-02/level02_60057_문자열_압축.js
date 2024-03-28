@@ -93,8 +93,7 @@ const compress = (s, n) => {
 // 'ded' !== 'e' -> [make(['2abc', 'ded', 1])] -> ['2abcded', 'e', 1] -> 반환
 
 // n 만큼 문자열 자르는 함수
-const chunk = (s, n) =>
-  s.length <= n ? [s] : [s.slice(0, n), ...chunk(s.slice(n), n)];
+const chunk = (s, n) => (s.length <= n ? [s] : [s.slice(0, n), ...chunk(s.slice(n), n)]);
 
 // 'abcabcdede', 3
 // -> ['abc', ...chunk('abcdede', 3)] -> ['abc', 'abc', 'ded', 'e']

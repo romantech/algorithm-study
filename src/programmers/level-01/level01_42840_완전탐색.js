@@ -28,10 +28,7 @@ function solution(answers) {
   });
 
   const maxCount = Math.max(...person.map(el => el.count));
-  return person.reduce(
-    (acc, cur, idx) => (cur.count === maxCount ? acc.concat(idx + 1) : acc),
-    [],
-  );
+  return person.reduce((acc, cur, idx) => (cur.count === maxCount ? acc.concat(idx + 1) : acc), []);
 }
 
 solution([1, 3, 2, 4, 2, 2, 5, 7, 1]); /* ? */ // return [1, 2, 3]

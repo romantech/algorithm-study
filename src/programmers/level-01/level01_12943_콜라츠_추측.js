@@ -44,9 +44,7 @@ testCase.forEach(({ input, expectedResult }) =>
 function solution2(num, count = 0) {
   if (count > 500) return -1;
 
-  return num === 1
-    ? count
-    : solution2(num % 2 === 0 ? num / 2 : num * 3 + 1, ++count);
+  return num === 1 ? count : solution2(num % 2 === 0 ? num / 2 : num * 3 + 1, ++count);
 }
 
 // 레퍼런스2 (while 루프 활용)
