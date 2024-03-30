@@ -10,4 +10,12 @@ export default {
   transform: {
     '\\.[jt]sx?$': 'babel-jest',
   },
+
+  // Jest가 감지할 테스트 파일 지정.
+  // Jest는 기본적으로 tests 폴더에 *.test.js, *.spec.js 접미사가 붙은 것을 테스트 파일로 인식함
+  // 아래 설정을 통해 src 폴더에 있는 모든 js 파일로 인식하도록 변경. (rootDir은 jest.config가 위치한 곳)
+  testMatch: ['<rootDir>/src/**/*.js'],
+
+  // 테스트에서 제외할 파일 패턴
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/build/'],
 };
