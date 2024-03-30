@@ -43,9 +43,10 @@ import { generateTestPair } from '../../utils.js';
 
 const getInitialDict = () => {
   const startChar = 'A'.codePointAt();
+  const alphabetLength = 26;
   const dict = new Map();
 
-  for (let i = 0; i < 26; i += 1) {
+  for (let i = 0; i < alphabetLength; i += 1) {
     const char = String.fromCodePoint(startChar + i);
     dict.set(char, i + 1);
   }
@@ -76,6 +77,38 @@ export function solution(msg) {
 
   return result;
 }
+
+export const reference = msg => {
+  const dict = getInitialDict();
+
+  const result = [];
+  let i = 0;
+
+  while (i < msg.length) {
+    let currentString = msg[i];
+    let nextIndex = i + 1;
+
+    // Find the longest string in the dictionary
+    while (nextIndex < msg.length && dict.has(currentString + msg[nextIndex])) {
+      currentString += msg[nextIndex];
+      nextIndex++;
+    }
+
+    // Add current string's index to result
+    result.push(dict.get(currentString));
+
+    // If next character exists, add new string to dictionary
+    if (nextIndex < msg.length) {
+      const newString = currentString + msg[nextIndex];
+      dict.set(newString, dict.size + 1);
+    }
+
+    // Move to the next character after the current string
+    i = nextIndex;
+  }
+
+  return result;
+};
 
 export const cases = [
   generateTestPair(['KAKAO'], [11, 1, 27, 15]),
