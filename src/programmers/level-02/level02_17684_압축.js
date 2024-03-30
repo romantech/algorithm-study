@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * 영문 대문자만 처리하는 LZW 압축 구현
@@ -39,7 +41,16 @@
  * msg: 영문 대문자로만 이뤄진 문자열 msg, 1 <= msg <= 1000
  */
 
-function solution(msg) {
+export function solution(msg) {
   const answer = [];
   return answer;
 }
+
+export const cases = [
+  generateTestPair(['KAKAO'], [11, 1, 27, 15]),
+  generateTestPair(
+    ['TOBEORNOTTOBEORTOBEORNOT'],
+    [20, 15, 2, 5, 15, 18, 14, 15, 20, 27, 29, 31, 36, 30, 32, 34],
+  ),
+  generateTestPair(['ABABABABABABABAB'], [1, 2, 27, 29, 28, 31, 30]),
+];
