@@ -41,9 +41,40 @@ import { generateTestPair } from '../../utils.js';
  * msg: 영문 대문자로만 이뤄진 문자열 msg, 1 <= msg <= 1000
  */
 
+const getInitialDict = () => {
+  const startChar = 'A'.codePointAt();
+  const dict = new Map();
+
+  for (let i = 0; i < 26; i += 1) {
+    const char = String.fromCodePoint(startChar + i);
+    dict.set(char, i + 1);
+  }
+
+  return dict;
+};
+
 export function solution(msg) {
-  const answer = [];
-  return answer;
+  const dict = getInitialDict();
+  const result = [];
+
+  for (let i = 0; i < msg.length; i++) {
+    let w = msg[i];
+    let c = msg[i + 1];
+
+    for (let j = i + 1; j < msg.length; j++) {
+      const cur = msg[j];
+      if (!dict.has(w + cur)) break;
+
+      w += cur;
+      i = j; // 바깥 반복문에서 i + 1 되므로
+      c = msg[j + 1];
+    }
+
+    if (c) dict.set(w + c, dict.size + 1);
+    result.push(dict.get(w));
+  }
+
+  return result;
 }
 
 export const cases = [
