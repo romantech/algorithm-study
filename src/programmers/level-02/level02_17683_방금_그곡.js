@@ -37,48 +37,51 @@ import { generateTestPair } from '../../utils.js';
  * 두 번째 곡: ABCDE (5분) -> (O)
  */
 
-const matcher = { 'C#': 1, 'D#': 2, 'F#': 3, 'G#': 4, 'A#': 5, 'B#': 6 };
+const noteToNumberMap = { 'C#': 1, 'D#': 2, 'F#': 3, 'G#': 4, 'A#': 5, 'B#': 6 };
 
 const convertTimeToMinutes = timeString => {
   const [hours, minutes] = timeString.split(':').map(Number);
-  const totalMinutes = hours * 60 + minutes;
-  return totalMinutes;
+  return hours * 60 + minutes;
 };
 
-const getTotalMin = (startTime, endTime) => {
+const calculateDurationInMinutes = (startTime, endTime) => {
   return Math.abs(convertTimeToMinutes(startTime) - convertTimeToMinutes(endTime));
 };
 
-const replaceMusicNotes = notesString => {
-  const pattern = /[A-G]#?/g; // A~G 문자 혹은 A~G 문자 뒤에 #가 있는 패턴과 일치
-  return notesString.replace(pattern, match => matcher[match] ?? match);
+const convertNotesToNumbers = notesString => {
+  const pattern = /[A-G]#?/g;
+  return notesString.replace(pattern, match => noteToNumberMap[match] ?? match);
 };
 
-const getPlayedNotes = (totalMin, sequence) => {
+const generatePlayedNoteSequence = (duration, sequence) => {
   let playedNotes = '';
-  for (let i = 0; i < totalMin; i += 1) {
+  for (let i = 0; i < duration; i++) {
     playedNotes += sequence[i % sequence.length];
   }
   return playedNotes;
 };
 
-export function solution(m, musicinfos) {
-  const numOfNotes = replaceMusicNotes(m);
-  const reg = new RegExp(numOfNotes, 'g');
+export function solution(melody, musicInfoArray) {
+  const melodyAsNumbers = convertNotesToNumbers(melody);
+  const melodyPattern = new RegExp(melodyAsNumbers, 'g');
 
-  return musicinfos.reduce(
-    (acc, cur) => {
-      const [start, end, subject, sequence] = cur.split(',');
+  const result = musicInfoArray.reduce(
+    (acc, musicInfo) => {
+      const [start, end, title, sequence] = musicInfo.split(',');
 
-      const totalMin = getTotalMin(start, end);
-      const convertedNotes = replaceMusicNotes(sequence);
-      const playedNotes = getPlayedNotes(totalMin, convertedNotes);
+      const duration = calculateDurationInMinutes(start, end);
+      const sequenceAsNumbers = convertNotesToNumbers(sequence);
+      const playedNoteSequence = generatePlayedNoteSequence(duration, sequenceAsNumbers);
 
-      if (playedNotes.match(reg) && totalMin > acc.totalMin) return { totalMin, subject };
+      if (playedNoteSequence.match(melodyPattern) && duration > acc.duration) {
+        return { duration, title };
+      }
       return acc;
     },
-    { totalMin: 0, subject: '(None)' },
-  ).subject;
+    { duration: 0, title: '(None)' },
+  );
+
+  return result.title;
 }
 
 export const cases = [
