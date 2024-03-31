@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * 기억한 멜로디를 재생 시간과 제공된 악보를 직접 비교하면서 찾으려는 음악의 제목 반환
@@ -19,7 +21,8 @@
  * [예시 - 1]
  * m: "ABCDEFG"
  * musicinfos: ["12:00,12:14,HELLO,CDEFGAB", "13:00,13:05,WORLD,ABCDEF"]
- * 총 14분 재생됐으므로 CDEFGABCDEFGAB 재생됐고, 기억한 멜로디 ABCDEFG가 들어있어서 HELLO 반환
+ * 첫 번째 곡: CDEFGABCDEFGAB (14분) -> ABCDEFG가 들어있어서 (O)
+ * 두 번째 곡: ABCDE(5분)
  *
  * [예시 - 2]
  * m: "CC#BCC#BCC#BCC#B"
@@ -31,10 +34,62 @@
  * m: "ABC"
  * musicinfos: ["12:00,12:14,HELLO,C#DEFGAB", "13:00,13:05,WORLD,ABCDEF"]
  * 첫 번째 곡: C#DEFGABC#DEFGAB (14분)
- * 두 번째 곡: ABCDE (5분)
+ * 두 번째 곡: ABCDE (5분) -> (O)
  */
 
-function solution(m, musicinfos) {
-  const answer = '';
-  return answer;
+const matcher = { 'C#': 1, 'D#': 2, 'F#': 3, 'G#': 4, 'A#': 5, 'B#': 6 };
+
+const convertTimeToMinutes = timeString => {
+  const [hours, minutes] = timeString.split(':').map(Number);
+  const totalMinutes = hours * 60 + minutes;
+  return totalMinutes;
+};
+
+const getTotalMin = (startTime, endTime) => {
+  return Math.abs(convertTimeToMinutes(startTime) - convertTimeToMinutes(endTime));
+};
+
+const replaceMusicNotes = notesString => {
+  const pattern = /[A-G]#?/g; // A~G 문자 혹은 A~G 문자 뒤에 #가 있는 패턴과 일치
+  return notesString.replace(pattern, match => matcher[match] ?? match);
+};
+
+const getPlayedNotes = (totalMin, sequence) => {
+  let playedNotes = '';
+  for (let i = 0; i < totalMin; i += 1) {
+    playedNotes += sequence[i % sequence.length];
+  }
+  return playedNotes;
+};
+
+export function solution(m, musicinfos) {
+  const numOfNotes = replaceMusicNotes(m);
+  const reg = new RegExp(numOfNotes, 'g');
+
+  return musicinfos.reduce(
+    (acc, cur) => {
+      const [start, end, subject, sequence] = cur.split(',');
+
+      const totalMin = getTotalMin(start, end);
+      const convertedNotes = replaceMusicNotes(sequence);
+      const playedNotes = getPlayedNotes(totalMin, convertedNotes);
+
+      if (playedNotes.match(reg) && totalMin > acc.totalMin) return { totalMin, subject };
+      return acc;
+    },
+    { totalMin: 0, subject: '(None)' },
+  ).subject;
 }
+
+export const cases = [
+  generateTestPair(['ABCDEFG', ['12:00,12:14,HELLO,CDEFGAB', '13:00,13:05,WORLD,ABCDEF']], 'HELLO'),
+  generateTestPair(
+    ['CC#BCC#BCC#BCC#B', ['03:00,03:30,FOO,CC#B', '04:00,04:08,BAR,CC#BCC#BCC#B']],
+    'FOO',
+  ),
+  generateTestPair(['ABC', ['12:00,12:14,HELLO,C#DEFGAB', '13:00,13:05,WORLD,ABCDEF']], 'WORLD'),
+  generateTestPair(['A', ['12:00,12:01,Sing,A', '12:00,12:01,Song,A']], 'Sing'),
+  generateTestPair(['A', ['12:00,12:01,Sing,A', '12:00,12:02,Song,A']], 'Song'),
+  generateTestPair(['A', ['12:00,12:01,Sing,A', '12:00,13:00,Song,A']], 'Song'),
+  generateTestPair(['A', ['12:00,12:01,Song,BA']], '(None)'),
+];
