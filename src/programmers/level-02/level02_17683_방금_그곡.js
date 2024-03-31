@@ -89,7 +89,10 @@ export const cases = [
   ),
   generateTestPair(['ABC', ['12:00,12:14,HELLO,C#DEFGAB', '13:00,13:05,WORLD,ABCDEF']], 'WORLD'),
   generateTestPair(['A', ['12:00,12:01,Sing,A', '12:00,12:01,Song,A']], 'Sing'),
+  // 일치하는 음이 여러개이고 재생 시간도 같으면 먼저 입력된 음악 제목 반환
   generateTestPair(['A', ['12:00,12:01,Sing,A', '12:00,12:02,Song,A']], 'Song'),
+  // 일치하는 음이 여러 개일 때 재생 시간이 가장 긴 음악 제목 반환
   generateTestPair(['A', ['12:00,12:01,Sing,A', '12:00,13:00,Song,A']], 'Song'),
+  // 일치하는 음악이 없을 때
   generateTestPair(['A', ['12:00,12:01,Song,BA']], '(None)'),
 ];
