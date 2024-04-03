@@ -37,7 +37,7 @@ import { generateTestPair } from '../../utils.js';
  * 유저 아이디 닉네임 길이 1 이상 10이하
  */
 
-function solution(record) {
+export function solution(record) {
   const latestNicks = {};
   const actionMessage = { Enter: '님이 들어왔습니다.', Leave: '님이 나갔습니다.' };
   const result = [];
@@ -52,7 +52,7 @@ function solution(record) {
   return result.map(({ id, message }) => `${latestNicks[id]}${message}`);
 }
 
-const cases = [
+export const cases = [
   generateTestPair(
     [
       [
@@ -71,8 +71,6 @@ const cases = [
     ],
   ),
 ];
-
-console.log(solution(...cases[0].input));
 
 /**
  * "Muzi(uid1234)님이 들어왔습니다"
