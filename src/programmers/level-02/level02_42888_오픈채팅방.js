@@ -38,8 +38,18 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(record) {
-  const answer = [];
-  return answer;
+  const latestNicks = {};
+  const actionMessage = { Enter: '님이 들어왔습니다.', Leave: '님이 나갔습니다.' };
+  const result = [];
+
+  record.forEach(log => {
+    const [action, id, nick] = log.split(' ');
+
+    if (nick) latestNicks[id] = nick;
+    if (action !== 'Change') result.push({ id, message: actionMessage[action] });
+  });
+
+  return result.map(({ id, message }) => `${latestNicks[id]}${message}`);
 }
 
 const cases = [
@@ -61,6 +71,8 @@ const cases = [
     ],
   ),
 ];
+
+console.log(solution(...cases[0].input));
 
 /**
  * "Muzi(uid1234)님이 들어왔습니다"
