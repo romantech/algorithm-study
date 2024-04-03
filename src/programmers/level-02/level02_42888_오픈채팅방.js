@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * 채팅방에 들어오고 나가거나, 닉네임을 변경한 기록이 담긴 배열 record가 주어질 때
@@ -39,3 +41,44 @@ function solution(record) {
   const answer = [];
   return answer;
 }
+
+const cases = [
+  generateTestPair(
+    [
+      [
+        'Enter uid1234 Muzi',
+        'Enter uid4567 Prodo',
+        'Leave uid1234',
+        'Enter uid1234 Prodo',
+        'Change uid4567 Ryan',
+      ],
+    ],
+    [
+      'Prodo님이 들어왔습니다.',
+      'Ryan님이 들어왔습니다.',
+      'Prodo님이 나갔습니다.',
+      'Prodo님이 들어왔습니다.',
+    ],
+  ),
+];
+
+/**
+ * "Muzi(uid1234)님이 들어왔습니다"
+ *
+ * "Muzi(uid1234)님이 들어왔습니다",
+ * "Prodo(uid4567)님이 들어왔습니다"
+ *
+ * "Muzi(uid1234)님이 들어왔습니다",
+ * "Prodo(uid4567)님이 들어왔습니다",
+ * "Muzi(uid1234)님이 나갔습니다"
+ *
+ * "Prodo(uid1234)님이 들어왔습니다",
+ * "Prodo(uid4567)님이 들어왔습니다",
+ * "Prodo(uid1234)님이 나갔습니다"
+ * "Prodo(uid1234)님이 들어왔습니다",
+ *
+ * "Prodo(uid1234)님이 들어왔습니다",
+ * "Ryan(uid4567)님이 들어왔습니다",
+ * "Prodo(uid1234)님이 나갔습니다"
+ * "Prodo(uid1234)님이 들어왔습니다",
+ */
