@@ -23,7 +23,7 @@ import { generateTestPair } from '../../utils.js';
  * return 2
  */
 
-function solution(numbers, target) {
+export function solution(numbers, target) {
   const dfs = (index, sum) => {
     if (index === numbers.length) return sum === target ? 1 : 0;
 
@@ -36,6 +36,7 @@ function solution(numbers, target) {
   return dfs(0, 0);
 }
 
-const cases = [generateTestPair([[1, 1, 1, 1, 1], 3], 5), generateTestPair([[4, 1, 2, 1], 4], 2)];
-
-console.log(solution(...cases[0].input));
+export const cases = [
+  generateTestPair([[1, 1, 1, 1, 1], 3], 5),
+  generateTestPair([[4, 1, 2, 1], 4], 2),
+];
