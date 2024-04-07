@@ -28,17 +28,30 @@ import { generateTestPair } from '../../utils.js';
  */
 
 export function solution(skill, skill_trees) {
-  const reg = new RegExp(`[^${skill}]`, 'g'); // skill과 다른 문자열만 매칭
+  const skillFilterReg = new RegExp(`[^${skill}]`, 'g'); // skill과 다른 문자열만 매칭
 
-  return skill_trees.reduce((acc, cur) => {
-    const filter = cur.replace(reg, '');
+  return skill_trees.reduce((acc, skillTree) => {
+    // skill에 해당하는 문자열만 남김 e.g. "BACDE" -> "BCD"
+    const filtered = skillTree.replace(skillFilterReg, '');
 
-    const valid = [...filter].every((s, i) => {
+    const isValid = filtered.split('').every((s, i) => {
       const idx = skill.indexOf(s);
       return idx === i;
     });
 
-    return valid ? acc + 1 : acc;
+    return isValid ? acc + 1 : acc;
+  }, 0);
+}
+
+export function reference(skill, skill_trees) {
+  const skillSet = new Set(skill); // Set { 'C', 'B', 'D' }
+
+  return skill_trees.reduce((acc, skillTree) => {
+    // skill에 해당하는 문자열만 필터 e.g. "BACDE" -> "BCD"
+    const filtered = skillTree.split('').filter(s => skillSet.has(s));
+    const isValid = filtered.every((s, i) => s === skill[i]);
+
+    return isValid ? acc + 1 : acc;
   }, 0);
 }
 
