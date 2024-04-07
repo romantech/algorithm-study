@@ -27,7 +27,7 @@ import { generateTestPair } from '../../utils.js';
  * BDA: B 전에 C가 없으므로 불가
  */
 
-function solution(skill, skill_trees) {
+export function solution(skill, skill_trees) {
   const reg = new RegExp(`[^${skill}]`, 'g'); // skill과 다른 문자열만 매칭
 
   return skill_trees.reduce((acc, cur) => {
@@ -42,11 +42,9 @@ function solution(skill, skill_trees) {
   }, 0);
 }
 
-const cases = [
-  generateTestPair(['CBD', ['BACDE', 'CBADF', 'AECB', 'BDA']], 2),
-  generateTestPair(['CBD', ['AEF', 'HIJ', 'KLM']], 3), // 선행 스킬 순서에 없는 스킬만 있는 경우
-  generateTestPair(['CBD', ['DCB', 'BCD']], 0), // 선행 스킬 순서가 모두 포함되어 있지만 순서가 잘못된 경우
-  generateTestPair(['CBD', ['C', 'B', 'D']], 1), // 선행 스킬이 일부만 포함되어 있는 경우
+export const cases = [
+  generateTestPair(['CBD', ['BACDE', 'CBADF', 'AECB', 'BDA']], 2, '프로그래머스 제공 케이스'),
+  generateTestPair(['CBD', ['AEF', 'HIJ', 'KLM']], 3, '선행 스킬을 포함하지 않는 경우'),
+  generateTestPair(['CBD', ['DCB', 'BCD']], 0, '선행 스킬 순서가 잘못된 경우'),
+  generateTestPair(['CBD', ['C', 'B', 'D']], 1, '선행 스킬이 일부만 포함되어 있는 경우'),
 ];
-
-console.log(solution(...cases[0].input));
