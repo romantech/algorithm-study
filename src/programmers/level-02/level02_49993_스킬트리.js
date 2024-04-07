@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * 선행 스킬이란 어떤 스킬을 배우기 전에 먼저 배워야 하는 스킬
@@ -14,7 +17,7 @@
  * 모든 스킬은 알파벳 대문자로 이루어져 있음
  * 스킬 순서와 스킬트리는 문자열로 표현 e.g. CBD는 C -> B -> D
  * skill: 1 이상 26 이하, 중복 값 없음
- * skill_trees: 1 이상 20 이하 배열
+ * skill_trees: 1 이상 20 이하 배열, 각 요소는 2 이상 26 이하 문자열
  *
  * [예시]
  * skill: CBD | skill_trees: ["BACDE", "CBADF", "AECB", "BDA"]
@@ -25,6 +28,25 @@
  */
 
 function solution(skill, skill_trees) {
-  const answer = -1;
-  return answer;
+  const reg = new RegExp(`[^${skill}]`, 'g'); // skill과 다른 문자열만 매칭
+
+  return skill_trees.reduce((acc, cur) => {
+    const filter = cur.replace(reg, '');
+
+    const valid = [...filter].every((s, i) => {
+      const idx = skill.indexOf(s);
+      return idx === i;
+    });
+
+    return valid ? acc + 1 : acc;
+  }, 0);
 }
+
+const cases = [
+  generateTestPair(['CBD', ['BACDE', 'CBADF', 'AECB', 'BDA']], 2),
+  generateTestPair(['CBD', ['AEF', 'HIJ', 'KLM']], 3), // 선행 스킬 순서에 없는 스킬만 있는 경우
+  generateTestPair(['CBD', ['DCB', 'BCD']], 0), // 선행 스킬 순서가 모두 포함되어 있지만 순서가 잘못된 경우
+  generateTestPair(['CBD', ['C', 'B', 'D']], 1), // 선행 스킬이 일부만 포함되어 있는 경우
+];
+
+console.log(solution(...cases[0].input));
