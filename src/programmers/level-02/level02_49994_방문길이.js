@@ -19,6 +19,7 @@ export function solution(dirs) {
   const directions = { U: [0, 1], D: [0, -1], R: [1, 0], L: [-1, 0] }; // [x, y]
 
   const isWithinRange = dir => dir <= 5 && dir >= -5;
+
   const generateKey = (from, to) => [from, to].sort().join('');
 
   return dirs.split('').reduce((history, dir) => {
@@ -30,7 +31,14 @@ export function solution(dirs) {
 
     if ([nx, ny].every(isWithinRange)) {
       [pos[0], pos[1]] = [nx, ny];
-      const key = generateKey(cx, nx) + generateKey(cy, ny);
+
+      /**
+       * (0,0) -> (0,1) 이동 후 다시 (0,1) -> (0,0) 돌아오는 경우 이미 방문한 경로이므로 카운트에 포함하면 안됨.
+       * 따라서 이동 전/후 좌표를 sort() 메서드로 정렬해서 양방향 경로가 고유한 값을 갖도록 취급
+       * (0,0) -> (0,1) : 0001 (x: 0,0 비교후 작은게 앞으로, y: 0,1 비교후 작은게 앞으로)
+       * (0,1) -> (0,0) : 0001 (위와 동일)
+       */
+      const key = generateKey(cx, nx) + generateKey(cy, ny); // 0001
 
       history.add(key);
     }
