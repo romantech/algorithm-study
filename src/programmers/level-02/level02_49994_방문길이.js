@@ -14,9 +14,33 @@ import { generateTestPair } from '../../utils.js';
  * dirs 길이는 500 이하의 자연수
  */
 
-function solution(dirs) {
-  const answer = 0;
-  return answer;
+export function solution(dirs) {
+  const pos = [0, 0]; // x, y
+  const directions = { U: [0, 1], D: [0, -1], R: [1, 0], L: [-1, 0] }; // [x, y]
+
+  const isWithinRange = dir => dir <= 5 && dir >= -5;
+  const generateKey = (from, to) => [from, to].sort().join('');
+
+  return dirs.split('').reduce((history, dir) => {
+    const [deltaX, deltaY] = directions[dir];
+    const [cx, cy] = pos; // currentX, currentY
+
+    const nx = deltaX + cx; // nextX
+    const ny = deltaY + cy; // nextY
+
+    if ([nx, ny].every(isWithinRange)) {
+      [pos[0], pos[1]] = [nx, ny];
+      const key = generateKey(cx, nx) + generateKey(cy, ny);
+
+      history.add(key);
+    }
+
+    return history;
+  }, new Set()).size;
 }
 
-const cases = [generateTestPair(['ULURRDLLU'], 7), generateTestPair(['LULLLLLLU'], 7)];
+export const cases = [
+  generateTestPair(['ULURRDLLU'], 7),
+  generateTestPair(['LULLLLLLU'], 7),
+  generateTestPair(['UDLRDURL'], 4, '경로에 왕복 이동이 포함된 경우'),
+];
