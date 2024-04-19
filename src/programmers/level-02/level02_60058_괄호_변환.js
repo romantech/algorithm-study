@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * 모든 괄호를 올바른 순서대로 배치하는 문제
@@ -31,7 +33,62 @@
  * 3. () + (())() -> ()(())() 반환
  */
 
+const LB = '(';
+const RB = ')';
+
+const isBalanced = str => {
+  let balance = 0;
+
+  for (const char of str) {
+    if (char === LB) balance++;
+    else if (char === RB) {
+      if (balance === 0) return false; // 짝이 맞지 않으므로 false
+      balance--;
+    }
+  }
+
+  return balance === 0;
+};
+
+const splitBalancedBrackets = str => {
+  let count = 0;
+  const result = { u: '', v: '' };
+
+  for (let i = 0; i < str.length; i += 1) {
+    count += str[i] === LB ? 1 : -1;
+
+    if (count === 0) {
+      result.u = str.slice(0, i + 1);
+      result.v = str.slice(i + 1);
+      break;
+    }
+  }
+
+  return result;
+};
+
+const reverseBracket = str => {
+  return str.split('').reduce((acc, cur) => {
+    return acc + (cur === LB ? RB : LB);
+  }, '');
+};
+
 function solution(p) {
-  const answer = '';
-  return answer;
+  if (isBalanced(p) || p === '') return p;
+
+  const { u, v } = splitBalancedBrackets(p);
+
+  // u가 올바른 괄호 문자열이라면
+  if (isBalanced(u)) return u + solution(v);
+
+  // u가 올바른 괄호 문자열이 아니라면
+  return LB + solution(v) + RB + reverseBracket(u.slice(1, -1));
 }
+
+const cases = [
+  generateTestPair(['(()())()'], '(()())()'),
+  generateTestPair([')('], '()'),
+  generateTestPair(['()))((()'], '()(())()'),
+];
+
+console.log(solution(...cases[2].input));
