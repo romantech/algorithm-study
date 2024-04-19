@@ -91,4 +91,7 @@ const cases = [
   generateTestPair(['()))((()'], '()(())()'),
 ];
 
-console.log(solution(...cases[2].input));
+cases.forEach(({ input, output }, i) => {
+  const passed = solution(...input) === output;
+  console.log(`${i + 1}번 문제 ${passed ? '통과' : '실패'}`);
+});
