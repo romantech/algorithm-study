@@ -1,3 +1,27 @@
+/**
+ * 유클리드 호제법을 이용해 두 수의 최대공약수(Greatest Common Divisor, GCD)를 계산한다.
+ * 최대공약수는 두 수 또는 그 이상의 수가 공통으로 가지는 약수 중 가장 큰 수이다.
+ * 약수는 한 수를 다른 수로 나누었을 때 나머지가 0인 경우를 가리킨다.
+ * 유클리드 호제법은 a를 b로 나눈 나머지(r)와 b의 최대공약수를 찾는 과정을 b가 0이될 때까지 반복한다.
+ * b가 0이 되면, 그때의 a가 두 수의 최대공약수이다.
+ *
+ * @param {number} a - 첫 번째 정수
+ * @param {number} b - 두 번째 정수
+ * @returns {number} - 두 정수의 최대공약수
+ *
+ * @example
+ * gcd(48, 18)는 다음과 같이 계산된다:
+ * gcd(48, 18) -> gcd(18, 48 % 18) = gcd(18, 12)
+ * gcd(18, 12) -> gcd(12, 18 % 12) = gcd(12, 6)
+ * gcd(12, 6) -> gcd(6, 12 % 6) = gcd(6, 0)
+ * 12 % 6이 0이므로 최대공약수는 6이다.
+ *
+ */
+export const gcd = (a, b) => {
+  if (b === 0) return a;
+  return gcd(b, a % b);
+};
+
 export const isPrime = num => {
   if (num <= 1) return false; // 소수는 1보다 큰 자연수이므로 1은 소수가 아님
   if (num === 2) return true; // 2는 짝수중 유일하게 소수

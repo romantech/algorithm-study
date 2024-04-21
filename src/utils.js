@@ -36,7 +36,7 @@ export const measureExecutionTime = (fn, ...args) => {
  * @throws {Error} If the output is undefined.
  * @return {Object} The test pair object containing the input, output.
  */
-export const generateTestPair = (input, output, desc) => {
+export const generateTestPair = (input, output, desc = '') => {
   if (!Array.isArray(input)) throw new Error('Input must be an array');
   if (output === undefined) throw new Error('Output must not be undefined');
   return { input, output, desc };
