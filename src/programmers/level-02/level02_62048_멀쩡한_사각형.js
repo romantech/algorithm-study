@@ -1,4 +1,5 @@
 import { generateTestPair } from '../../utils.js';
+import { gcd as GCD } from '../../math.js';
 
 /**
  * [요구사항]
@@ -24,19 +25,13 @@ import { generateTestPair } from '../../utils.js';
  * 각 패턴에서 제외되는 직사각형 수는 첫번째 패턴의 (가로 + 세로 - 1) 식으로 구할 수 있다.
  * 예를들어 (2, 3) 첫번째 패턴에서 제외되는 직사각형의 수는 2 + 3 - 1 = 4개다.
  * 따라서 전체 제외되는 직사각형의 수는 4(2 + 3 - 1) * 4(GCD) = 16개가 된다.
- * 직사각형의 가로, 세로를 더한 뒤 GCD 만큼 빼도 동일한 값이 나온다. 8 + 1 2 - 4 = 16
+ * 직사각형의 가로, 세로를 더한 뒤 GCD 만큼 빼도 동일한 값이 나온다. 8 + 12 - 4 = 16
  * 전체 직사각형 수가 96이므로 남은 직사각형 수는 96 - 16 = 80개가 된다.
  *
  * 위 과정을 식으로 정리하면... (w * h) - (w + h - gcd(w, h))
  *
- * @see {@link https://blog.itcode.dev/posts/2021/12/27/programmers-a0069|참고글}
+ * {@link https://blog.itcode.dev/posts/2021/12/27/programmers-a0069|참고글}
  */
-
-// f(48, 18) -> f(18, 12) -> f(12, 6) -> f(6, 0)
-const GCD = (a, b) => {
-  if (b === 0) return a;
-  return GCD(b, a % b);
-};
 
 function solution(w, h) {
   const totalCells = w * h; // 전체 격자 수
@@ -48,4 +43,4 @@ function solution(w, h) {
 
 const cases = [generateTestPair([8, 12], 80)];
 
-console.log(solution(...cases[0].input));
+console.log(solution(...cases[0].input) === cases[0].output);
