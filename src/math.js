@@ -16,10 +16,32 @@
  * gcd(12, 6) -> gcd(6, 12 % 6) = gcd(6, 0)
  * 12 % 6이 0이므로 최대공약수는 6이다.
  *
+ * @see [참고 노트]{@link https://colorfilter.notion.site/TIL-56be7900184b4e39b600dc8046d53e13?pvs=4}
+ *
  */
 export const gcd = (a, b) => {
   if (b === 0) return a;
   return gcd(b, a % b);
+};
+
+/**
+ * 두 정수 a와 b의 최소공배수(Lowest Common Multiple, LCM)를 계산한다.
+ * 배수는 어떤 수에 정수를 곱한 수를 가리킨다(어떤 수에 1배, 2배, 3배, ...)
+ * 최소공배수는 두 수의 곱을 그 두 수의 최대공약수로 나눈 값과 같다.
+ * 이는 a와 b의 최대공약수와 최소공배수의 곱이 a와 b를 곱한 값과 같다는 성질을 이용한 것이다.
+ * lcm 함수는 내부적으로 `gcd` 함수를 호출하여 최대공약수를 계산한다.
+ *
+ * @param {number} a - 첫 번째 정수
+ * @param {number} b - 두 번째 정수
+ * @returns {number} a와 b의 최소공배수
+ *
+ * @example
+ * lcm(12, 18) // 36 반환
+ *
+ * @see [참고 노트]{@link https://colorfilter.notion.site/TIL-56be7900184b4e39b600dc8046d53e13?pvs=4}
+ */
+export const lcm = (a, b) => {
+  return (a * b) / gcd(a, b);
 };
 
 export const isPrime = num => {
