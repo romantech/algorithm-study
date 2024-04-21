@@ -1,4 +1,4 @@
-import { generateTestPair } from '../../utils';
+import { generateTestPair } from '../../utils.js';
 
 /**
  * [요구사항]
@@ -27,9 +27,21 @@ import { generateTestPair } from '../../utils';
  * @see {@link https://blog.itcode.dev/posts/2021/12/27/programmers-a0069|참고글}
  */
 
+// f(48, 18) -> f(18, 12) -> f(12, 6) -> f(6, 0)
+const GCD = (a, b) => {
+  if (b === 0) return a;
+  return GCD(b, a % b);
+};
+
 function solution(w, h) {
-  const answer = 1;
-  return answer;
+  const totalCells = w * h; // 전체 격자 수
+  const gcd = GCD(w, h); // 패턴의 반복 횟수
+  const widthFactor = w / gcd; // 너비의 축소된 배수
+  const heightFactor = h / gcd; // 높이의 축소된 배수
+  const excludedCells = widthFactor + heightFactor - 1; // 제외된 격자 수
+  return totalCells - excludedCells * gcd; // 남은 격자 수
 }
 
 const cases = [generateTestPair([8, 12], 80)];
+
+console.log(solution(...cases[0].input));
