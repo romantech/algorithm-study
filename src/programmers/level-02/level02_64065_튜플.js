@@ -39,24 +39,21 @@ const toArray = tupleString => {
   return tupleStrings.map(tuple => tuple.split(','));
 };
 
-function solution(s) {
+export function solution(s) {
   const tupleArrays = toArray(s);
   const sortedByLength = tupleArrays.sort((a, b) => a.length - b.length);
+  const merged = sortedByLength.flat();
 
-  const uniqueElements = sortedByLength.reduce((result, tuple) => {
-    tuple.forEach(t => result.add(Number(t)));
-    return result;
-  }, new Set());
+  // set.add 후 자기 자신 반환
+  const uniqueElements = merged.reduce((set, el) => set.add(Number(el)), new Set());
 
   return [...uniqueElements];
 }
 
-const cases = [
+export const cases = [
   generateTestPair(['{{2},{2,1},{2,1,3},{2,1,3,4}}'], [2, 1, 3, 4]),
   generateTestPair(['{{1,2,3},{2,1},{1,2,4,3},{2}}'], [2, 1, 3, 4]),
   generateTestPair(['{{20,111},{111}}'], [111, 20]),
   generateTestPair(['{{123}}'], [123]),
   generateTestPair(['{{4,2,3},{3},{2,3,4,1},{2,3}}'], [3, 2, 4, 1]),
 ];
-
-console.log(solution(...cases[4].input));
