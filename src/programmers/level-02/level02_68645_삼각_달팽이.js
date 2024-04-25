@@ -59,6 +59,25 @@ export function solution(n) {
   return triangleArray.flat();
 }
 
+export function reference(n) {
+  const a = Array(n)
+    .fill()
+    .map((_, i) => Array(i + 1).fill());
+
+  let row = -1;
+  let col = 0;
+  let fill = 0;
+
+  for (let i = n; i > 0; i -= 3) {
+    a[++row][col] = ++fill;
+    for (let j = 0; j < i - 1; j++) a[++row][col] = ++fill;
+    for (let j = 0; j < i - 1; j++) a[row][++col] = ++fill;
+    for (let j = 0; j < i - 2; j++) a[--row][--col] = ++fill;
+  }
+
+  return a.flat();
+}
+
 export const cases = [
   generateTestPair([4], [1, 2, 9, 3, 10, 8, 4, 5, 6, 7]),
   generateTestPair([5], [1, 2, 12, 3, 13, 11, 4, 14, 15, 10, 5, 6, 7, 8, 9]),
