@@ -13,6 +13,10 @@ import { generateTestPair } from '../../utils.js';
 const createTriangleArray = n => {
   // 더욱 간결하게 배열 생성
   const triangleArray = Array.from({ length: n }, (_, i) => Array(i + 1));
+  /**
+   * 1 + 2 + 3 + 4 ... 수의 총 합이므로 등차수열로 계산 가능
+   * 참고 노트: https://colorfilter.notion.site/TIL-545e8bf0172b496d8143a3c7e056a17b
+   */
   const sum = (n * (n + 1)) / 2;
   return { triangleArray, sum };
 };
