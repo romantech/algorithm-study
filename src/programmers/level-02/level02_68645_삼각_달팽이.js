@@ -60,9 +60,7 @@ export function solution(n) {
 }
 
 export function reference(n) {
-  const a = Array(n)
-    .fill()
-    .map((_, i) => Array(i + 1).fill());
+  const a = Array.from({ length: n }, (_, i) => Array(i + 1));
 
   let row = -1;
   let col = 0;
