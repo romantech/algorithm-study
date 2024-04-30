@@ -66,11 +66,35 @@ export function reference(n) {
   let col = 0;
   let fill = 0;
 
+  /**
+   * n = 4 시뮬레이션
+   * i = 4 시작
+   * a[0][0] = 1
+   *   for(1) j < 3 (i-1)
+   *   j0 -> a[1][0] = 2
+   *   j1 -> a[2][0] = 3
+   *   j2 -> a[3][0] = 4
+   *
+   *   for(2) j < 3 (i-1)
+   *   j0 -> a[3][1] = 5
+   *   j1 -> a[3][2] = 6
+   *   j2 -> a[3][3] = 7
+   *
+   *   for(3) j < 2 (i-2)
+   *   j0 -> a[2][2] = 8
+   *   j1 -> a[1][1] = 9
+   *
+   * i = 1 시작
+   * a[2][1] = 10
+   *   for(1) j < 0 (i-1) skip
+   *   for(2) j < 0 (i-1) skip
+   *   for(3) j < -1 (i-2) skip
+   */
   for (let i = n; i > 0; i -= 3) {
-    a[++row][col] = ++fill;
-    for (let j = 0; j < i - 1; j++) a[++row][col] = ++fill;
-    for (let j = 0; j < i - 1; j++) a[row][++col] = ++fill;
-    for (let j = 0; j < i - 2; j++) a[--row][--col] = ++fill;
+    a[++row][col] = ++fill; // 위 꼭지점 채우기
+    for (let j = 0; j < i - 1; j++) a[++row][col] = ++fill; // 좌측 변 채우기
+    for (let j = 0; j < i - 1; j++) a[row][++col] = ++fill; // 하단 변 변채우기
+    for (let j = 0; j < i - 2; j++) a[--row][--col] = ++fill; // 우측 변 채우기
   }
 
   return a.flat();
