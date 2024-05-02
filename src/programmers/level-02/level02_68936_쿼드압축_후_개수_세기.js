@@ -80,14 +80,14 @@ const compress = (arr, x, y, size, count) => {
   return results[0];
 };
 
-function solution(arr) {
+export function solution(arr) {
   const count = [0, 0];
   const compressed = compress(arr, 0, 0, arr.length, count);
 
   return count;
 }
 
-const cases = [
+export const cases = [
   generateTestPair(
     [
       [
@@ -123,8 +123,6 @@ const cases = [
         [1, 1, 1, 1],
       ],
     ],
-    [10, 15],
+    [0, 1],
   ),
 ];
-
-console.log(solution(...cases[1].input));
