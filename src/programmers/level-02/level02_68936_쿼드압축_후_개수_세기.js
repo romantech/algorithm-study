@@ -42,23 +42,6 @@ import { generateTestPair } from '../../utils.js';
  * ...생략
  */
 
-/**
- * [시뮬레이션]
- * f(0, 0, 4)
- *    newSize = 2
- *    f(0, 0, 2)
- *        newSize = 1
- *        f(0, 0, 1) -> return 1
- *        f(0, 1, 1) -> return 1
- *        f(1, 0, 1) -> return 1
- *        f(1, 1, 1) -> return 0
- *        -> return [1, 1, 1, 0]
- *    f(0, 2, 2) -> return 0
- *    f(2, 0, 2) -> [1, 0, 1, 1]
- *    f(2, 2, 2) -> [0, 1, 1, 1]
- *    -> return [[1, 1, 1, 0], 0, [1, 0, 1, 1], [0, 1, 1, 1]]
- */
-
 const compress = (arr, x, y, size, count) => {
   if (size === 1) {
     const num = arr[x][y];
@@ -80,6 +63,23 @@ const compress = (arr, x, y, size, count) => {
   return results[0];
 };
 
+/**
+ * [시뮬레이션]
+ * f(0, 0, 4)
+ *    newSize = 2
+ *    f(0, 0, 2)
+ *        newSize = 1
+ *        f(0, 0, 1) -> return 1 | count = [0, 1]
+ *        f(0, 1, 1) -> return 1 | count = [0, 2]
+ *        f(1, 0, 1) -> return 1 | count = [0, 3]
+ *        f(1, 1, 1) -> return 0 | count = [1, 3]
+ *        -> return [1, 1, 1, 0]
+ *    f(0, 2, 2) -> return 0     | count = [2, 3]
+ *    f(2, 0, 2) -> [1, 0, 1, 1] | count = [3, 6]
+ *    f(2, 2, 2) -> [0, 1, 1, 1] | count = [4, 9]
+ *    -> return [[1, 1, 1, 0], 0, [1, 0, 1, 1], [0, 1, 1, 1]]
+ * -> return [4, 9]
+ */
 export function solution(arr) {
   const count = [0, 0];
   const compressed = compress(arr, 0, 0, arr.length, count);
