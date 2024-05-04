@@ -1,4 +1,4 @@
-import { generateTestPair } from '../../utils';
+import { generateTestPair } from '../../utils.js';
 
 /**
  * [요구사항]
@@ -18,8 +18,18 @@ import { generateTestPair } from '../../utils';
  */
 
 function solution(s) {
-  const answer = [];
-  return answer;
+  if (s.length <= 1) return [0, 0];
+
+  const ones = s.match(/1/g) ?? [];
+  const zeroCount = s.length - ones.length;
+  const newStr = ones.length.toString(2);
+
+  const [transformations, zerosRemoved] = solution(newStr);
+  // [0, 0] -> return [1, 1]
+  // [1, 1] -> return [2, 2]
+  // [2, 2] -> return [3, 8]
+
+  return [transformations + 1, zerosRemoved + zeroCount];
 }
 
 const cases = [
@@ -27,3 +37,9 @@ const cases = [
   generateTestPair(['01110'], [3, 3]),
   generateTestPair(['1111111'], [4, 1]),
 ];
+
+cases.forEach(({ input, output }, i) => {
+  const result = solution(...input);
+  const passed = result.join('') === output.join('');
+  console.log(`${i + 1}번 테스트 ${passed ? '통과' : '실패'}`);
+});
