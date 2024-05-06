@@ -26,9 +26,46 @@ import { generateTestPair } from '../../utils.js';
  * 반환값: 알파벳 오름차순으로 정렬. 메뉴 구성 여러개면 모두 배열에 담아서 반환
  */
 
+const getCombinations = (arr, combSize, start = 0, curComb = []) => {
+  if (curComb.length === combSize) return [curComb];
+
+  const results = [];
+  const maxIndex = arr.length - combSize + curComb.length;
+
+  for (let i = start; i <= maxIndex; i++) {
+    const nextComb = curComb.concat(arr[i]);
+    const nextStart = i + 1;
+    results.push(...getCombinations(arr, combSize, nextStart, nextComb));
+  }
+
+  return results;
+};
+
 function solution(orders, course) {
-  const answer = [];
-  return answer;
+  const freqMap = orders.reduce((map, order) => {
+    const sortedOrder = order.split('').sort();
+    course.forEach(size => {
+      const combs = getCombinations(sortedOrder, size);
+      combs.forEach(comb => {
+        const combStr = comb.join('');
+        map.set(combStr, (map.get(combStr) ?? 0) + 1);
+      });
+    });
+    return map;
+  }, new Map());
+
+  const result = [];
+  const maxCount = Array(course.at(-1) + 1).fill(0);
+
+  freqMap.forEach((count, { length: menuLen }) => {
+    if (count > 1 && count > maxCount[menuLen]) maxCount[menuLen] = count;
+  });
+
+  freqMap.forEach((count, comb) => {
+    if (count === maxCount[comb.length]) result.push(comb);
+  });
+
+  return result.sort();
 }
 
 const cases = [
@@ -54,3 +91,5 @@ const cases = [
     ['WX', 'XY'],
   ),
 ];
+
+console.log(solution(...cases[0].input));
