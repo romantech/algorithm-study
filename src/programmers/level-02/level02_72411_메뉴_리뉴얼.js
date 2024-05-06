@@ -27,7 +27,7 @@ import { getCombinationsIterative } from '../../math.js';
  * 반환값: 알파벳 "오름차순"으로 정렬. 메뉴 "구성 여러개면 모두 배열에 담아서 반환"
  */
 
-function solution(orders, course) {
+export function solution(orders, course) {
   // 모든 조합에 대한 주문 빈도 생성 e.g. Map { 'AB': 1, 'AC': 4, 'ABC': 1, ... }
   const freqMap = orders.reduce((map, order) => {
     const sortedOrder = order.split('').sort();
@@ -62,7 +62,7 @@ function solution(orders, course) {
   return result.sort();
 }
 
-const cases = [
+export const cases = [
   generateTestPair(
     [
       ['ABCFG', 'AC', 'CDE', 'ACDE', 'BCFG', 'ACDEH'],
@@ -85,5 +85,3 @@ const cases = [
     ['WX', 'XY'],
   ),
 ];
-
-console.log(solution(...cases[0].input));
