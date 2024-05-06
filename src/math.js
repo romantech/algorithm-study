@@ -100,6 +100,43 @@ sliced = [1, 2, 3], i2, nextComb = [3], nextStart = (0 + 2 + 1) = 3
 */
 
 /**
+ * 함수형을 사용한 조합 코드보다 속도 더 빠름
+ */
+export const getCombinationsIterative = (arr, combSize, start = 0, curComb = []) => {
+  if (curComb.length === combSize) return [curComb];
+
+  const results = [];
+  const maxIndex = arr.length - combSize + curComb.length;
+
+  for (let i = start; i <= maxIndex; i++) {
+    const nextComb = curComb.concat(arr[i]);
+    const nextStart = i + 1;
+    results.push(...getCombinations(arr, combSize, nextStart, nextComb));
+  }
+
+  return results;
+};
+
+/*
+f([1, 2, 3], 2, 0, [])
+max=3-2+0=1 (i0, i1)
+i0 | nextComb = [1] | nextStart = 1
+  f([1, 2, 3], 2, 1, [1])
+  max=3-2+1=2 (i1, i2)
+  i1 | nextComb = [1, 2] | nextStart = 2
+    f([1, 2, 3], 2, 2, [1, 2]) -> return [[1, 2]]
+  i2 | nextComb = [1, 3] | nextStart = 3
+    f([1, 2, 3], 2, 3, [1, 3]) -> return [[1, 3]]
+  return [[1, 2], [1, 3]]
+i1 | nextComb = [2] | nextStart = 2
+  f([1, 2, 3], 2, 2, [2])
+  max=3-2+1=2 (i1, i2)
+  i2 | nextComb = [2, 3] | nextStart = 3
+    f([1, 2, 3], 2, 3, [2, 3]) -> return [[2, 3]]
+  return [[2, 3]]
+*/
+
+/**
  * Generates all possible permutations of an array.
  *
  * @param {Array} arr - The input array.

@@ -1,4 +1,5 @@
 import { generateTestPair } from '../../utils.js';
+import { getCombinationsIterative } from '../../math.js';
 
 /**
  * [문제 분석]
@@ -22,30 +23,16 @@ import { generateTestPair } from '../../utils.js';
  * orders: 손님이 주문한 단품 메뉴들이 문자열 형식으로 담긴 2 이상 20 이하 배열
  * orders의 각 요소는 2 이상 10 이하인 문자열, 알파벳 중복 없음
  * course: 추가하고 싶은 코스요리의 단품 메뉴 구성이 담긴 1 이상 10이하 배열
- * course 각 요소는 2 이상 10 이하 자연수가 오름차순으로 정렬돼 있고, 중복 없음
- * 반환값: 알파벳 오름차순으로 정렬. 메뉴 구성 여러개면 모두 배열에 담아서 반환
+ * course 각 요소는 2 이상 10 이하 자연수가 "오름차순"으로 정렬돼 있고, 중복 없음
+ * 반환값: 알파벳 "오름차순"으로 정렬. 메뉴 "구성 여러개면 모두 배열에 담아서 반환"
  */
 
-const getCombinations = (arr, combSize, start = 0, curComb = []) => {
-  if (curComb.length === combSize) return [curComb];
-
-  const results = [];
-  const maxIndex = arr.length - combSize + curComb.length;
-
-  for (let i = start; i <= maxIndex; i++) {
-    const nextComb = curComb.concat(arr[i]);
-    const nextStart = i + 1;
-    results.push(...getCombinations(arr, combSize, nextStart, nextComb));
-  }
-
-  return results;
-};
-
 function solution(orders, course) {
+  // 모든 조합에 대한 주문 빈도 생성 e.g. Map { 'AB': 1, 'AC': 4, 'ABC': 1, ... }
   const freqMap = orders.reduce((map, order) => {
     const sortedOrder = order.split('').sort();
     course.forEach(size => {
-      const combs = getCombinations(sortedOrder, size);
+      const combs = getCombinationsIterative(sortedOrder, size);
       combs.forEach(comb => {
         const combStr = comb.join('');
         map.set(combStr, (map.get(combStr) ?? 0) + 1);
@@ -55,12 +42,19 @@ function solution(orders, course) {
   }, new Map());
 
   const result = [];
+  // 가장 많은 주문 조합을 저장할 배열 초기화 e.g. [0, 0, 0, 0, 0]
+  // 각 요소는 코스의 길이를 나타냄. 예를들어 인덱스 3은 'ABC'와 같은 길이 3인 코스를 의미
+  // maxCount['ABC'.length] 이렇게 문자열 길이를 인덱스로 사용하기 때문에
+  // maxCount 배열 크기는 코스의 최대 크기 + 1로 설정
   const maxCount = Array(course.at(-1) + 1).fill(0);
 
+  // 각 코스의 최대 빈도 결정 e.g. [0, 0, 4, 3, 2]
+  // 길이 2인 코스의 최대 빈도는 4, 길이 3인 코스의 최대 빈도는 3, ...
   freqMap.forEach((count, { length: menuLen }) => {
     if (count > 1 && count > maxCount[menuLen]) maxCount[menuLen] = count;
   });
 
+  // 최대 빈도에 해당하는 코스를 result 배열에 추가
   freqMap.forEach((count, comb) => {
     if (count === maxCount[comb.length]) result.push(comb);
   });
