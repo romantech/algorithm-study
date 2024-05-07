@@ -27,7 +27,6 @@ const quickSort1 = array => {
 console.time('quickSort1');
 quickSort1(makeRandomArr(10000, 10000));
 console.timeEnd('quickSort1');
-
 /* quickSort1 시뮬레이션
 ①f([85, 24, 63, 45, 17, 31, 96, 50])
 =======================================
@@ -79,7 +78,7 @@ function quickSort2(arr, start = 0, end = arr.length - 1) {
 
   const borderIndex = partition(arr, start, end); // 배열을 나누는 경계 인덱스
   quickSort2(arr, start, borderIndex - 1); // borderIndex 왼쪽 요소
-  quickSort2(arr, borderIndex + 1, end); // borderIndex 오른쪽 요소
+  quickSort2(arr, borderIndex, end); // borderIndex 오른쪽 요소
 
   return arr;
 }
@@ -113,7 +112,7 @@ quickSort2(makeRandomArr(10000, 10000));
 console.timeEnd('quickSort2');
 
 /*
-quickSort2 시뮬레이션 (오른쪽 배열의 시작 인덱스를 borderIndex로 설정했을 때 기준)
+quickSort2 시뮬레이션
 ⑴ Q([85, 24, 63, 45, 17, 31, 96, 50], 0, 7)
 ===========================================
 b = P([85, 24, 63, 45, 17, 31, 96, 50], 0, 7) -> [P-1] 4
