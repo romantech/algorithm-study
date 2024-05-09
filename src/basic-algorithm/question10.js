@@ -23,12 +23,15 @@ import { generateTestPair } from '../utils.js';
  */
 
 function solution(babbling) {
-  const re = /aya|ye|woo|ma/g;
-
-  return babbling.reduce((count, char) => {
-    if (char.replaceAll(re, '') === '') return count + 1;
-    return count;
-  }, 0);
+  /**
+   * "aya", "ye", "woo", "ma" 중 하나 또는 그 이상의 조합으로 시작해서 끝나는 경우 매치
+   * ^: 문자열의 시작
+   * (aya|ye|woo|ma) : "aya", "ye", "woo", "ma" 중 하나를 나타내는 그룹
+   * + : 앞의 (...) 그룹이 1번 이상 반복
+   * $ : 문자열의 끝
+   */
+  const re = /^(aya|ye|woo|ma)+$/g;
+  return babbling.reduce((acc, char) => (re.test(char) ? acc + 1 : acc), 0);
 }
 
 const cases = [
