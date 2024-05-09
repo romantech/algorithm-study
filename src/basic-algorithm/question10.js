@@ -23,11 +23,17 @@ import { generateTestPair } from '../utils.js';
  */
 
 function solution(babbling) {
-  const answer = 0;
-  return answer;
+  const re = /aya|ye|woo|ma/g;
+
+  return babbling.reduce((count, char) => {
+    if (char.replaceAll(re, '') === '') return count + 1;
+    return count;
+  }, 0);
 }
 
 const cases = [
   generateTestPair([['aya', 'yee', 'u', 'maa', 'wyeoo']], 1),
   generateTestPair([['ayaye', 'uuuma', 'ye', 'yemawoo', 'ayaa']], 3),
 ];
+
+console.log(solution(...cases[1].input));
