@@ -39,4 +39,8 @@ const cases = [
   generateTestPair([['ayaye', 'uuuma', 'ye', 'yemawoo', 'ayaa']], 3),
 ];
 
-console.log(solution(...cases[1].input));
+cases.forEach(({ input, output }, i) => {
+  const result = solution(...input);
+  const passed = result === output ? '통과' : '실패';
+  console.log(`${i}번 테스트 ${passed}`);
+});
