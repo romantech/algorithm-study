@@ -1,4 +1,5 @@
-import { generateTestPair } from '../../utils.js';
+import { generateTestPair, deduplicate } from '../../utils.js';
+import { getPermutations } from '../../math.js';
 
 /**
  * [요구사항]
@@ -32,20 +33,8 @@ import { generateTestPair } from '../../utils.js';
  * 같은 연산자끼리는 앞에 있는 것의 우선순위가 더 높음
  */
 
-const getPermutations = (arr, permSize = arr.length, curPerm = []) => {
-  if (curPerm.length === permSize) return [curPerm];
-  if (arr.length === 0 || permSize === 0) return [];
-
-  return arr.reduce((allPerms, item, i) => {
-    const restItems = arr.slice(0, i).concat(arr.slice(i + 1));
-    const nextPerm = curPerm.concat(item);
-    return allPerms.concat(getPermutations(restItems, permSize, nextPerm));
-  }, []);
-};
-
 const getOps = exp => exp.match(/[*+-]/g);
 const getNums = exp => exp.match(/\d+/g).map(Number);
-const deduplicate = arr => [...new Set(arr)];
 
 const applyOperation = (a, b, op) => {
   if (op === '*') return a * b;
