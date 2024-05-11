@@ -1,5 +1,4 @@
-import { generateTestPair, deduplicate } from '../../utils.js';
-import { getPermutations } from '../../math.js';
+import { generateTestPair } from '../../utils.js';
 
 /**
  * [요구사항]
@@ -36,6 +35,15 @@ import { getPermutations } from '../../math.js';
 const getOps = exp => exp.match(/[*+-]/g);
 const getNums = exp => exp.match(/\d+/g).map(Number);
 
+const operatorPerms = [
+  ['-', '+', '*'],
+  ['-', '*', '+'],
+  ['+', '*', '-'],
+  ['+', '-', '*'],
+  ['*', '-', '+'],
+  ['*', '+', '-'],
+];
+
 const applyOperation = (a, b, op) => {
   if (op === '*') return a * b;
   if (op === '+') return a + b;
@@ -44,8 +52,6 @@ const applyOperation = (a, b, op) => {
 };
 
 function solution(expression) {
-  const operators = deduplicate(getOps(expression));
-  const permutations = getPermutations(operators);
   const originalNums = getNums(expression);
 
   const evaluation = priority => {
@@ -59,6 +65,11 @@ function solution(expression) {
           nums.splice(i + 1, 1);
           ops.splice(i, 1);
           i--;
+          // operator to look for is "*"
+          // i0 = [-, *, -, +] i++
+          // i1 = [-, (*), -, +] pop(1) i--
+          // i1 = [-, -, +] i++
+          // i2 = [-, -, +]
         }
       }
     });
@@ -66,7 +77,7 @@ function solution(expression) {
     return Math.abs(nums[0]);
   };
 
-  return permutations.reduce((max, perm) => Math.max(evaluation(perm), max), 0);
+  return operatorPerms.reduce((max, perm) => Math.max(evaluation(perm), max), 0);
 }
 
 const cases = [
@@ -76,5 +87,6 @@ const cases = [
 
 cases.forEach(({ input, output }, i) => {
   const isPassed = solution(...input) === output;
-  console.log(`${i}번 테스트 ${isPassed ? '통과' : '실패'}`);
+  const message = isPassed ? '통과' : '실패';
+  console.log(`${i}번 테스트 ${message}`);
 });
