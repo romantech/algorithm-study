@@ -41,3 +41,8 @@ export const generateTestPair = (input, output, desc = '') => {
   if (output === undefined) throw new Error('Output must not be undefined');
   return { input, output, desc };
 };
+
+export const deduplicate = arr => {
+  if (!Array.isArray(arr)) throw new Error('Input must be an array');
+  return [...new Set(arr)];
+};
