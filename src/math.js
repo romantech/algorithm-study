@@ -196,3 +196,23 @@ r = [1, 2], p = [3]
       getPermutations([], [3, 2, 1]) -> return [[3, 2, 1]]
   return [[3, 1, 2], [3, 2, 1]]
 */
+
+export const memoizedFactorial = (() => {
+  const memo = [1, 1]; // [0!, 1!]
+
+  return function f(num) {
+    if (num < 0) throw new Error('Negative number is not allowed');
+    if (memo[num] !== undefined) return memo[num];
+
+    memo[num] = num * f(num - 1);
+    return memo[num];
+  };
+})();
+/**
+ * f(5) -> memo[5] = 5 * f(4)   | memo: [1, 1, 2, 6, 24, 120]
+ * f(4) -> memo[4] = 4 * f(3)   | memo: [1, 1, 2, 6, 24]
+ * f(3) -> memo[3] = 3 * f(2)   | memo: [1, 1, 2, 6]
+ * f(2) -> memo[2] = 2 * f(1)   | memo: [1, 1, 2]
+ * f(1) -> return 1             | memo: [1, 1]
+ * f(0) -> return 1             | memo: [1, 1]
+ */

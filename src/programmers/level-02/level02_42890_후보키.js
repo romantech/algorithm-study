@@ -1,4 +1,5 @@
 import { generateTestPair } from '../../utils.js';
+import { getCombinationsIterative, memoizedFactorial } from '../../math.js';
 
 /**
  * [요구사항]
@@ -34,8 +35,7 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(relation) {
-  const answer = 0;
-  return answer;
+  const permCount = memoizedFactorial(relation.length);
 }
 
 const cases = [
@@ -53,3 +53,5 @@ const cases = [
     2, // result
   ),
 ];
+
+console.log(solution(...cases[0].input));
