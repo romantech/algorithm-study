@@ -1,5 +1,5 @@
 import { generateTestPair } from '../../utils.js';
-import { getCombinationsIterative, memoizedFactorial } from '../../math.js';
+import { getCombinationsIterative } from '../../math.js';
 
 /**
  * [요구사항]
@@ -35,7 +35,43 @@ import { getCombinationsIterative, memoizedFactorial } from '../../math.js';
  */
 
 function solution(relation) {
-  const permCount = memoizedFactorial(relation.length);
+  const numCols = relation[0].length;
+  const cols = Array.from({ length: numCols }, (_, idx) => idx); // [0, 1, 2, 3]
+
+  // 주어진 속성 인덱스의 모든 조합 생성
+  // [[0], ..., [3], [0, 1], ..., [2, 3], [0, 1, 2], ..., [1, 2, 3], [0, 1, 2, 3]]
+  const allCombs = cols.reduce((combs, colIdx) => {
+    return combs.concat(getCombinationsIterative(cols, colIdx + 1));
+  }, []);
+
+  // [[0], [0, 1], [0, 2], ..., [0, 1, 2], [0, 1, 3] ..., [0, 1, 2, 3]]
+  const uniqueCombs = [];
+
+  // 유일성 검사: 각 조합에 대해 Set을 이용해 중복을 제거한 후, 그 크기가 relation의 row 수와 동일한지 확인
+  for (const combination of allCombs) {
+    const seen = new Set();
+    for (const row of relation) {
+      // 1자리 조합일 때 e.g. [0] : 100, 200, 300, 400, 500, 600
+      // 2자리 조합일 때 e.g. [0, 1]: 100.ryan, 200.apeach, 300.tube, ...
+      // 3자리 조합일 때 e.g. [0, 1, 2]: 100.ryan.music, 200.apeach.math, ...
+      const key = combination.map(idx => row[idx]).join('.');
+      seen.add(key);
+    }
+    // 중복일 경우 seen 사이즈가 relation의 row보다 작아짐
+    if (seen.size === relation.length) uniqueCombs.push(combination);
+  }
+
+  const candidateKeys = [];
+
+  // 최소성 검사: 현재 키가 이미 선택된 후보키의 부분 집합이 아닌 것만 필터
+  // 최소성을 만족하려면 비교하는 두 조합(키)이 서로 겹치는 키가 없어야 하기 때문
+  for (const comb of uniqueCombs) {
+    // every는 빈 배열일 때 항상 true를 반환한다. 따라서 첫 번째 조합은 항상 조건을 통과한다
+    const isCandidate = candidateKeys.every(key => !key.every(k => comb.includes(k)));
+    if (isCandidate) candidateKeys.push(comb);
+  }
+
+  return candidateKeys.length;
 }
 
 const cases = [
@@ -54,4 +90,8 @@ const cases = [
   ),
 ];
 
-console.log(solution(...cases[0].input));
+cases.forEach(({ input, output }, i) => {
+  const isPassed = solution(...input) === output;
+  const message = isPassed ? '통과' : '실패';
+  console.log(`#case ${i + 1} ${message}`);
+});
