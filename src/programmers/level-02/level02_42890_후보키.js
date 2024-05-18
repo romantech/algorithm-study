@@ -34,7 +34,7 @@ import { getCombinationsIterative } from '../../math.js';
  * relation의 모든 튜플은 유일하게 식별 가능하다(중복되는 튜플 없음)
  */
 
-function solution(relation) {
+export function solution(relation) {
   const numCols = relation[0].length;
   const cols = Array.from({ length: numCols }, (_, idx) => idx); // [0, 1, 2, 3]
 
@@ -74,7 +74,7 @@ function solution(relation) {
   return candidateKeys.length;
 }
 
-const cases = [
+export const cases = [
   generateTestPair(
     [
       [
@@ -88,10 +88,28 @@ const cases = [
     ],
     2, // result
   ),
+  generateTestPair(
+    [
+      [
+        ['a', '1'],
+        ['a', '2'],
+        ['b', '1'],
+        ['b', '2'],
+      ],
+    ],
+    1,
+    '단독 행이 유일성을 가지지 않는 경우',
+  ),
+  generateTestPair(
+    [
+      [
+        ['1', '2', '3'],
+        ['4', '5', '6'],
+        ['7', '8', '9'],
+        ['1', '5', '9'],
+      ], // relation
+    ],
+    3, // result
+    '여러 속성이 유일성을 가지는 경우',
+  ),
 ];
-
-cases.forEach(({ input, output }, i) => {
-  const isPassed = solution(...input) === output;
-  const message = isPassed ? '통과' : '실패';
-  console.log(`#case ${i + 1} ${message}`);
-});
