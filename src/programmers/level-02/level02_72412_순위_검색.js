@@ -41,7 +41,7 @@ const allCombinations = (arr, prefix = []) => {
   }, []);
 };
 
-function solution(info, query) {
+export function solution(info, query) {
   const languages = ['cpp', 'java', 'python', '-'];
   const positions = ['backend', 'frontend', '-'];
   const levels = ['junior', 'senior', '-'];
@@ -71,7 +71,7 @@ function solution(info, query) {
   // 이진 탐색을 위해 각 조합의 score 오름차순 정렬
   Object.values(criteriaMap).forEach(scores => scores.sort((a, b) => a - b));
 
-  const binarySearch = (sortedArr, target) => {
+  const bisectLt = (sortedArr, target) => {
     let low = 0;
     let high = sortedArr.length;
     while (low < high) {
@@ -87,11 +87,11 @@ function solution(info, query) {
   return query.map(q => {
     const [language, position, level, food, score] = parseQuery(q);
     const key = [language, position, level, food].join(' ');
-    return binarySearch(criteriaMap[key], parseInt(score, 10));
+    return bisectLt(criteriaMap[key], parseInt(score, 10));
   });
 }
 
-const cases = [
+export const cases = [
   generateTestPair(
     [
       [
@@ -113,6 +113,31 @@ const cases = [
     ],
     [1, 1, 1, 1, 2, 4],
   ),
+  generateTestPair(
+    [
+      [
+        'cpp backend junior pizza 150',
+        'java backend senior chicken 210',
+        'python frontend senior pizza 260',
+        'java backend junior chicken 90',
+        'cpp frontend senior pizza 320',
+        'java backend senior pizza 50',
+        'python backend junior chicken 80',
+        'cpp backend junior chicken 70',
+      ],
+      [
+        'cpp and backend and junior and pizza 100',
+        'java and backend and senior and chicken 200',
+        'python and frontend and senior and pizza 250',
+        'java and backend and - and - 100',
+        'cpp and - and - and pizza 200',
+        '- and backend and senior and pizza 50',
+        '- and - and - and chicken 100',
+        '- and - and senior and pizza 300',
+        '- and backend and - and pizza 100',
+        'python and - and - and - 50',
+      ],
+    ],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
+  ),
 ];
-
-console.log(solution(...cases[0].input));
