@@ -32,6 +32,7 @@ import { generateTestPair } from '../../utils.js';
  */
 
 const parseQuery = str => str.split(/\s+and\s+|\s(?=\d+)/);
+const createKey = (arr, seperator = ' ') => arr.join(seperator);
 
 const allCombinations = (arr, prefix = []) => {
   if (arr.length === 0) return [prefix];
@@ -51,12 +52,8 @@ export function solution(info, query) {
   // ⑴ 조건에 대한 모든 조합 생성
   // [ 'cpp', 'backend', 'junior', 'chicken' ], [ 'cpp', 'backend', 'junior', 'pizza' ], ...]
   const combinations = allCombinations(allConditions);
-
   // { 'cpp backend junior chicken': [], 'cpp backend junior pizza': [], ... }
-  const criteriaMap = combinations.reduce((combs, comb) => {
-    combs[comb.join(' ')] = [];
-    return combs;
-  }, {});
+  const criteriaMap = new Map(combinations.map(comb => [createKey(comb), []]));
 
   // ⑵ 점수 데이터 매핑
   // { 'cpp backend junior chicken': [260, 110], 'cpp backend junior pizza': [], ... }
@@ -64,12 +61,12 @@ export function solution(info, query) {
     const [lang, pos, lv, food, score] = entry.split(' ');
     combinations.forEach(comb => {
       const passed = [lang, pos, lv, food].every((c, i) => comb[i] === '-' || comb[i] === c);
-      if (passed) criteriaMap[comb.join(' ')].push(parseInt(score, 10));
+      if (passed) criteriaMap.get(createKey(comb)).push(parseInt(score, 10));
     });
   });
 
   // 이진 탐색을 위해 각 조합의 score 오름차순 정렬
-  Object.values(criteriaMap).forEach(scores => scores.sort((a, b) => a - b));
+  criteriaMap.forEach(scores => scores.sort((a, b) => a - b));
 
   const bisectLt = (sortedArr, target) => {
     let low = 0;
@@ -86,8 +83,8 @@ export function solution(info, query) {
   // ⑶ 이진 탐색으로 조건에 맞는 인원 검색
   return query.map(q => {
     const [language, position, level, food, score] = parseQuery(q);
-    const key = [language, position, level, food].join(' ');
-    return bisectLt(criteriaMap[key], parseInt(score, 10));
+    const key = createKey([language, position, level, food]);
+    return bisectLt(criteriaMap.get(key), parseInt(score, 10));
   });
 }
 
