@@ -1,3 +1,6 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-bitwise */
+
 import { generateTestPair } from '../../utils.js';
 
 /**
@@ -42,6 +45,18 @@ const allCombinations = (arr, prefix = []) => {
   }, []);
 };
 
+const bisectLt = (sortedArr, target) => {
+  let low = 0;
+  let high = sortedArr.length;
+  while (low < high) {
+    const mid = Math.floor((low + high) / 2);
+
+    if (sortedArr[mid] >= target) high = mid;
+    else low = mid + 1;
+  }
+  return sortedArr.length - low; // target 보다 크거나 같은 요소의 개수
+};
+
 export function solution(info, query) {
   const languages = ['cpp', 'java', 'python', '-'];
   const positions = ['backend', 'frontend', '-'];
@@ -67,18 +82,6 @@ export function solution(info, query) {
 
   // 이진 탐색을 위해 각 조합의 score 오름차순 정렬
   criteriaMap.forEach(scores => scores.sort((a, b) => a - b));
-
-  const bisectLt = (sortedArr, target) => {
-    let low = 0;
-    let high = sortedArr.length;
-    while (low < high) {
-      const mid = Math.floor((low + high) / 2);
-
-      if (sortedArr[mid] >= target) high = mid;
-      else low = mid + 1;
-    }
-    return sortedArr.length - low; // target 보다 크거나 같은 요소의 개수
-  };
 
   // ⑶ 이진 탐색으로 조건에 맞는 인원 검색
   return query.map(q => {
@@ -106,9 +109,9 @@ export const cases = [
         '- and backend and senior and - 150',
         '- and - and - and chicken 100',
         '- and - and - and - 150',
-      ],
+      ], // input
     ],
-    [1, 1, 1, 1, 2, 4],
+    [1, 1, 1, 1, 2, 4], // output
   ),
   generateTestPair(
     [
@@ -138,3 +141,49 @@ export const cases = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 2],
   ),
 ];
+
+/* ------------------------------------------------------------------------
+비트마스크를 활용한 레퍼런스(가독성을 위해 일부 코드 개선/수정)
+* 참고하면 좋은 글: https://bit.ly/4dL6ywz
+* 비트 마스크: 이진수의 각 비트를 조작하여 특정한 상태나 값을 표현하는 방법
+------------------------------------------------------------------------  */
+
+function convertToBitmaskAndScore(list, table, adjust = x => x) {
+  const bitmask = list.slice(0, -1).reduce((acc, key) => (acc << 3) + adjust(table[key.at(0)]), 0);
+  const score = parseInt(list.at(-1), 10);
+  return [bitmask, score];
+}
+
+function reference(info, query) {
+  // 각 조건을 최대 3비트로 표현한 테이블 : 3 = 011(2), 5 = 101(2), 6 = 110(2), 0 = 000(2)
+  // 각 조건의 최대값은 7 = 111(2) / 참고로 십진수 8부터 이진수는 1000이 돼서 4비트를 넘어감
+  const table = { c: 3, j: 5, p: 6, b: 6, f: 5, s: 6, '-': 0 }; // c, j 등은 모든 조건의 앞 글자
+
+  // 3비트로 변환한 info/query를 AND 연산자로 비교하기 위해 info 조건은 x => 7 - x 함수를 통해 역순으로 변환
+  // 여기서 역순 변환은 각 비트 그룹의 최대값인 7을 기준으로 값을 반대로 변환하는 작업을 가리킴
+  // 각 조건의 역순을 2진수로 표현하면 -> 4(7-3) = 100(2), 2(7-5) = 010(2), 1(7-6) = 001(2), 0(7-0) = 111(2)
+  // 이런식으로 변환해두면 & AND 연산자(둘 다 1이면 1, 아니면 0)로 비교했을 때 0이 나오면 동일한 값으로 간주할 수 있음
+  // 예를들어 3을 역순(4)으로 변환한 2진수가 100이고 3의 이진수가 011일 때 AND 비트 연산의 결과는 0이므로 동일한 값
+  info = info.map(item => convertToBitmaskAndScore(item.split(' '), table, x => 7 - x)); // [[ 1105, 150 ], [ 652, 210 ], ...]
+  query = query.map(item => convertToBitmaskAndScore(parseQuery(item), table)); // [[ 2990, 100 ], [ 3443, 200 ], ...]
+
+  // Map { 1105: [ 150 ], 652: [ 210, 150 ], ... }
+  const map = info.reduce((m, [bitmask, score]) => {
+    if (!m.has(bitmask)) m.set(bitmask, []);
+    m.get(bitmask).push(score);
+    return m;
+  }, new Map());
+
+  const sortedMapEntries = [...map].map(([bitmask, scores]) => [
+    bitmask,
+    scores.sort((a, b) => a - b), // score 오름차순 정렬
+  ]);
+
+  return query.map(([queryBitmask, minScore]) =>
+    sortedMapEntries.reduce((count, [bitmask, scores]) => {
+      // 각 조건을 3비트 역순으로 표현한 bitmask와, 3비트로 표현한 queryBitmask에
+      // AND 연산을 수행하여 결과가 0이면 동일한 값, 1이면 동일하지 않은 값으로 간주
+      return count + (bitmask & queryBitmask ? 0 : bisectLt(scores, minScore));
+    }, 0),
+  );
+}
