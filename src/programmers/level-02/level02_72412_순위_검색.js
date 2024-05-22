@@ -35,7 +35,7 @@ import { generateTestPair } from '../../utils.js';
  */
 
 const parseQuery = str => str.split(/\s+and\s+|\s(?=\d+)/);
-const createKey = (arr, seperator = ' ') => arr.join(seperator);
+const createKey = (arr, separator = ' ') => arr.join(separator);
 
 const allCombinations = (arr, prefix = []) => {
   if (arr.length === 0) return [prefix];
@@ -147,14 +147,26 @@ export const cases = [
 * 참고하면 좋은 글: https://bit.ly/4dL6ywz
 * 비트 마스크: 이진수의 각 비트를 조작하여 특정한 상태나 값을 표현하는 방법
 ------------------------------------------------------------------------  */
-
 function convertToBitmaskAndScore(list, table, adjust = x => x) {
-  const bitmask = list.slice(0, -1).reduce((acc, key) => (acc << 3) + adjust(table[key.at(0)]), 0);
+  const bitmask = list.slice(0, -1).reduce((acc, key) => {
+    // 매 순회마다 3비트 확보 후(acc << 3), 1번째 글자를 table과 맵핑한 숫자 저장
+    // 예를들어 순회마다 첫번째 글자가 j(5), b(6), j(5), p(6) 라면
+    // acc << 3 = 0 -> 0 + 101(j)
+    // acc << 3 = 101000       -> 101000 + 110(b) = 101110
+    // acc << 3 = 101110000    -> 101110000 + 101(j) = 101110101
+    // acc << 3 = 101110101000 -> 101110101000 + 110(p) = 101110101110 (10진수 2990)
+    // 최종 결과는 101110101110이 되고(10진수 2990), 각 비트 그룹에 아래처럼 문자를 저장한 것과 동일
+    // 101(j) 110(b) 101(j) 110(p)
+    // 만약 비트를 확보하지 않는다면 모든 숫자가 겹쳐서 더해지므로 비트 수준에 문자를 저장할 수 없다
+    // e.g., 0 + 101 + 110 + 101 + 110 = 10110(십진수 22)
+    const firstLetter = key.at(0);
+    return (acc << 3) + adjust(table[firstLetter]);
+  }, 0);
   const score = parseInt(list.at(-1), 10);
   return [bitmask, score];
 }
 
-function reference(info, query) {
+export function reference(info, query) {
   // 각 조건을 최대 3비트로 표현한 테이블 : 3 = 011(2), 5 = 101(2), 6 = 110(2), 0 = 000(2)
   // 각 조건의 최대값은 7 = 111(2) / 참고로 십진수 8부터 이진수는 1000이 돼서 4비트를 넘어감
   const table = { c: 3, j: 5, p: 6, b: 6, f: 5, s: 6, '-': 0 }; // c, j 등은 모든 조건의 앞 글자
