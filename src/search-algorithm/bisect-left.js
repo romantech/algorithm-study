@@ -1,11 +1,10 @@
 /**
- * Finds the leftmost index at which the element can be inserted in a sorted array
- * while maintaining its sorted order.
+ * Finds the insertion point for a target value in a sorted array to maintain sorted order.
+ * The returned insertion point is before any existing entries of the target in the array.
  *
- * @param {Array} sortedArr - The sorted array to search in.
- * @param {number} target - The element to search for.
- * @return {number} The leftmost index where the element can be inserted.
- * {@link https://colorfilter.notion.site/TIL-Binary-Search-Algorithm-671538a6b47443d9a2679c7ba1b248c3 Romantech} - explanation
+ * @param {number[]} sortedArr - The array in which to search, assumed to be sorted.
+ * @param {number} target - The value to search for in the array.
+ * @returns {number} The index at which the target should be inserted to maintain sorted order.
  */
 const bisectLeft = (sortedArr, target) => {
   let left = 0;

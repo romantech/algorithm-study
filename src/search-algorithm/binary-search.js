@@ -1,10 +1,11 @@
 /**
- * Performs a binary search on a sorted array to find the index of a target element.
+ * Performs a binary search to find the index of a target value in a sorted array.
+ * If the target value is found, returns the index of the target.
+ * If the target value is not found, returns -1.
  *
- * @param {Array} sortedArr - The sorted array to search in.
- * @param {*} target - The target element to find.
- * @return {number} The index of the target element in the array, or -1 if not found.
- * {@link https://colorfilter.notion.site/TIL-Binary-Search-Algorithm-671538a6b47443d9a2679c7ba1b248c3 Romantech} - explanation
+ * @param {number[]} sortedArr - The array in which to search, assumed to be sorted.
+ * @param {number} target - The value to search for in the array.
+ * @returns {number} The index of the target if found; otherwise, -1.
  */
 const binarySearch = (sortedArr, target) => {
   let left = 0;
