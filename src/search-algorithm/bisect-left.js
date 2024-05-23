@@ -5,6 +5,7 @@
  * @param {Array} sortedArr - The sorted array to search in.
  * @param {number} target - The element to search for.
  * @return {number} The leftmost index where the element can be inserted.
+ * {@link https://colorfilter.notion.site/TIL-Binary-Search-Algorithm-671538a6b47443d9a2679c7ba1b248c3 Romantech} - explanation
  */
 const bisectLeft = (sortedArr, target) => {
   let left = 0;

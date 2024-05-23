@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-bitwise */
 
-import { countGreaterOrEqual } from '../../search/index.js';
+import { countGreaterOrEqual } from '../../search-algorithm/index.js';
 import { generateTestPair } from '../../utils.js';
 
 /**

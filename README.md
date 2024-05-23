@@ -17,6 +17,13 @@
 - [병합 정렬](/src/sort-algorithm/mergeSort.js)
 - [퀵 정렬](/src/sort-algorithm/quickSort.js)
 
+## 탐색 알고리즘
+
+- [이진 탐색](/src/search-algorithm/binary-search.js)
+- [좌측 이분 탐색 (bisect-left)](/src/search-algorithm/bisect-left.js)
+- [우측 이분 탐색 (bisect-right)](/src/search-algorithm/bisect-right.js)
+- [경계 요소 카운트 (bounds-counter)](/src/search-algorithm/bounds-counter.js)
+
 ## 자료 구조
 
 - [우선순위 큐](/src/data-structure/priority-queue.js)
