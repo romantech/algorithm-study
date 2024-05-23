@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-bitwise */
 
+import { countGreaterOrEqual } from '../../search/index.js';
 import { generateTestPair } from '../../utils.js';
 
 /**
@@ -45,18 +46,6 @@ const allCombinations = (arr, prefix = []) => {
   }, []);
 };
 
-const bisectLt = (sortedArr, target) => {
-  let low = 0;
-  let high = sortedArr.length;
-  while (low < high) {
-    const mid = Math.floor((low + high) / 2);
-
-    if (sortedArr[mid] >= target) high = mid;
-    else low = mid + 1;
-  }
-  return sortedArr.length - low; // target 보다 크거나 같은 요소의 개수
-};
-
 export function solution(info, query) {
   const languages = ['cpp', 'java', 'python', '-'];
   const positions = ['backend', 'frontend', '-'];
@@ -87,7 +76,7 @@ export function solution(info, query) {
   return query.map(q => {
     const [language, position, level, food, score] = parseQuery(q);
     const key = createKey([language, position, level, food]);
-    return bisectLt(criteriaMap.get(key), parseInt(score, 10));
+    return countGreaterOrEqual(criteriaMap.get(key), parseInt(score, 10));
   });
 }
 
@@ -195,7 +184,7 @@ export function reference(info, query) {
     sortedMapEntries.reduce((count, [bitmask, scores]) => {
       // 각 조건을 3비트 역순으로 표현한 bitmask와, 3비트로 표현한 queryBitmask에
       // AND 연산을 수행하여 결과가 0이면 동일한 값, 1이면 동일하지 않은 값으로 간주
-      return count + (bitmask & queryBitmask ? 0 : bisectLt(scores, minScore));
+      return count + (bitmask & queryBitmask ? 0 : countGreaterOrEqual(scores, minScore));
     }, 0),
   );
 }
