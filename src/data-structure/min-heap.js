@@ -8,7 +8,7 @@ import { swap } from '../utils.js';
  * Priority values determine the position within the heap, with the lowest value at the front.
  * @class
  * @property {Object[]} heap - An array holding the items in the heap.
- * @see {@link https://www.geeksforgeeks.org/min-heap-in-javascript GeeksforGeeks} - Code reference.
+ * @see [GeeksforGeeks]{@link https://www.geeksforgeeks.org/min-heap-in-javascript} - Code Reference
  */
 class MinHeap {
   constructor() {
