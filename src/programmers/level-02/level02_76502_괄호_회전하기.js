@@ -25,30 +25,26 @@ import { generateTestPair } from '../../utils.js';
  * ... return 3
  * */
 
-const bracketPairs = { '[': ']', '(': ')', '{': '}' };
+const BRACKET_PAIRS = { '[': ']', '(': ')', '{': '}' };
 
 function solution(s) {
-  let copiedStr = s;
-
   const checkBracketsBalance = str => {
     const stack = [];
 
-    for (let i = 0; i < str.length; i += 1) {
-      const cur = str[i];
-      const last = stack.at(-1);
-
-      if (bracketPairs[last] === cur) stack.pop();
-      else stack.push(cur);
+    for (const char of str) {
+      if (BRACKET_PAIRS[stack.at(-1)] === char) stack.pop();
+      else stack.push(char);
     }
 
     return stack.length === 0;
   };
 
   let result = 0;
+  let str = s;
 
   for (let i = 0; i < s.length; i += 1) {
-    if (checkBracketsBalance(copiedStr)) result++;
-    copiedStr = copiedStr.slice(1) + copiedStr[0];
+    if (checkBracketsBalance(str)) result++;
+    str = str.slice(1) + str[0];
   }
 
   return result;
