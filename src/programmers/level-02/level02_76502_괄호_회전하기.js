@@ -25,9 +25,33 @@ import { generateTestPair } from '../../utils.js';
  * ... return 3
  * */
 
+const bracketPairs = { '[': ']', '(': ')', '{': '}' };
+
 function solution(s) {
-  const answer = -1;
-  return answer;
+  let copiedStr = s;
+
+  const checkBracketsBalance = str => {
+    const stack = [];
+
+    for (let i = 0; i < str.length; i += 1) {
+      const cur = str[i];
+      const last = stack.at(-1);
+
+      if (bracketPairs[last] === cur) stack.pop();
+      else stack.push(cur);
+    }
+
+    return stack.length === 0;
+  };
+
+  let result = 0;
+
+  for (let i = 0; i < s.length; i += 1) {
+    if (checkBracketsBalance(copiedStr)) result++;
+    copiedStr = copiedStr.slice(1) + copiedStr[0];
+  }
+
+  return result;
 }
 
 const cases = [
@@ -37,4 +61,8 @@ const cases = [
   generateTestPair(['}}}'], 0),
 ];
 
-console.log(solution(...cases[0]));
+cases.forEach(({ input, output }, i) => {
+  const isPassed = solution(...input) === output;
+  const msg = isPassed ? '통과' : '실패';
+  console.log(`${i + 1}번 케이스 ${msg}`);
+});
