@@ -24,7 +24,25 @@ import { generateTestPair } from '../../utils.js';
  * 총 만들 수 있는 조합 = 3905가지
  */
 
-function solution(word) {}
+const getSortedCombs = (maxLen = 5) => {
+  const vowels = ['A', 'E', 'I', 'O', 'U'];
+
+  const make = (len, str = '') => {
+    if (len === str.length) return str;
+    return vowels.flatMap(v => make(len, str + v));
+  };
+
+  const combs = [];
+  for (let i = 1; i <= maxLen; i++) combs.push(...make(i));
+
+  return combs.sort();
+};
+
+const combs = getSortedCombs();
+
+function solution(word) {
+  return combs.indexOf(word) + 1;
+}
 
 const cases = [
   generateTestPair(['AAAAE'], 6),
@@ -32,3 +50,9 @@ const cases = [
   generateTestPair(['I'], 1563),
   generateTestPair(['EIO'], 1189),
 ];
+
+cases.forEach(({ input, output }, i) => {
+  const isPassed = solution(...input) === output;
+  const msg = isPassed ? '통과' : '실패';
+  console.log(`${i + 1}번 케이스 ${msg}`);
+});
