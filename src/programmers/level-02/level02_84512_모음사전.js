@@ -19,17 +19,18 @@ import { generateTestPair } from '../../utils.js';
  * 1자리로 만들 수 있는 조합: 1, 2, 3, 4, 5 = 5가지
  * 2자리로 만들 수 있는 조합: 11, 12, ..., 51, 52, 53, 54, 55 = 5^5 25가지
  * 3자리 조합: 5^3 = 125가지
- * 4자리 조합: 5^4 = 615가지
+ * 4자리 조합: 5^4 = 625가지
  * 5자리 조합: 5^5 = 3125가지
  * 총 만들 수 있는 조합 = 3905가지
  */
 
-const getSortedCombs = (maxLen = 5) => {
-  const vowels = ['A', 'E', 'I', 'O', 'U'];
+const vowelIdxMap = { A: 0, E: 1, I: 2, O: 3, U: 4 };
+const vowelList = Object.keys(vowelIdxMap);
 
+const getSortedCombs = (maxLen = 5) => {
   const make = (len, str = '') => {
     if (len === str.length) return str;
-    return vowels.flatMap(v => make(len, str + v));
+    return vowelList.flatMap(v => make(len, str + v));
   };
 
   const combs = [];
@@ -39,9 +40,30 @@ const getSortedCombs = (maxLen = 5) => {
 };
 
 const combs = getSortedCombs();
+// console.log(combs.reduce((acc, cur, i) => acc.set(i + 1, cur), new Map()));
 
 function solution(word) {
   return combs.indexOf(word) + 1;
+}
+
+function reference(word) {
+  // 각 자리의 가중치를 계산합니다.
+  // 1번째 자리 가중치 = 1 | 예: AAAAA(5) -> AAAAE (5+1) -> AAAAI (6+1)
+  // 2번째 자리 가중치 = 6 = 1번째 자리 가중치 * 5(모음 개수) + 1   | 예: AAAA(4) -> AAAE (4+6*1) -> AAAI (4+6*2)
+  // 3번째 자리 가중치 = 31 = 2번째 자리 가중치 * 5(모음 개수) + 1  | 예: AAA(3) -> AAE (3+31*1) -> AAI (3+31*2)
+  // 4번째 자리 가중치 = 156 = 3번째 자리 가중치 * 5(모음 개수) + 1 | 예: AA(2) -> AE (2+156*1) -> AI (2+156*2)
+  // 5번째 자리 가중치 = 781 = 4번째 자리 가중치 * 5(모음 개수) + 1 | 예: A(1) -> E (1+781*1) -> I (1+781*2)
+  const weightByPosition = vowelList.reduce(acc => {
+    const prevWeight = acc[0] ?? 0;
+    return [prevWeight * vowelList.length + 1].concat(acc);
+  }, []); // [781, 156, 31, 6, 1]
+
+  return [...word].reduce((totalWeight, char, i) => {
+    // 각 자리의 가중치를 계산하여 누적 가중치 계산
+    // 각 자리의 문자 인덱스에 해당하는 가중치에 해당 자리의 가중치를 곱하고,
+    // 누적 가중치에 더해준다. 마지막으로 +1을 더하여 각 자리수까지 포함시킵니다.
+    return totalWeight + vowelIdxMap[char] * weightByPosition[i] + 1;
+  }, 0);
 }
 
 const cases = [
