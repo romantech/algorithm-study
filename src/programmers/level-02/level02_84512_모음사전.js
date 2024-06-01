@@ -47,20 +47,28 @@ export function solution(word) {
 }
 
 export function reference(word) {
-  // 각 자리의 가중치 계산
-  // 1번째 자리 가중치 = 1 | 예: AAAAA(5) -> AAAAE (5+1) -> AAAAI (6+1)
-  // 2번째 자리 가중치 = 6 = 1번째 자리 가중치 * 5(모음 개수) + 1   | 예: AAAA(4) -> AAAE (4+6*1) -> AAAI (4+6*2)
-  // 3번째 자리 가중치 = 31 = 2번째 자리 가중치 * 5(모음 개수) + 1  | 예: AAA(3) -> AAE (3+31*1) -> AAI (3+31*2)
-  // 4번째 자리 가중치 = 156 = 3번째 자리 가중치 * 5(모음 개수) + 1 | 예: AA(2) -> AE (2+156*1) -> AI (2+156*2)
-  // 5번째 자리 가중치 = 781 = 4번째 자리 가중치 * 5(모음 개수) + 1 | 예: A(1) -> E (1+781*1) -> I (1+781*2)
+  /**
+   * 1~5자리의 가중치 계산. 5를 곱하는 이유는 모음 개수가 {A,E,I,O,U} 5개이기 때문
+   *
+   * 1번째 자리 가중치 = 1 | 예: AAAAA(5) -> AAAAE (5+1) -> AAAAI (5+1+1)
+   * 2번째 자리 가중치 = 6 = 1번째 자리 가중치 * 5 + 1   | 예: AAAA- (4+6*0)   -> AAAE- (4+6*1)   -> AAAI- (4+6*2) ...
+   * 3번째 자리 가중치 = 31 = 2번째 자리 가중치 * 5 + 1  | 예: AAA-- (3+31*0)  -> AAE-- (3+31*1)  -> AAI-- (3+31*2) ...
+   * 4번째 자리 가중치 = 156 = 3번째 자리 가중치 * 5 + 1 | 예: AA--- (2+156*0) -> AE--- (2+156*1) -> AI--- (2+156*2) ...
+   * 5번째 자리 가중치 = 781 = 4번째 자리 가중치 * 5 + 1 | 예: A---- (1+781*0) -> E---- (1+781*1) -> I---- (1+781*2) ...
+   *
+   * 예를들어 AAAA-는 4번째에 위치해 있고 AAAE-는 2번째 자리의 가중치 6을 더한 10번째에 위치해 있다는 의미
+   */
   const weightByPosition = vowelList.reduce(acc => {
     const prevWeight = acc[0] ?? 0;
     return [prevWeight * vowelList.length + 1].concat(acc);
   }, []); // [781, 156, 31, 6, 1]
 
   return [...word].reduce((totalWeight, char, i) => {
-    // 각 자리의 문자 인덱스(vowelIdxMap[char])를 가중치(weightPosition[i])에 곱하고,
-    // 누적 가중치(totalWeight)에 더해준다. 마지막으로 +1을 더해서 각 자리수까지 포함시킨다.
+    /**
+     * 각 문자를 A=0, E=1, I=2, O=3, U=4로 설정하고 각 자리의 가중치를 곱하는 방식으로 순서를 계산할 수 있음
+     * 각 자리의 문자 인덱스(vowelIdxMap[char])를 가중치(weightPosition[i])에 곱하고,
+     * 누적 가중치(totalWeight)에 더해준다. 마지막으로 +1을 더해서 각 자리수까지 포함시킨다.
+     */
     return totalWeight + vowelIdxMap[char] * weightByPosition[i] + 1;
   }, 0);
 }
