@@ -42,11 +42,11 @@ const getSortedCombs = (maxLen = 5) => {
 const combs = getSortedCombs();
 // console.log(combs.reduce((acc, cur, i) => acc.set(i + 1, cur), new Map()));
 
-function solution(word) {
+export function solution(word) {
   return combs.indexOf(word) + 1;
 }
 
-function reference(word) {
+export function reference(word) {
   // 각 자리의 가중치를 계산합니다.
   // 1번째 자리 가중치 = 1 | 예: AAAAA(5) -> AAAAE (5+1) -> AAAAI (6+1)
   // 2번째 자리 가중치 = 6 = 1번째 자리 가중치 * 5(모음 개수) + 1   | 예: AAAA(4) -> AAAE (4+6*1) -> AAAI (4+6*2)
@@ -66,15 +66,10 @@ function reference(word) {
   }, 0);
 }
 
-const cases = [
+export const cases = [
   generateTestPair(['AAAAE'], 6),
   generateTestPair(['AAAE'], 10),
   generateTestPair(['I'], 1563),
   generateTestPair(['EIO'], 1189),
+  generateTestPair(['UUUUU'], 3905),
 ];
-
-cases.forEach(({ input, output }, i) => {
-  const isPassed = solution(...input) === output;
-  const msg = isPassed ? '통과' : '실패';
-  console.log(`${i + 1}번 케이스 ${msg}`);
-});
