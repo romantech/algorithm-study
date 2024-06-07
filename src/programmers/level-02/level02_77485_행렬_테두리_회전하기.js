@@ -18,8 +18,60 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(rows, columns, queries) {
-  const answer = [];
-  return answer;
+  const result = [];
+
+  const board = Array.from({ length: rows }, (_row, i) =>
+    Array.from({ length: columns }, (_col, j) => i * columns + j + 1),
+  );
+
+  const directions = [
+    [0, 1], // 오른쪽
+    [1, 0], // 아래
+    [0, -1], // 왼쪽
+    [-1, 0], // 위
+  ];
+
+  const getDelta = (query, dirIndex) => {
+    switch (dirIndex) {
+      case 0:
+        return query[3] - query[1];
+      case 1:
+        return query[2] - query[0];
+      case 2:
+        return query[3] - query[1];
+      case 3:
+        return query[2] - query[0];
+      default:
+        return 0;
+    }
+  };
+
+  for (const query of queries) {
+    const [x1, y1, x2, y2] = query.map(coord => coord - 1);
+    let prevValue = board[x1][y1];
+    let minValue = prevValue;
+
+    let curX = x1;
+    let curY = y1;
+
+    for (let dirIndex = 0; dirIndex < 4; dirIndex++) {
+      const [dx, dy] = directions[dirIndex];
+      const moveCount = getDelta([x1, y1, x2, y2], dirIndex);
+
+      for (let move = 0; move < moveCount; move++) {
+        curX += dx;
+        curY += dy;
+        const temp = board[curX][curY];
+        board[curX][curY] = prevValue;
+        prevValue = temp;
+        minValue = Math.min(minValue, temp);
+      }
+    }
+
+    result.push(minValue);
+  }
+
+  return result;
 }
 
 const cases = [
@@ -50,3 +102,5 @@ const cases = [
   ),
   generateTestPair([100, 97, [[1, 1, 100, 97]]], [1]),
 ];
+
+console.log(solution(...cases[2].input));
