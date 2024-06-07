@@ -17,7 +17,7 @@ import { generateTestPair } from '../../utils.js';
  * 그 상태에서 두 번째 회전을 실행했을 때 이동한 숫자 중 최솟값을 계산하면 됨
  */
 
-function solution(rows, columns, queries) {
+export function solution(rows, columns, queries) {
   const result = [];
 
   const board = Array.from({ length: rows }, (_row, i) =>
@@ -74,7 +74,7 @@ function solution(rows, columns, queries) {
   return result;
 }
 
-const cases = [
+export const cases = [
   generateTestPair(
     [
       6,
@@ -102,5 +102,3 @@ const cases = [
   ),
   generateTestPair([100, 97, [[1, 1, 100, 97]]], [1]),
 ];
-
-console.log(solution(...cases[2].input));
