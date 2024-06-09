@@ -3,7 +3,7 @@ import { generateTestPair } from '../../utils.js';
 /**
  * [요구사항]
  * 양의 정수 x에 대한 함수 f(x)는 아래와 같이 정의:
- * x 보다 크고 x와 비트가 1~2개 다른 수들 중에서 제일 작은 수
+ * x 보다 크고 x와 비트가 1개 혹은 2개 다른 수들 중에서 제일 작은 수
  * 예를들어 f(2) = 3이 된다.
  * 2 이진수 = 0010
  * 3 이진수 = 0011 (다른 비트의 개수 1)
@@ -21,8 +21,19 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(numbers) {
-  const answer = [];
-  return answer;
+  return numbers.map(n => {
+    if (n % 2 === 0) return n + 1;
+    const bit = '0' + n.toString(2);
+    const idx = bit.lastIndexOf('0');
+    const min = bit.slice(0, idx) + '10' + bit.slice(idx + 2);
+    return parseInt(min, 2);
+  });
 }
 
-const cases = [generateTestPair([[2, 7]], [3, 11])];
+const cases = [generateTestPair([[2, 7]], [3, 11]), generateTestPair([[99, 9231]], [101, 9239])];
+
+cases.forEach(({ input, output }, i) => {
+  const result = solution(...input);
+  const msg = result.every((r, idx) => r === output[idx]) ? '통과' : '실패';
+  console.log(`${i + 1}번 케이스 ${msg}`);
+});
