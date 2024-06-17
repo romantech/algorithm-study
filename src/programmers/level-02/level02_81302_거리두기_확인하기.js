@@ -5,7 +5,9 @@ import { generateTestPair } from '../../utils.js';
  * 대기실은 5개, 각 대기실은 5x5 크기
  * 응시자들은 맨해튼 거리 2 이하로 앉으면 안됨
  * 맨해튼 거리(두 포인트 사이의 가장 긴 경로) = |(x1 - x2)| + |(y1 - y2)|
- * 응시자가 앉아있는 자리 사이에 파티션이 있으면 허용
+ *
+ * 응시자 둘이 사이에 파티션이 있으면 맨해튼 거리 2여도 허용 e.g. P(0,0) - X(0,1) - P(0,2)
+ * 응시자 둘이 사선으로 앉아 있는 경우 둘 사이에 파티션 있으면 허용 e.g. P(0,0) P(1,1) 사이에 X(1,0) X(0,1) 파티션 존재
  *
  * 응시자가 앉아있는 자리 = P
  * 빈 테이블 = O
@@ -13,11 +15,67 @@ import { generateTestPair } from '../../utils.js';
  *
  * 응시자, 대기실 정보를 담은 2차원 문자열 배열 places가 매개변수로 주어졌을 때,
  * 각 대기실별로 거리두기를 지키고 있으면 1, 한 명이라도 지키지 않으면 0을 배열에 담아서 반환
+ *
+ * [풀이]
+ * 참고하면 좋은 링크: https://jisunshine.tistory.com/148
  */
 
+function checkDistance(place) {
+	// 상하좌우, 대각선, 2칸 거리의 모든 방향을 나타내는 배열
+	const directions = [
+		[-1, 0], // 상 (거리 1)
+		[1, 0], // 하 (거리 1)
+		[0, -1], // 좌 (거리 1)
+		[0, 1], // 우 (거리 1)
+		[-1, -1], // 대각선 좌상 (거리 2)
+		[-1, 1], // 대각선 우상 (거리 2)
+		[1, -1], // 대각선 좌하 (거리 2)
+		[1, 1], // 대각선 우하 (거리 2)
+		[-2, 0], // 2칸 상 (거리 2)
+		[2, 0], // 2칸 하 (거리 2)
+		[0, -2], // 2칸 좌 (거리 2)
+		[0, 2], // 2칸 우 (거리 2)
+	];
+
+	// 5x5 격자의 각 칸을 순회
+	for (let r = 0; r < 5; r++) {
+		for (let c = 0; c < 5; c++) {
+			// 현재 칸에 사람이 있는 경우
+			if (place[r][c] === 'P') {
+				// 각 방향을 순회하며 새로운 위치 계산
+				for (const [dr, dc] of directions) {
+					const nr = r + dr;
+					const nc = c + dc;
+					// 새로운 위치가 유효한지 확인
+					if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5) {
+						// 새로운 위치에 사람이 있는지 확인
+						if (place[nr][nc] === 'P') {
+							const distance = Math.abs(dr) + Math.abs(dc);
+							// 1칸 거리일 때 규칙 위반
+							if (distance === 1) return false;
+							// 2칸 거리일 때 규칙 확인
+							if (distance === 2) {
+								// 상하좌우로 2칸 떨어진 경우 중간에 파티션이 있어야 함
+								if (dr === 0 || dc === 0) {
+									// 현재 좌표가 (5,5)이고 비교하는 곳이 (5,7) 이라면 midRow=(5+5)/2=5, midCol=(5+7)/2=6
+									// 중간 위치에 파티션 없으면 규칙 위반
+									if (place[(r + nr) / 2][(c + nc) / 2] !== 'X') return false;
+								}
+								// 대각선으로 2칸 떨어진 경우 두 위치 사이에 파티션 있어야 함
+								else if (place[r][nc] !== 'X' || place[nr][c] !== 'X') return false;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	// 모든 규칙을 지킨 경우 true 반환
+	return true;
+}
+
 function solution(places) {
-	const answer = [];
-	return answer;
+	return places.map((place) => (checkDistance(place) ? 1 : 0));
 }
 
 const cases = [
@@ -34,3 +92,5 @@ const cases = [
 		[1, 0, 1, 1, 1], // result
 	),
 ];
+
+console.log(solution(...cases[0].input));
