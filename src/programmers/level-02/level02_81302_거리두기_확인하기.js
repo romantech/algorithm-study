@@ -18,8 +18,6 @@ import { generateTestPair } from '../../utils.js';
  * 응시자, 대기실 정보를 담은 2차원 문자열 배열 places가 매개변수로 주어졌을 때,
  * 각 대기실별로 거리두기를 지키고 있으면 1, 한 명이라도 지키지 않으면 0을 배열에 담아서 반환
  *
- * [풀이]
- * 참고하면 좋은 링크: https://jisunshine.tistory.com/148
  */
 
 const MAX_SIZE = 5;
@@ -49,7 +47,9 @@ const LONG_DIRECTIONS = [
 
 const WHOLE_DIR = [...STRAIGHT_DIRECTIONS, ...DIAGONAL_DIRECTIONS, ...LONG_DIRECTIONS];
 
-// 반복적 접근 방식
+/**
+ * [반복적 접근 방식]
+ */
 function iterative(place) {
 	// 상하좌우, 대각선, 2칸 거리의 모든 방향을 나타내는 배열
 
@@ -90,11 +90,15 @@ function iterative(place) {
 	return true;
 }
 
-// bfs를 이용한 접근 방식
-// 1. 거리 1 상하좌우 확인
-// 1-2. X면 거리 2 대각선 자리에 어떤 값이 와도 상관없으므로 OK
-// 1-3. O면, 해당 자리를 기준으로 거리 1에 P가 있으면 Not OK
-// 1-4. P면, Not OK
+/**
+ * [bfs를 이용한 접근 방식]
+ * 1. 거리 1 상하좌우 확인
+ * 1-2. X면 거리 2 대각선 자리에 어떤 값이 와도 상관없으므로 OK
+ * 1-3. O면, 해당 자리를 기준으로 거리 1에 P가 있으면 Not OK
+ * 1-4. P면, Not OK
+ *
+ * {@link https://jisunshine.tistory.com/148 참고하면 좋은 글}
+ */
 function bfs(place) {
 	const isSafeDistance = ([startRow, startCol]) => {
 		const queue = [[startRow, startCol]];
