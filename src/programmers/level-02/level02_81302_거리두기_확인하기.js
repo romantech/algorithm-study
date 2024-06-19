@@ -23,24 +23,35 @@ import { generateTestPair } from '../../utils.js';
  */
 
 const MAX_SIZE = 5;
+const isWithinRange = (r, c) => r >= 0 && c >= 0 && r < MAX_SIZE && c < MAX_SIZE;
+const getManhattanDistance = (r1, c1, r2, c2) => Math.abs(r1 - r2) + Math.abs(c1 - c2);
+
+const STRAIGHT_DIRECTIONS = [
+	[-1, 0], // 상 (거리 1)
+	[1, 0], // 하 (거리 1)
+	[0, -1], // 좌 (거리 1)
+	[0, 1], // 우 (거리 1)
+];
+
+const DIAGONAL_DIRECTIONS = [
+	[-1, -1], // 대각선 좌상 (거리 2)
+	[-1, 1], // 대각선 우상 (거리 2)
+	[1, -1], // 대각선 좌하 (거리 2)
+	[1, 1], // 대각선 우하 (거리 2)
+];
+
+const LONG_DIRECTIONS = [
+	[-2, 0], // 2칸 상 (거리 2)
+	[2, 0], // 2칸 하 (거리 2)
+	[0, -2], // 2칸 좌 (거리 2)
+	[0, 2], // 2칸 우 (거리 2)
+];
+
+const WHOLE_DIR = [...STRAIGHT_DIRECTIONS, ...DIAGONAL_DIRECTIONS, ...LONG_DIRECTIONS];
 
 // 반복적 접근 방식
 function iterative(place) {
 	// 상하좌우, 대각선, 2칸 거리의 모든 방향을 나타내는 배열
-	const directions = [
-		[-1, 0], // 상 (거리 1)
-		[1, 0], // 하 (거리 1)
-		[0, -1], // 좌 (거리 1)
-		[0, 1], // 우 (거리 1)
-		[-1, -1], // 대각선 좌상 (거리 2)
-		[-1, 1], // 대각선 우상 (거리 2)
-		[1, -1], // 대각선 좌하 (거리 2)
-		[1, 1], // 대각선 우하 (거리 2)
-		[-2, 0], // 2칸 상 (거리 2)
-		[2, 0], // 2칸 하 (거리 2)
-		[0, -2], // 2칸 좌 (거리 2)
-		[0, 2], // 2칸 우 (거리 2)
-	];
 
 	// 5x5 격자의 각 칸을 순회
 	for (let r = 0; r < MAX_SIZE; r++) {
@@ -48,11 +59,11 @@ function iterative(place) {
 			// 현재 칸에 사람이 있는 경우
 			if (place[r][c] === 'P') {
 				// 각 방향을 순회하며 새로운 위치 계산
-				for (const [dr, dc] of directions) {
+				for (const [dr, dc] of WHOLE_DIR) {
 					const nr = r + dr;
 					const nc = c + dc;
 					// 새로운 위치가 유효한지 확인
-					if (nr >= 0 && nr < MAX_SIZE && nc >= 0 && nc < MAX_SIZE) {
+					if (isWithinRange(nr, nc)) {
 						// 새로운 위치에 사람이 있는지 확인
 						if (place[nr][nc] === 'P') {
 							const distance = Math.abs(dr) + Math.abs(dc);
@@ -85,29 +96,17 @@ function iterative(place) {
 // 1-3. O면, 해당 자리를 기준으로 거리 1에 P가 있으면 Not OK
 // 1-4. P면, Not OK
 function bfs(place) {
-	const directions = [
-		[-1, 0], // 상
-		[1, 0], // 하
-		[0, -1], // 좌
-		[0, 1], // 우
-	];
-
-	// 맨해튼 거리 계산
-	const getManhattanDistance = (r1, c1, r2, c2) => {
-		return Math.abs(r1 - r2) + Math.abs(c1 - c2);
-	};
-
 	const isSafeDistance = ([startRow, startCol]) => {
 		const queue = [[startRow, startCol]];
 
 		while (queue.length > 0) {
 			const [r, c] = queue.shift();
-			for (const [dr, dc] of directions) {
+			for (const [dr, dc] of STRAIGHT_DIRECTIONS) {
 				const nr = dr + r;
 				const nc = dc + c;
 
 				// 범위 벗어났을 때
-				if (!place[nr]?.[nc]) continue;
+				if (!isWithinRange(nr, nc)) continue;
 				// 이동한 곳이 시작점과 같을 때
 				if (nr === startRow && nc === startCol) continue;
 
@@ -136,11 +135,15 @@ function bfs(place) {
 	return true;
 }
 
-function solution(places) {
+export function iterativeSolution(places) {
+	return places.map((place) => (iterative(place) ? 1 : 0));
+}
+
+export function bfsSolution(places) {
 	return places.map((place) => (bfs(place) ? 1 : 0));
 }
 
-const cases = [
+export const cases = [
 	generateTestPair(
 		[
 			[
@@ -153,6 +156,16 @@ const cases = [
 		],
 		[1, 0, 1, 1, 1], // result
 	),
+	generateTestPair(
+		[
+			[
+				['POOOO', 'XPOOO', 'OOOOO', 'OOOOO', 'OOOOO'],
+				['OOOOO', 'OOOOO', 'OOOOO', 'OOOOO', 'OOOOO'],
+				['PXOPX', 'OXOXP', 'OXPOX', 'OXXOP', 'PXPOX'],
+				['OOOXX', 'XOOOX', 'OOOXX', 'OXOOX', 'OOOOO'],
+				['PXPXP', 'XPXPX', 'PXPXP', 'XPXPX', 'PXPXP'],
+			], // places
+		],
+		[0, 1, 1, 1, 1], // result
+	),
 ];
-
-console.log(solution(...cases[0].input));
