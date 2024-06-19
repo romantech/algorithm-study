@@ -1,3 +1,5 @@
+/* eslint-disable no-continue */
+
 import { generateTestPair } from '../../utils.js';
 
 /**
@@ -6,7 +8,7 @@ import { generateTestPair } from '../../utils.js';
  * 응시자들은 맨해튼 거리 2 이하로 앉으면 안됨
  * 맨해튼 거리(두 포인트 사이의 가장 긴 경로) = |(x1 - x2)| + |(y1 - y2)|
  *
- * 응시자 둘이 사이에 파티션이 있으면 맨해튼 거리 2여도 허용 e.g. P(0,0) - X(0,1) - P(0,2)
+ * 응시자 둘 사이에 파티션이 있으면 맨해튼 거리 2여도 허용 e.g. P(0,0) - X(0,1) - P(0,2)
  * 응시자 둘이 사선으로 앉아 있는 경우 둘 사이에 파티션 있으면 허용 e.g. P(0,0) P(1,1) 사이에 X(1,0) X(0,1) 파티션 존재
  *
  * 응시자가 앉아있는 자리 = P
@@ -20,7 +22,10 @@ import { generateTestPair } from '../../utils.js';
  * 참고하면 좋은 링크: https://jisunshine.tistory.com/148
  */
 
-function checkDistance(place) {
+const MAX_SIZE = 5;
+
+// 반복적 접근 방식
+function iterative(place) {
 	// 상하좌우, 대각선, 2칸 거리의 모든 방향을 나타내는 배열
 	const directions = [
 		[-1, 0], // 상 (거리 1)
@@ -38,8 +43,8 @@ function checkDistance(place) {
 	];
 
 	// 5x5 격자의 각 칸을 순회
-	for (let r = 0; r < 5; r++) {
-		for (let c = 0; c < 5; c++) {
+	for (let r = 0; r < MAX_SIZE; r++) {
+		for (let c = 0; c < MAX_SIZE; c++) {
 			// 현재 칸에 사람이 있는 경우
 			if (place[r][c] === 'P') {
 				// 각 방향을 순회하며 새로운 위치 계산
@@ -47,7 +52,7 @@ function checkDistance(place) {
 					const nr = r + dr;
 					const nc = c + dc;
 					// 새로운 위치가 유효한지 확인
-					if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5) {
+					if (nr >= 0 && nr < MAX_SIZE && nc >= 0 && nc < MAX_SIZE) {
 						// 새로운 위치에 사람이 있는지 확인
 						if (place[nr][nc] === 'P') {
 							const distance = Math.abs(dr) + Math.abs(dc);
@@ -74,8 +79,61 @@ function checkDistance(place) {
 	return true;
 }
 
+// bfs를 이용한 접근 방식
+// (1) 거리 1 상하좌우 확인
+// (1-1) X면 대각선 거리 2 자리에 어떤 값이 와도 상관없으므로 passed
+// (1-2) O면, 해당 자리를 기준으로 거리 1에 P가 있으면 not passed
+// (1-3) P면, not passed
+function bfs(place) {
+	const directions = [
+		[-1, 0], // 상
+		[1, 0], // 하
+		[0, -1], // 좌
+		[0, 1], // 우
+	];
+
+	const calculateDistance = (r1, c1, r2, c2) => {
+		return Math.abs(r1 - r2) + Math.abs(c1 - c2);
+	};
+
+	const checkDistance = ([row, col]) => {
+		const queue = [[row, col]];
+
+		while (queue.length > 0) {
+			const [r, c] = queue.shift();
+			for (const [dr, dc] of directions) {
+				const nr = dr + r;
+				const nc = dc + c;
+
+				if (!place[nr]?.[nc]) continue; // 범위 벗어났을 때
+				if (nr === row && nc === col) continue; // 이동한 곳이 시작지점과 같을 때
+
+				const state = place[nr][nc];
+				const distance = calculateDistance(row, col, nr, nc);
+
+				// 거리가 1일 때
+				if (distance < 2 && state === 'O') queue.push([nr, nc]);
+				// 거리가 1 혹은 2 일 때
+				else if (distance <= 2 && state === 'P') return false;
+			}
+		}
+
+		return true;
+	};
+
+	for (let row = 0; row < MAX_SIZE; row++) {
+		for (let col = 0; col < MAX_SIZE; col++) {
+			if (place[row][col] === 'P' && !checkDistance([row, col])) {
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
 function solution(places) {
-	return places.map((place) => (checkDistance(place) ? 1 : 0));
+	return places.map((place) => (bfs(place) ? 1 : 0));
 }
 
 const cases = [
