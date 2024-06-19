@@ -80,10 +80,10 @@ function iterative(place) {
 }
 
 // bfs를 이용한 접근 방식
-// (1) 거리 1 상하좌우 확인
-// (1-1) X면 대각선 거리 2 자리에 어떤 값이 와도 상관없으므로 passed
-// (1-2) O면, 해당 자리를 기준으로 거리 1에 P가 있으면 not passed
-// (1-3) P면, not passed
+// 1. 거리 1 상하좌우 확인
+// 1-2. X면 거리 2 대각선 자리에 어떤 값이 와도 상관없으므로 OK
+// 1-3. O면, 해당 자리를 기준으로 거리 1에 P가 있으면 Not OK
+// 1-4. P면, Not OK
 function bfs(place) {
 	const directions = [
 		[-1, 0], // 상
@@ -92,12 +92,13 @@ function bfs(place) {
 		[0, 1], // 우
 	];
 
-	const calculateDistance = (r1, c1, r2, c2) => {
+	// 맨해튼 거리 계산
+	const getManhattanDistance = (r1, c1, r2, c2) => {
 		return Math.abs(r1 - r2) + Math.abs(c1 - c2);
 	};
 
-	const checkDistance = ([row, col]) => {
-		const queue = [[row, col]];
+	const isSafeDistance = ([startRow, startCol]) => {
+		const queue = [[startRow, startCol]];
 
 		while (queue.length > 0) {
 			const [r, c] = queue.shift();
@@ -105,11 +106,14 @@ function bfs(place) {
 				const nr = dr + r;
 				const nc = dc + c;
 
-				if (!place[nr]?.[nc]) continue; // 범위 벗어났을 때
-				if (nr === row && nc === col) continue; // 이동한 곳이 시작지점과 같을 때
+				// 범위 벗어났을 때
+				if (!place[nr]?.[nc]) continue;
+				// 이동한 곳이 시작점과 같을 때
+				if (nr === startRow && nc === startCol) continue;
 
 				const state = place[nr][nc];
-				const distance = calculateDistance(row, col, nr, nc);
+				// 시작점에서 다음 지점까지의 거리
+				const distance = getManhattanDistance(startRow, startCol, nr, nc);
 
 				// 거리가 1일 때
 				if (distance < 2 && state === 'O') queue.push([nr, nc]);
@@ -123,7 +127,7 @@ function bfs(place) {
 
 	for (let row = 0; row < MAX_SIZE; row++) {
 		for (let col = 0; col < MAX_SIZE; col++) {
-			if (place[row][col] === 'P' && !checkDistance([row, col])) {
+			if (place[row][col] === 'P' && !isSafeDistance([row, col])) {
 				return false;
 			}
 		}
