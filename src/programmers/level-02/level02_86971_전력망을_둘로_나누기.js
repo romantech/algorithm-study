@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * n개의 송전탑이 전선을 통해 하나의 트리 형태로 연결돼 있음
@@ -15,6 +17,86 @@
  * */
 
 function solution(n, wires) {
-	const answer = -1;
-	return answer;
+	const adjacencyList = {}; // 인접리스트
+
+	for (const [n1, n2] of wires) {
+		if (!adjacencyList[n1]) adjacencyList[n1] = [];
+		if (!adjacencyList[n2]) adjacencyList[n2] = [];
+		adjacencyList[n1].push(n2);
+		adjacencyList[n2].push(n1);
+	}
+
+	let minDiff = n;
+
+	const getSubtreeSizes = (rootNode, cutNode) => {
+		const visited = Array(n).fill(false);
+		const stack = [rootNode];
+		let size = 0;
+
+		while (stack.length > 0) {
+			const now = stack.pop();
+			size++;
+			visited[now] = true;
+
+			adjacencyList[now].forEach((node) => {
+				if (!visited[node] && node !== cutNode) stack.push(node);
+			});
+		}
+
+		return [size, n - size];
+	};
+
+	for (const [n1, n2] of wires) {
+		const [size1, size2] = getSubtreeSizes(n1, n2);
+		const diff = Math.abs(size1 - size2);
+		minDiff = Math.min(minDiff, diff);
+	}
+
+	return minDiff;
 }
+
+const cases = [
+	generateTestPair(
+		[
+			9,
+			[
+				[1, 3],
+				[2, 3],
+				[3, 4],
+				[4, 5],
+				[4, 6],
+				[4, 7],
+				[7, 8],
+				[7, 9],
+			],
+		],
+		3,
+	),
+	generateTestPair(
+		[
+			4,
+			[
+				[1, 2],
+				[2, 3],
+				[3, 4],
+			],
+		],
+		0,
+	),
+	generateTestPair(
+		[
+			7,
+			[
+				[1, 2],
+				[2, 7],
+				[3, 7],
+				[3, 4],
+				[4, 5],
+				[6, 7],
+			],
+		],
+		1,
+	),
+];
+
+console.log(solution(...cases[0].input));
