@@ -99,4 +99,8 @@ const cases = [
 	),
 ];
 
-console.log(solution(...cases[0].input));
+cases.forEach(({ input, output }, i) => {
+	const isPassed = solution(...input) === output;
+	const resultMsg = isPassed ? '통과' : '실패';
+	console.log(`${i + 1}번 케이스 ${resultMsg}`);
+});
