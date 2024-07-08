@@ -12,15 +12,36 @@ import { generateTestPair } from '../../utils.js';
  * 1 <= n <= 10⁷
  * 0 <= left <= right < n²
  * right - left < 10⁵
+ *
+ * [풀이]
+ * 3*3 행렬의 각 위치를 좌표로 나타내면...
+ * (0,0)(1,0)(2,0)
+ * (0,1)(1,1)(2,1)
+ * (0,2)(1,2)(2,2)
+ * 각 위치의 row, col 중 큰 수 + 1은 해당 위치의 값
+ * 따라서 i = Math.max(row, col) + 1
  * */
 
 function solution(n, left, right) {
-	const answer = [];
-	return answer;
+	const result = [];
+
+	for (let i = left; i <= right; i++) {
+		const row = Math.floor(i / n);
+		const col = i % n;
+		result.push(Math.max(row, col) + 1);
+	}
+
+	return result;
 }
 
 const cases = [
-	// n, left, right
+	// input: [n, left, right]
 	generateTestPair([3, 2, 5], [3, 2, 2, 3]),
 	generateTestPair([4, 7, 14], [4, 3, 3, 3, 4, 4, 4, 4]),
 ];
+
+cases.forEach(({ input, output }, caseIdx) => {
+	const result = solution(...input);
+	const passed = result.every((r, i) => output[i] === r);
+	console.log(`${caseIdx + 1}번 테스트 ${passed ? '통과' : '실패'}`);
+});
