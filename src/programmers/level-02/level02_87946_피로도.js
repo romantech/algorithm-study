@@ -52,6 +52,31 @@ function solution(k, dungeons) {
 	return maxCount;
 }
 
+/**
+ * 백트래킹을 이용한 솔루션
+ * 백트래킹: 가능한 모든 경로를 탐색하되, 조건을 만족하지 않는 경로는 되돌아가면서 최적의 해결책을 찾는 방법
+ */
+function reference(k, d) {
+	const N = d.length;
+	const visited = new Array(N).fill(false);
+	let maxCount = 0;
+
+	function dfs(hp, count) {
+		maxCount = Math.max(count, maxCount);
+
+		for (let i = 0; i < N; i++) {
+			if (hp >= d[i][0] && !visited[i]) {
+				visited[i] = true;
+				dfs(hp - d[i][1], count + 1);
+				visited[i] = false;
+			}
+		}
+	}
+
+	dfs(k, 0);
+	return maxCount;
+}
+
 const cases = [
 	generateTestPair(
 		[
@@ -66,4 +91,8 @@ const cases = [
 	),
 ];
 
-console.log(solution(...cases[0].input));
+cases.forEach(({ input, output }, i) => {
+	const solRes = solution(...input) === output ? '통과' : '실패';
+	const refRes = reference(...input) === output ? '통과' : '실패';
+	console.log(`${i + 1}번 테스트 solution: ${solRes} | reference: ${refRes}`);
+});
