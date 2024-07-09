@@ -18,9 +18,38 @@ import { generateTestPair } from '../../utils.js';
  * 최소 피로도는 항상 소모 피로도보다 크거나 같음
  * */
 
+const getPermutation = (arr, perm = [], max = 3) => {
+	if (perm.length === max) return [perm]; // result 반환 방식 맞추기 위해 배열로 반환
+
+	const result = [];
+	for (let i = 0; i < arr.length; i++) {
+		const newPerm = [...perm, arr[i]];
+		const rest = arr.slice(0, i).concat(arr.slice(i + 1));
+		result.push(...getPermutation(rest, newPerm, max)); // result.push(...[[1, 2, 3], [1, 3, 2]])
+	}
+
+	return result;
+};
+
 function solution(k, dungeons) {
-	const answer = -1;
-	return answer;
+	const perms = getPermutation(dungeons, [], dungeons.length);
+	let maxCount = 0;
+
+	for (const perm of perms) {
+		let currentK = k;
+		let count = 0;
+		for (const [requiredK, consumeK] of perm) {
+			if (currentK >= requiredK) {
+				currentK -= consumeK;
+				count++;
+			} else {
+				break;
+			}
+		}
+		maxCount = Math.max(count, maxCount);
+	}
+
+	return maxCount;
 }
 
 const cases = [
@@ -36,3 +65,5 @@ const cases = [
 		3, // result
 	),
 ];
+
+console.log(solution(...cases[0].input));
