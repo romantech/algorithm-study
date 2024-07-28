@@ -29,11 +29,11 @@ function solution(s) {
     }
     if (Number.isNaN(Number(s[i])) === false) {
       const word = Object.fromEntries(numWords)[s[i]];
-      const matchedIdx = numWords.findIndex(el => el[1] === word);
+      const matchedIdx = numWords.findIndex((el) => el[1] === word);
       answer += numWords[matchedIdx][0];
     } else {
       const step1 = numWords.filter(
-        el => el[1][0] === s[i] && el[1][el[1].length - 1] === s[i + el[1].length - 1],
+        (el) => el[1][0] === s[i] && el[1][el[1].length - 1] === s[i + el[1].length - 1],
       );
 
       if (step1.length) {

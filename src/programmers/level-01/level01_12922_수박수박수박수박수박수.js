@@ -15,7 +15,7 @@ const c3 = 11;
 solution(c2); /* ? */
 
 // 레퍼런스
-const waterMelon = n => {
+const waterMelon = (n) => {
   return '수박'.repeat(n / 2) + (n % 2 === 1 ? '수' : '');
   // n을 2('수박')로 나눠서 짝수번 만큼한 repeat 하고
   // n / 2 나머지가 홀수라면 수'추가(짝수일땐 '수박'을 앞에서 반복해서 추가했으므로 별도로 문자 추가하지 않음)

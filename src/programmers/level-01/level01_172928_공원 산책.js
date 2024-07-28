@@ -64,9 +64,9 @@ export function solution(park, routes) {
     return true;
   };
 
-  const dirMatcher = (curDir, target) => target.some(dir => dir === curDir);
+  const dirMatcher = (curDir, target) => target.some((dir) => dir === curDir);
 
-  routes.forEach(route => {
+  routes.forEach((route) => {
     const [dir, count] = route.split(' ');
     const isIncrease = dirMatcher(dir, ['E', 'S']);
     const axis = dirMatcher(dir, ['E', 'W']) ? 'x' : 'y';

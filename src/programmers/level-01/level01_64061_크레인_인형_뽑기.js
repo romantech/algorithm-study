@@ -59,7 +59,7 @@ function solution(board, moves) {
 // 같다면 basket 배열의 마지막 요소를 pop하고
 // result + 2
 /* eslint-enable */
-const transpose = matrix =>
+const transpose = (matrix) =>
   matrix.reduce((result, row) => row.map((_, i) => [...(result[i] || []), row[i]]), []);
 
 /* transpose 함수를 거친 후 배열
@@ -74,7 +74,7 @@ const transpose = matrix =>
 
 /* eslint-disable no-continue */
 const solution2 = (board, moves) => {
-  const stacks = transpose(board).map(row => row.reverse().filter(el => el !== 0));
+  const stacks = transpose(board).map((row) => row.reverse().filter((el) => el !== 0));
 
   /* stacks 배열
   [

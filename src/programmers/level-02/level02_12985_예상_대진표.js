@@ -24,7 +24,7 @@ import { generateTestPair } from '../../utils.js';
 function solution(n, a, b) {
   const totalRounds = Math.log2(n);
   const players = { p1: a, p2: b };
-  const divider = num => Math.ceil(num / 2);
+  const divider = (num) => Math.ceil(num / 2);
 
   // 라운드 수 만큼 n을 2로 나누면 해당 번호가 몇 번째 팀인지 확인 가능
   // e.g. 1라운드에선 2를 한 번 나누고, 2라운드에선 2로 두 번 나누고...

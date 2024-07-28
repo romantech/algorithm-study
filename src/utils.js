@@ -42,7 +42,7 @@ export const generateTestPair = (input, output, desc = '') => {
   return { input, output, desc };
 };
 
-export const deduplicate = arr => {
+export const deduplicate = (arr) => {
   if (!Array.isArray(arr)) throw new Error('Input must be an array');
   return [...new Set(arr)];
 };

@@ -39,7 +39,7 @@ import { generateTestPair } from '../../utils.js';
 
 const noteToNumberMap = { 'C#': 1, 'D#': 2, 'F#': 3, 'G#': 4, 'A#': 5, 'B#': 6 };
 
-const convertTimeToMinutes = timeString => {
+const convertTimeToMinutes = (timeString) => {
   const [hours, minutes] = timeString.split(':').map(Number);
   return hours * 60 + minutes;
 };
@@ -48,9 +48,9 @@ const calculateDurationInMinutes = (startTime, endTime) => {
   return Math.abs(convertTimeToMinutes(startTime) - convertTimeToMinutes(endTime));
 };
 
-const convertNotesToNumbers = notesString => {
+const convertNotesToNumbers = (notesString) => {
   const pattern = /[A-G]#?/g;
-  return notesString.replace(pattern, match => noteToNumberMap[match] ?? match);
+  return notesString.replace(pattern, (match) => noteToNumberMap[match] ?? match);
 };
 
 const generatePlayedNoteSequence = (duration, sequence) => {

@@ -48,7 +48,7 @@ export function reference(skill, skill_trees) {
 
   return skill_trees.reduce((acc, skillTree) => {
     // skill에 해당하는 문자열만 필터 e.g. "BACDE" -> "BCD"
-    const filtered = skillTree.split('').filter(s => skillSet.has(s));
+    const filtered = skillTree.split('').filter((s) => skillSet.has(s));
     const isValid = filtered.every((s, i) => s === skill[i]);
 
     return isValid ? acc + 1 : acc;

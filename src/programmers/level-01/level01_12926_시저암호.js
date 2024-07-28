@@ -41,7 +41,7 @@ function solution2(s, n) {
     ' '.repeat(26);
   return s
     .split('')
-    .map(e => chars[chars.indexOf(e) + n])
+    .map((e) => chars[chars.indexOf(e) + n])
     .join('');
 }
 

@@ -28,7 +28,7 @@ import { generateTestPair } from '../../utils.js';
 const BRACKET_PAIRS = { '[': ']', '(': ')', '{': '}' };
 
 function solution(s) {
-  const checkBracketsBalance = str => {
+  const checkBracketsBalance = (str) => {
     const stack = [];
 
     for (const char of str) {

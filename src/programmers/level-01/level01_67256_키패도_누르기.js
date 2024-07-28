@@ -17,7 +17,7 @@ function solution(numbers, hand) {
     middle: [0, 8, 5, 2],
   };
 
-  const checkIndex = currentNum => {
+  const checkIndex = (currentNum) => {
     for (let i = 0; i < padNum.keyPad.length; i += 1) {
       if (padNum.keyPad[i].includes(currentNum)) {
         return i;
@@ -25,7 +25,7 @@ function solution(numbers, hand) {
     }
   };
 
-  const isMiddleNum = num => {
+  const isMiddleNum = (num) => {
     return padNum.middle.includes(num);
   };
 
@@ -43,7 +43,7 @@ function solution(numbers, hand) {
 
   for (let i = 0; i < numbers.length; i += 1) {
     if (isMiddleNum(numbers[i]) === false) {
-      ['left', 'right'].forEach(type =>
+      ['left', 'right'].forEach((type) =>
         padNum[type].includes(numbers[i]) ? setHand(type, numbers[i]) : '',
       );
     } else {

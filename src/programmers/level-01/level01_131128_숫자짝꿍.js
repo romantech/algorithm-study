@@ -23,8 +23,8 @@ function solution1(X, Y) {
   let result = '';
 
   for (let i = 9; i >= 0; i--) {
-    xMap[i] = splitedX.filter(x => Number(x) === i).length;
-    yMap[i] = splitedY.filter(y => Number(y) === i).length;
+    xMap[i] = splitedX.filter((x) => Number(x) === i).length;
+    yMap[i] = splitedY.filter((y) => Number(y) === i).length;
   }
 
   for (let i = 9; i >= 0; i--) {

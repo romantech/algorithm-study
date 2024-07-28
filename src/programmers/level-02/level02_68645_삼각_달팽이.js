@@ -10,7 +10,7 @@ import { generateTestPair } from '../../utils.js';
  * 예를들어 n = 7에서 가장 바깥쪽의 오른쪽 삼각형 마지막은 (1, 1) 다음 사이클 시작점은 (1, 2)
  */
 
-const createTriangleArray = n => {
+const createTriangleArray = (n) => {
   // 더욱 간결하게 배열 생성
   const triangleArray = Array.from({ length: n }, (_, i) => Array(i + 1));
   /**

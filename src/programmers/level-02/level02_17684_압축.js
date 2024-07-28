@@ -78,7 +78,7 @@ export function solution(msg) {
   return result;
 }
 
-export const reference = msg => {
+export const reference = (msg) => {
   const dict = getInitialDict();
 
   const result = [];

@@ -31,9 +31,9 @@ export function solution(orders, course) {
   // 모든 조합에 대한 주문 빈도 생성 e.g. Map { 'AB': 1, 'AC': 4, 'ABC': 1, ... }
   const freqMap = orders.reduce((map, order) => {
     const sortedOrder = order.split('').sort();
-    course.forEach(size => {
+    course.forEach((size) => {
       const combs = getCombinationsIterative(sortedOrder, size);
-      combs.forEach(comb => {
+      combs.forEach((comb) => {
         const combStr = comb.join('');
         map.set(combStr, (map.get(combStr) ?? 0) + 1);
       });

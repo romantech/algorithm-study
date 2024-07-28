@@ -40,7 +40,7 @@ function solution(bridge_length, weight, truck_weights) {
     elapsedTime++;
 
     // 다리 위에 있는 트록 앞으로 이동
-    trucksOnBridge.forEach(truck => truck.distanceLeft--);
+    trucksOnBridge.forEach((truck) => truck.distanceLeft--);
 
     // 가장 앞에 있는 트럭이 다리를 건넜는지 확인
     if (trucksOnBridge[0]?.distanceLeft === 0) {

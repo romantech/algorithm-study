@@ -39,7 +39,7 @@ function solution(n) {
 // 15 -> 15(m) * 1(k) = 15
 // k는 항상 홀수이고 15의 약수인 것을 알 수 있음
 // 따라서 n의 약수 중 홀수의 개수가 연속된 자연수의 합으로 n을 나타내는 방법의 수가 됨
-const reference = n => {
+const reference = (n) => {
   let answer = 0;
   for (let i = 1; i <= n; i++) {
     if (n % i === 0 && i % 2 === 1) answer++;

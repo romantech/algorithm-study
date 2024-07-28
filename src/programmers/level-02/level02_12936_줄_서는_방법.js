@@ -3,7 +3,7 @@
 
 const memo = [1, 1]; // [0!, 1!]
 
-const factorial = num => {
+const factorial = (num) => {
   if (memo[num] !== undefined) return memo[num];
 
   memo[num] = num * factorial(num - 1);

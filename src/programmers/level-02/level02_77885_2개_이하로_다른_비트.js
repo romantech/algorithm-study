@@ -41,7 +41,7 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(numbers) {
-  return numbers.map(n => {
+  return numbers.map((n) => {
     if (n % 2 === 0) return n + 1;
     const bit = '0' + n.toString(2);
     const idx = bit.lastIndexOf('0');

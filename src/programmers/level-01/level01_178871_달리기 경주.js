@@ -24,7 +24,7 @@ function solution(players, callings) {
     return acc;
   }, {});
 
-  callings.forEach(calling => {
+  callings.forEach((calling) => {
     const fromIndex = dict[calling];
     const toIndex = fromIndex - 1;
 

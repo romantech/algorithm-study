@@ -14,13 +14,13 @@ function solution(lottos, win_nums) {
   let winNum = 0;
   let zeroNum = 0;
   // 당첨 갯수
-  win_nums.forEach(winEl => {
+  win_nums.forEach((winEl) => {
     if (lottos.includes(winEl)) {
       winNum += 1;
     }
   });
 
-  lottos.forEach(el => {
+  lottos.forEach((el) => {
     if (el === 0) {
       zeroNum += 1;
     }
@@ -42,8 +42,8 @@ solution(test1.lottos, test1.win_nums); /* ? */
 function solution2(lottos, win_nums) {
   const rank = [6, 6, 5, 4, 3, 2, 1];
 
-  const minCount = lottos.filter(v => win_nums.includes(v)).length;
-  const zeroCount = lottos.filter(v => !v).length; // 0은 false !0은 true
+  const minCount = lottos.filter((v) => win_nums.includes(v)).length;
+  const zeroCount = lottos.filter((v) => !v).length; // 0은 false !0은 true
 
   const maxCount = minCount + zeroCount;
 

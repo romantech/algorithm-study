@@ -1,5 +1,5 @@
 // 문제2. 사용하지 않는 가장 작은 숫자 찾기
-const findUnusedMinNum = ids => {
+const findUnusedMinNum = (ids) => {
   const sortedNum = [...new Set(ids.sort((a, b) => a - b))];
   const len = sortedNum.length;
   const lastNum = sortedNum[len - 1];

@@ -46,7 +46,7 @@ function solution(keymap, targets) {
     return acc;
   }, {});
 
-  return targets.map(target => {
+  return targets.map((target) => {
     let sum = 0;
     for (const s of target.split('')) {
       if (!keyMapIndex[s]) {

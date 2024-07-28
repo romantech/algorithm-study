@@ -42,7 +42,7 @@ export function solution(record) {
   const actionMessage = { Enter: '님이 들어왔습니다.', Leave: '님이 나갔습니다.' };
   const result = [];
 
-  record.forEach(log => {
+  record.forEach((log) => {
     const [action, id, nick] = log.split(' ');
 
     if (nick) latestNicks[id] = nick;

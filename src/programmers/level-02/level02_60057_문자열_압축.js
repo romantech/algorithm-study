@@ -56,11 +56,11 @@ function solution(s) {
 // 나머지 문자열 붙여서 2abcded + e
 
 // 레퍼런스 (약간 수정)
-const solution2 = s => {
+const solution2 = (s) => {
   // length / 2 만큼 index + 1 부터 시작하는 배열 생성 -> 각 요소는 압축 단위로 사용됨
   // 'abcabcdede' -> [1, 2, 3, 4, 5]
-  const range = Array.from(Array(Math.floor(s.length / 2)).keys(), n => n + 1);
-  return Math.min(...range.map(i => compress(s, i).length));
+  const range = Array.from(Array(Math.floor(s.length / 2)).keys(), (n) => n + 1);
+  return Math.min(...range.map((i) => compress(s, i).length));
 };
 
 const compress = (s, n) => {

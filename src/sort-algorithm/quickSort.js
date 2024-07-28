@@ -5,7 +5,7 @@
 
 import { makeRandomArr, swap } from '../utils.js';
 
-const quickSort1 = array => {
+const quickSort1 = (array) => {
   if (array.length <= 1) return array; // Base Case
 
   // 배열 분할을 위한 기준 요소 선택 및 left, right 하위 배열 생성

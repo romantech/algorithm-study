@@ -9,7 +9,7 @@ function solution(arr, divisor) {
     return sorted;
   }
 
-  const filter = sorted.filter(el => el % divisor === 0);
+  const filter = sorted.filter((el) => el % divisor === 0);
   return filter.length ? filter : [-1];
 }
 

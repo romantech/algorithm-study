@@ -15,12 +15,12 @@ function solution(id_list, report, k) {
     return acc;
   }, {});
 
-  report.forEach(ticket => {
+  report.forEach((ticket) => {
     const [id, target] = ticket.split(' ');
     reportList[target].add(id);
   });
 
-  return id_list.map(id =>
+  return id_list.map((id) =>
     Object.values(reportList).reduce(
       (result, list) => (list.size >= k && list.has(id) ? result + 1 : result),
       0,
@@ -30,7 +30,7 @@ function solution(id_list, report, k) {
 
 // 레퍼런스
 function solution2(id_list, report, k) {
-  const reports = [...new Set(report)].map(a => {
+  const reports = [...new Set(report)].map((a) => {
     return a.split(' ');
   });
   // 중복 신고 제거 ['ryan con', 'ryan con', 'ryan con', 'ryan con'] -> [['ryan', 'con']]
@@ -53,7 +53,7 @@ function solution2(id_list, report, k) {
     }
   }
 
-  return id_list.map(a => good.get(a) || 0);
+  return id_list.map((a) => good.get(a) || 0);
 }
 
 const case1 = {

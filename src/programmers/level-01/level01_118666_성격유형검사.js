@@ -39,9 +39,9 @@ function solution1(survey, choices) {
     { A: 0, N: 0 }, // 지표 4
   ];
 
-  const findMetricIdx = currentSurvey => {
-    return metrics.findIndex(metric => {
-      return Object.keys(metric).some(k => currentSurvey.includes(k));
+  const findMetricIdx = (currentSurvey) => {
+    return metrics.findIndex((metric) => {
+      return Object.keys(metric).some((k) => currentSurvey.includes(k));
     });
   };
 
@@ -68,8 +68,8 @@ function solution2(survey, choices) {
   const types = ['RT', 'CF', 'JM', 'AN'];
 
   // MBTI 객체 초기화 // { R: 0, T: 0, C: 0, F: 0, J: 0, M: 0, A: 0, N: 0 }
-  types.forEach(type =>
-    type.split('').forEach(char => {
+  types.forEach((type) =>
+    type.split('').forEach((char) => {
       MBTI[char] = 0;
     }),
   );

@@ -27,7 +27,7 @@ import { generateTestPair } from '../../utils.js';
  */
 
 export function solution(files) {
-  const splitPart = file => {
+  const splitPart = (file) => {
     // "^" 시작, "+" 1번 이상 일치, "*" 0번 이상 일치, "\D" 숫자 아님, "\d" 숫자, "." 임의 문자, "$" 끝
     const match = file.match(/^(\D+)(\d{1,5})(.*)$/);
     if (!match) return { head: '', number: '', tail: '' };

@@ -8,7 +8,7 @@
 function solution(arr1, arr2) {
   const { length } = arr2[0];
 
-  return arr1.map(row => {
+  return arr1.map((row) => {
     return Array.from({ length }, (_, i) => {
       return row.reduce((acc, cur, idx) => acc + arr2[idx][i] * cur, 0);
     });

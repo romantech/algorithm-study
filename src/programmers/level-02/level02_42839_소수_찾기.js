@@ -17,7 +17,7 @@ import { getPermutations, isPrime } from '../../math.js';
  * 11과 011은 같은 숫자로 취급
  */
 
-const getPrimeCount = arr => {
+const getPrimeCount = (arr) => {
   return arr.reduce((acc, cur) => (isPrime(cur) ? acc + 1 : acc), 0);
 };
 
@@ -25,8 +25,8 @@ function solution(numbers) {
   const digits = numbers.split('');
   const permSizes = Array.from({ length: digits.length }, (_, i) => i + 1);
 
-  const permutations = permSizes.flatMap(permSize => {
-    return getPermutations(digits, permSize).map(n => Number(n.join('')));
+  const permutations = permSizes.flatMap((permSize) => {
+    return getPermutations(digits, permSize).map((n) => Number(n.join('')));
   });
 
   const uniqueNumbers = [...new Set(permutations)];

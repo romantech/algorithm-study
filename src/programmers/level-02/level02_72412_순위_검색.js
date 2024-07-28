@@ -35,7 +35,7 @@ import { generateTestPair } from '../../utils.js';
  * 받은 사람은 모두 몇 명인가?를 의미
  */
 
-const parseQuery = str => str.split(/\s+and\s+|\s(?=\d+)/);
+const parseQuery = (str) => str.split(/\s+and\s+|\s(?=\d+)/);
 const createKey = (arr, separator = ' ') => arr.join(separator);
 
 const allCombinations = (arr, prefix = []) => {
@@ -57,23 +57,23 @@ export function solution(info, query) {
   // [ 'cpp', 'backend', 'junior', 'chicken' ], [ 'cpp', 'backend', 'junior', 'pizza' ], ...]
   const combinations = allCombinations(allConditions);
   // { 'cpp backend junior chicken': [], 'cpp backend junior pizza': [], ... }
-  const criteriaMap = new Map(combinations.map(comb => [createKey(comb), []]));
+  const criteriaMap = new Map(combinations.map((comb) => [createKey(comb), []]));
 
   // ⑵ 점수 데이터 매핑
   // { 'cpp backend junior chicken': [260, 110], 'cpp backend junior pizza': [], ... }
-  info.forEach(entry => {
+  info.forEach((entry) => {
     const [lang, pos, lv, food, score] = entry.split(' ');
-    combinations.forEach(comb => {
+    combinations.forEach((comb) => {
       const passed = [lang, pos, lv, food].every((c, i) => comb[i] === '-' || comb[i] === c);
       if (passed) criteriaMap.get(createKey(comb)).push(parseInt(score, 10));
     });
   });
 
   // 이진 탐색을 위해 각 조합의 score 오름차순 정렬
-  criteriaMap.forEach(scores => scores.sort((a, b) => a - b));
+  criteriaMap.forEach((scores) => scores.sort((a, b) => a - b));
 
   // ⑶ 이진 탐색으로 조건에 맞는 인원 검색
-  return query.map(q => {
+  return query.map((q) => {
     const [language, position, level, food, score] = parseQuery(q);
     const key = createKey([language, position, level, food]);
     return countGreaterOrEqual(criteriaMap.get(key), parseInt(score, 10));
@@ -136,7 +136,7 @@ export const cases = [
 * 참고하면 좋은 글: https://bit.ly/4dL6ywz
 * 비트 마스크: 이진수의 각 비트를 조작하여 특정한 상태나 값을 표현하는 방법
 ------------------------------------------------------------------------  */
-function convertToBitmaskAndScore(list, table, adjust = x => x) {
+function convertToBitmaskAndScore(list, table, adjust = (x) => x) {
   const bitmask = list.slice(0, -1).reduce((acc, key) => {
     // 매 순회마다 3비트 확보 후(acc << 3), 1번째 글자를 table과 맵핑한 숫자 저장
     // 예를들어 순회마다 첫번째 글자가 j(5), b(6), j(5), p(6) 라면
@@ -158,15 +158,15 @@ function convertToBitmaskAndScore(list, table, adjust = x => x) {
 export function reference(info, query) {
   // 각 조건을 최대 3비트로 표현한 테이블 : 3 = 011(2), 5 = 101(2), 6 = 110(2), 0 = 000(2)
   // 각 조건의 최대값은 7 = 111(2) / 참고로 십진수 8부터 이진수는 1000이 돼서 4비트를 넘어감
-  const table = { c: 3, j: 5, p: 6, b: 6, f: 5, s: 6, '-': 0 }; // c, j 등은 모든 조건의 앞 글자
+  const table = { 'c': 3, 'j': 5, 'p': 6, 'b': 6, 'f': 5, 's': 6, '-': 0 }; // c, j 등은 모든 조건의 앞 글자
 
   // 3비트로 변환한 info/query를 AND 연산자로 비교하기 위해 info 조건은 x => 7 - x 함수를 통해 역순으로 변환
   // 여기서 역순 변환은 각 비트 그룹의 최대값인 7을 기준으로 값을 반대로 변환하는 작업을 가리킴
   // 각 조건의 역순을 2진수로 표현하면 -> 4(7-3) = 100(2), 2(7-5) = 010(2), 1(7-6) = 001(2), 0(7-0) = 111(2)
   // 이런식으로 변환해두면 & AND 연산자(둘 다 1이면 1, 아니면 0)로 비교했을 때 0이 나오면 동일한 값으로 간주할 수 있음
   // 예를들어 3을 역순(4)으로 변환한 2진수가 100이고 3의 이진수가 011일 때 AND 비트 연산의 결과는 0이므로 동일한 값
-  info = info.map(item => convertToBitmaskAndScore(item.split(' '), table, x => 7 - x)); // [[ 1105, 150 ], [ 652, 210 ], ...]
-  query = query.map(item => convertToBitmaskAndScore(parseQuery(item), table)); // [[ 2990, 100 ], [ 3443, 200 ], ...]
+  info = info.map((item) => convertToBitmaskAndScore(item.split(' '), table, (x) => 7 - x)); // [[ 1105, 150 ], [ 652, 210 ], ...]
+  query = query.map((item) => convertToBitmaskAndScore(parseQuery(item), table)); // [[ 2990, 100 ], [ 3443, 200 ], ...]
 
   // Map { 1105: [ 150 ], 652: [ 210, 150 ], ... }
   const map = info.reduce((m, [bitmask, score]) => {

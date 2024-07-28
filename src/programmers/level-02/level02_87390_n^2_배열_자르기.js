@@ -23,25 +23,25 @@ import { generateTestPair } from '../../utils.js';
  * */
 
 function solution(n, left, right) {
-	const result = [];
+  const result = [];
 
-	for (let i = left; i <= right; i++) {
-		const row = Math.floor(i / n);
-		const col = i % n;
-		result.push(Math.max(row, col) + 1);
-	}
+  for (let i = left; i <= right; i++) {
+    const row = Math.floor(i / n);
+    const col = i % n;
+    result.push(Math.max(row, col) + 1);
+  }
 
-	return result;
+  return result;
 }
 
 const cases = [
-	// input: [n, left, right]
-	generateTestPair([3, 2, 5], [3, 2, 2, 3]),
-	generateTestPair([4, 7, 14], [4, 3, 3, 3, 4, 4, 4, 4]),
+  // input: [n, left, right]
+  generateTestPair([3, 2, 5], [3, 2, 2, 3]),
+  generateTestPair([4, 7, 14], [4, 3, 3, 3, 4, 4, 4, 4]),
 ];
 
 cases.forEach(({ input, output }, caseIdx) => {
-	const result = solution(...input);
-	const passed = result.every((r, i) => output[i] === r);
-	console.log(`${caseIdx + 1}번 테스트 ${passed ? '통과' : '실패'}`);
+  const result = solution(...input);
+  const passed = result.every((r, i) => output[i] === r);
+  console.log(`${caseIdx + 1}번 테스트 ${passed ? '통과' : '실패'}`);
 });

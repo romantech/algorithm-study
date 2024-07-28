@@ -18,7 +18,7 @@ export function solution(dirs) {
   const pos = [0, 0]; // x, y
   const directions = { U: [0, 1], D: [0, -1], R: [1, 0], L: [-1, 0] }; // [x, y]
 
-  const isWithinRange = dir => dir <= 5 && dir >= -5;
+  const isWithinRange = (dir) => dir <= 5 && dir >= -5;
 
   const generateKey = (from, to) => [from, to].sort().join('');
 

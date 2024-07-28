@@ -33,7 +33,7 @@ solution(cases[0].input);
 function solution2(babbling) {
   let answer = 0;
 
-  babbling.forEach(word => {
+  babbling.forEach((word) => {
     // aya|ye|woo|ma 중 하나를 캡처하여 yeye 이렇게 한 번더 중복되는걸 찾고 '-'로 변경
     // e.g. yeye -> ye를 \1로 캡쳐 -> (ye)\1 -> yeye -> 중복되므로 '-'로 변경
     // 참고로 + 수량자는 1번 이상 반복할 때 일치한다고 판단 e.g. (ye)\1+는 yeye+가 되므로 ye가 2번 이상 반복할 때 일치한다고 판단

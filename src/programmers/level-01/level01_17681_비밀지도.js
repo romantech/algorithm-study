@@ -1,7 +1,7 @@
 /* eslint-disable no-bitwise */
 function solution1(n, arr1, arr2) {
   // 2진수 변환
-  const converter = arr => {
+  const converter = (arr) => {
     return arr.reduce((acc, cur) => {
       let converted = cur.toString(2);
       converted = '0'.repeat(n - converted.length) + converted;
@@ -49,7 +49,7 @@ function solution2(n, arr1, arr2) {
   return arr1.map((v, i) =>
     // +a는 문자열을 숫자로 변경해줌. +'0' -> 0
     // 정규식에서 | 교체구문은 OR 연산자와 동일. 현재 문자열이 1이나 0이면 replace 진행
-    addZero(n, (v | arr2[i]).toString(2)).replace(/1|0/g, a => (+a ? '#' : ' ')),
+    addZero(n, (v | arr2[i]).toString(2)).replace(/1|0/g, (a) => (+a ? '#' : ' ')),
   );
 }
 
