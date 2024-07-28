@@ -17,8 +17,7 @@ import { generateTestPair } from '../../utils.js';
  * 피로도: 1 이상 1000 이하 자연수
  * 최소 피로도는 항상 소모 피로도보다 크거나 같음
  *
- * [스터디 노트]
- * https://colorfilter.notion.site/TIL-88b6d8dc48b94753867ef0234bef34bb?pvs=4
+ * [스터디 노트]{@link https://colorfilter.notion.site/TIL-88b6d8dc48b94753867ef0234bef34bb}
  * */
 
 const getPermutation = (arr, perm = [], max = 3) => {
