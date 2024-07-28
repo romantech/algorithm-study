@@ -44,7 +44,7 @@ export const lcm = (a, b) => {
   return (a * b) / gcd(a, b);
 };
 
-export const isPrime = num => {
+export const isPrime = (num) => {
   if (num <= 1) return false; // 소수는 1보다 큰 자연수이므로 1은 소수가 아님
   if (num === 2) return true; // 2는 짝수중 유일하게 소수
   if (num % 2 === 0) return false; // 모든 짝수는 2로 나누어 떨어지기 때문에 소수가 아님
@@ -216,3 +216,27 @@ export const memoizedFactorial = (() => {
  * f(1) -> return 1             | memo: [1, 1]
  * f(0) -> return 1             | memo: [1, 1]
  */
+
+/**
+ * Generates all possible subsets of a given array of numbers using backtracking.
+ *
+ * @param {number[]} nums - The array of numbers for which subsets are to be generated.
+ * @returns {number[][]} - A two-dimensional array containing all possible subsets of the input array.
+ * @see [Study Notes]{@link https://colorfilter.notion.site/TIL-88b6d8dc48b94753867ef0234bef34bb}
+ */
+export const findSubsets = (nums) => {
+  const result = [];
+
+  function generateSubsets(start, path) {
+    result.push([...path]); // 현재 경로를 결과에 추가
+
+    for (let i = start; i < nums.length; i++) {
+      path.push(nums[i]); // 현재 원소를 경로에 추가
+      generateSubsets(i + 1, path); // 다음 원소 탐색
+      path.pop(); // 경로에서 마지막 원소 제거(백트래킹)
+    }
+  }
+
+  generateSubsets(0, []);
+  return result;
+};
