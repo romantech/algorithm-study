@@ -24,7 +24,7 @@
 - [우측 이분 탐색 (bisect-right)](/src/search-algorithm/bisect-right.js)
 - [경계 요소 카운트 (bounds-counter)](/src/search-algorithm/bounds-counter.js)
 - [다익스트라 (dijkstra)](/src/programmers/level-02/level02_12978_배달.js)
-- [백트래킹 (backtracking)](/src/programmers/level-02/level02_87946_피로도.js)
+- [백트래킹 (backtracking)](/src/programmers/level-02/level02_87946_피로도.js#L61)
 
 ## 자료 구조
 
