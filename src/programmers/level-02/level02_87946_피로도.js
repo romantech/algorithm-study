@@ -56,8 +56,8 @@ function solution(k, dungeons) {
  * 백트래킹을 이용한 솔루션
  * 백트래킹: 가능한 모든 경로를 탐색하되, 조건을 만족하지 않는 경로는 되돌아가면서 최적의 해결책을 찾는 방법
  */
-function reference(k, d) {
-	const N = d.length;
+function reference(k, dungeon) {
+	const N = dungeon.length;
 	const visited = new Array(N).fill(false);
 	let maxCount = 0;
 
@@ -65,9 +65,9 @@ function reference(k, d) {
 		maxCount = Math.max(count, maxCount);
 
 		for (let i = 0; i < N; i++) {
-			if (hp >= d[i][0] && !visited[i]) {
+			if (hp >= dungeon[i][0] && !visited[i]) {
 				visited[i] = true;
-				dfs(hp - d[i][1], count + 1);
+				dfs(hp - dungeon[i][1], count + 1);
 				visited[i] = false;
 			}
 		}
