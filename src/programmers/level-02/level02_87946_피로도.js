@@ -21,37 +21,37 @@ import { generateTestPair } from '../../utils.js';
  * */
 
 const getPermutation = (arr, perm = [], max = 3) => {
-	if (perm.length === max) return [perm]; // result 반환 방식 맞추기 위해 배열로 반환
+  if (perm.length === max) return [perm]; // result 반환 방식 맞추기 위해 배열로 반환
 
-	const result = [];
-	for (let i = 0; i < arr.length; i++) {
-		const newPerm = [...perm, arr[i]];
-		const rest = arr.slice(0, i).concat(arr.slice(i + 1));
-		result.push(...getPermutation(rest, newPerm, max)); // result.push(...[[1, 2, 3], [1, 3, 2]])
-	}
+  const result = [];
+  for (let i = 0; i < arr.length; i++) {
+    const newPerm = [...perm, arr[i]];
+    const rest = arr.slice(0, i).concat(arr.slice(i + 1));
+    result.push(...getPermutation(rest, newPerm, max)); // result.push(...[[1, 2, 3], [1, 3, 2]])
+  }
 
-	return result;
+  return result;
 };
 
 function solution(k, dungeons) {
-	const perms = getPermutation(dungeons, [], dungeons.length);
-	let maxCount = 0;
+  const perms = getPermutation(dungeons, [], dungeons.length);
+  let maxCount = 0;
 
-	for (const perm of perms) {
-		let currentK = k;
-		let count = 0;
-		for (const [requiredK, consumeK] of perm) {
-			if (currentK >= requiredK) {
-				currentK -= consumeK;
-				count++;
-			} else {
-				break;
-			}
-		}
-		maxCount = Math.max(count, maxCount);
-	}
+  for (const perm of perms) {
+    let currentK = k;
+    let count = 0;
+    for (const [requiredK, consumeK] of perm) {
+      if (currentK >= requiredK) {
+        currentK -= consumeK;
+        count++;
+      } else {
+        break;
+      }
+    }
+    maxCount = Math.max(count, maxCount);
+  }
 
-	return maxCount;
+  return maxCount;
 }
 
 /**
@@ -59,42 +59,42 @@ function solution(k, dungeons) {
  * 백트래킹: 가능한 모든 경로를 탐색하되, 조건을 만족하지 않는 경로는 되돌아가면서 최적의 해결책을 찾는 방법
  */
 function reference(k, dungeon) {
-	const N = dungeon.length;
-	const visited = new Array(N).fill(false);
-	let maxCount = 0;
+  const N = dungeon.length;
+  const visited = new Array(N).fill(false);
+  let maxCount = 0;
 
-	function dfs(hp, count) {
-		maxCount = Math.max(count, maxCount);
+  function dfs(hp, count) {
+    maxCount = Math.max(count, maxCount);
 
-		for (let i = 0; i < N; i++) {
-			if (hp >= dungeon[i][0] && !visited[i]) {
-				visited[i] = true;
-				dfs(hp - dungeon[i][1], count + 1);
-				visited[i] = false;
-			}
-		}
-	}
+    for (let i = 0; i < N; i++) {
+      if (hp >= dungeon[i][0] && !visited[i]) {
+        visited[i] = true;
+        dfs(hp - dungeon[i][1], count + 1);
+        visited[i] = false;
+      }
+    }
+  }
 
-	dfs(k, 0);
-	return maxCount;
+  dfs(k, 0);
+  return maxCount;
 }
 
 const cases = [
-	generateTestPair(
-		[
-			80, // k
-			[
-				[80, 20], // [최소 필요 피로도, 소모 피로도]
-				[50, 40],
-				[30, 10],
-			], // dungeons
-		],
-		3, // result
-	),
+  generateTestPair(
+    [
+      80, // k
+      [
+        [80, 20], // [최소 필요 피로도, 소모 피로도]
+        [50, 40],
+        [30, 10],
+      ], // dungeons
+    ],
+    3, // result
+  ),
 ];
 
 cases.forEach(({ input, output }, i) => {
-	const solRes = solution(...input) === output ? '통과' : '실패';
-	const refRes = reference(...input) === output ? '통과' : '실패';
-	console.log(`${i + 1}번 테스트 solution: ${solRes} | reference: ${refRes}`);
+  const solRes = solution(...input) === output ? '통과' : '실패';
+  const refRes = reference(...input) === output ? '통과' : '실패';
+  console.log(`${i + 1}번 테스트 solution: ${solRes} | reference: ${refRes}`);
 });
