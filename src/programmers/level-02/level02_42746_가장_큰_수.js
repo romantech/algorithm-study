@@ -15,7 +15,7 @@ import { generateTestPair } from '../../utils.js';
  */
 
 function solution(numbers) {
-  if (numbers.every(n => n === 0)) return '0';
+  if (numbers.every((n) => n === 0)) return '0';
 
   const sorted = numbers.sort((a, b) => {
     // localeCompare는 로케일의 사전 순으로 비교하므로 '10', '2'를 비교할 때

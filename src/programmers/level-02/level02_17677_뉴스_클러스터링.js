@@ -35,9 +35,9 @@ import { generateTestPair } from '../../utils.js';
  * 유사도 값은 0~1 사이의 실수이므로, 이를 다루기 쉽도록 65536을 곱한 후 정수부만 반환
  */
 
-const isAlphabet = str => /^[A-Za-z]+$/.test(str);
+const isAlphabet = (str) => /^[A-Za-z]+$/.test(str);
 
-const makePairs = str => {
+const makePairs = (str) => {
   const pairs = [];
 
   for (let i = 0; i < str.length; i += 1) {
@@ -104,9 +104,9 @@ function reference(str1, str2) {
   // arr1, arr2 합집합의 고유한 요소를 순회하면서...
   // 교집합: 각 고유 요소의 최소 출현 횟수를 교집합 카운트에 추가
   // 합집합: 각 고유 요소의 최대 출현 횟수를 합집합 카운트에 추가
-  set.forEach(item => {
-    const has1 = arr1.filter(x => x === item).length; // 1, 1, 1, 1, 1, 0, 0, 0
-    const has2 = arr2.filter(x => x === item).length; // 1, 0, 0, 1, 0, 1, 1, 1
+  set.forEach((item) => {
+    const has1 = arr1.filter((x) => x === item).length; // 1, 1, 1, 1, 1, 0, 0, 0
+    const has2 = arr2.filter((x) => x === item).length; // 1, 0, 0, 1, 0, 1, 1, 1
     intersection += Math.min(has1, has2); // 1, 1, 1, 2, 2, 2, 2, 2
     union += Math.max(has1, has2); // 1, 2, 3, 4, 5, 6, 7, 8
   });

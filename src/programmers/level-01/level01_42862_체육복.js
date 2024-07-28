@@ -30,8 +30,8 @@
 function lostFilter(lost, reserve, findT) {
   const filterT = { me: true, friend: false };
 
-  return lost.filter(lostN => {
-    const existI = reserve.findIndex(reserveN =>
+  return lost.filter((lostN) => {
+    const existI = reserve.findIndex((reserveN) =>
       // 여분의 체육복 빌려줄 수 있으면 reserve에서 제거, lost 배열엔 추가하지 않음
       // 여분의 체육복을 빌려줄 수 없으면 reserve 배열 유지, lost 배열에 추가
       filterT[findT] ? reserveN === lostN : Math.abs(reserveN - lostN) <= 1,

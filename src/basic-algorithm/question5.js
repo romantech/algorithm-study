@@ -1,6 +1,6 @@
 // 문제5. 모음 찾기. a, e, i, o, u가 몇개 들어있는지 세는 함수
 
-const getVowels = str => {
+const getVowels = (str) => {
   return (str.match(/[aeiou]/gi) || []).length;
   // i 플래그 대소문자 구분 없음,
   // [] 문자 그룹 : 대괄호 내부 문자열 중 하나라도 일치하는 경우

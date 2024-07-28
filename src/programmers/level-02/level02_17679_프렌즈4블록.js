@@ -86,7 +86,7 @@ const removeSameBlock = (toRemove, board) => {
   });
 };
 
-const dropBlocks = board => {
+const dropBlocks = (board) => {
   const swap = (row, col) => {
     for (let newRow = row - 1; newRow >= 0; newRow--) {
       const target = board[newRow][col];
@@ -106,7 +106,7 @@ const dropBlocks = board => {
 };
 
 function solution(m, n, board) {
-  const gameBoard = board.map(row => row.split(''));
+  const gameBoard = board.map((row) => row.split(''));
 
   const processBoard = () => {
     const toRemove = [];
@@ -129,7 +129,7 @@ function solution(m, n, board) {
   processBoard();
 
   return gameBoard.reduce((acc, cur) => {
-    return acc + cur.filter(e => e === null).length;
+    return acc + cur.filter((e) => e === null).length;
   }, 0);
 }
 

@@ -146,7 +146,7 @@ const dijkstraEnhanced = (N, graph, start, usePriorityQueue = true) => {
 function solution(N, road, K) {
   const graph = createGraph(N, road); // road 거리 정보를 사용해서 인접리스트 생성
   const distances = dijkstraEnhanced(N, graph, 1, false); // 시작 노드에서 각 노드까지의 최단 거리 계산
-  return distances.filter(distance => distance <= K).length; // 최단 거리가 K 이하인 마을의 수 계산
+  return distances.filter((distance) => distance <= K).length; // 최단 거리가 K 이하인 마을의 수 계산
 }
 
 const cases = [

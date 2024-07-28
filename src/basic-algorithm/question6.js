@@ -1,6 +1,6 @@
 // 문제6. 중간 숫자 찾기. 3개 숫자 중에 2번째 크기의 숫자를 찾는 함수
 
-const findMiddleNum = nums => {
+const findMiddleNum = (nums) => {
   return nums.sort((a, b) => a - b)[1];
 };
 

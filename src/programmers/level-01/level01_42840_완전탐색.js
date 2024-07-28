@@ -27,7 +27,7 @@ function solution(answers) {
     }
   });
 
-  const maxCount = Math.max(...person.map(el => el.count));
+  const maxCount = Math.max(...person.map((el) => el.count));
   return person.reduce((acc, cur, idx) => (cur.count === maxCount ? acc.concat(idx + 1) : acc), []);
 }
 

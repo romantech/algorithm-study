@@ -29,7 +29,7 @@ function solution(cards1, cards2, goal) {
     return false;
   };
 
-  const result = goal.filter(card => {
+  const result = goal.filter((card) => {
     return checker(cards1, card) || checker(cards2, card);
   });
 

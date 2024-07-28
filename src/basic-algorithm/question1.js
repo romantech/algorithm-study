@@ -1,5 +1,5 @@
 // 문제1. 분기 숫자 구하기
-const getQuaterNumber = month => {
+const getQuaterNumber = (month) => {
   if (month >= 1 && month <= 12) {
     return Math.ceil(month / 3);
   }
@@ -7,7 +7,7 @@ const getQuaterNumber = month => {
 };
 
 // 문제1. 테스트
-Array.from(Array(12).keys(), i => i + 1).forEach(num => {
+Array.from(Array(12).keys(), (i) => i + 1).forEach((num) => {
   let expectResult;
   if (num >= 0 && num <= 3) {
     expectResult = 1;

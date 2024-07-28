@@ -31,7 +31,7 @@ class PriorityQueue extends MinHeap {
 
   // Checks if the queue contains a value.
   contains(value) {
-    return this.heap.some(element => element.value === value);
+    return this.heap.some((element) => element.value === value);
   }
 }
 

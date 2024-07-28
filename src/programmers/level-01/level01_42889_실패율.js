@@ -8,11 +8,11 @@
 
 function solution(N, stages) {
   // 해당 스테이지를 도전중인 유저 수 -> 현재 N 숫자와 같거나 큰
-  return Array.from(Array(N).keys(), n => n + 1)
+  return Array.from(Array(N).keys(), (n) => n + 1)
     .reduce((result, stageNum) => {
       const clear = [];
       const unclear = [];
-      stages.forEach(n => {
+      stages.forEach((n) => {
         if (n >= stageNum) {
           clear.push(n);
           if (stageNum + 1 > n) {
@@ -24,7 +24,7 @@ function solution(N, stages) {
       return result.concat({ stageNum, rate });
     }, [])
     .sort((a, b) => b.rate - a.rate)
-    .map(e => e.stageNum);
+    .map((e) => e.stageNum);
 }
 
 const case1 = {

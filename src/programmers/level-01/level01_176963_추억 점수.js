@@ -48,7 +48,7 @@ function solution(name, yearning, photo) {
     return acc;
   }, {});
 
-  return photo.map(p => p.reduce((acc, cur) => acc + (scoreByName[cur] || 0), 0));
+  return photo.map((p) => p.reduce((acc, cur) => acc + (scoreByName[cur] || 0), 0));
 }
 
 solution(...cases[0].input);

@@ -30,7 +30,7 @@ const vowelList = Object.keys(vowelIdxMap);
 const getSortedCombs = (maxLen = 5) => {
   const make = (len, str = '') => {
     if (len === str.length) return str;
-    return vowelList.flatMap(v => make(len, str + v));
+    return vowelList.flatMap((v) => make(len, str + v));
   };
 
   const combs = [];
@@ -58,7 +58,7 @@ export function reference(word) {
    *
    * 예를들어 AAAA-는 4번째에 위치해 있고 AAAE-는 2번째 자리의 가중치 6을 더한 10번째에 위치해 있다는 의미
    */
-  const weightByPosition = vowelList.reduce(acc => {
+  const weightByPosition = vowelList.reduce((acc) => {
     const prevWeight = acc[0] ?? 0;
     return [prevWeight * vowelList.length + 1].concat(acc);
   }, []); // [781, 156, 31, 6, 1]

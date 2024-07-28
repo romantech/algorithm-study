@@ -10,7 +10,7 @@ function solution(arr) {
   const sortedArray = arr.sort((a, b) => b - a);
   const [biggest, ...rest] = sortedArray;
 
-  const isDivisible = target => rest.every(n => target % n === 0);
+  const isDivisible = (target) => rest.every((n) => target % n === 0);
 
   let lcmFound = false;
   let multiplier = 1;

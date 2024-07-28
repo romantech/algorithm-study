@@ -46,7 +46,7 @@ function solution(n) {
  * 이진수에서 1이 나온 자리에서 건전지를 사용하므로 사실상 1의 개수만 세면 되는 것이다.
  * 참고로 n^0은 1이고, 이진수에서 0으로 끝나면 짝수가 된다
  */
-const reference = n => {
+const reference = (n) => {
   const binary = n.toString(2); // n을 이진수로 변환
   const c = binary.match(/1/g) ?? []; // 1만 찾아서 추가
   return c.length;

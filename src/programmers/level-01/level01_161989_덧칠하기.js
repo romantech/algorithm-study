@@ -27,7 +27,7 @@ function solution(n, m, section) {
   // 2(section) > 0(max) --> max = 5 (2~5번까지 칠함)
   // 3(section) < 5(max) --> 3번 섹션은 이전에 칠함
   // 6(section) > 5(max) --> max = 9 (6~9번까지 칠함)
-  section.forEach(s => {
+  section.forEach((s) => {
     // max : 0 > 5 > 5
     if (s > max) {
       answer++;

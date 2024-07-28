@@ -1,6 +1,6 @@
 // 문제7. 친구 찾기, 이름이 4글자면 친구
-const findFriends = names => {
-  return names.filter(name => name.length === 4);
+const findFriends = (names) => {
+  return names.filter((name) => name.length === 4);
 };
 
 // 문제7. 테스트

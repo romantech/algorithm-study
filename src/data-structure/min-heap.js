@@ -116,7 +116,7 @@ class MinHeap {
 
   // Prints all elements in the heap
   printHeap(property = 'priority') {
-    console.log(this.heap.map(element => element[property]).join(' '));
+    console.log(this.heap.map((element) => element[property]).join(' '));
   }
 }
 

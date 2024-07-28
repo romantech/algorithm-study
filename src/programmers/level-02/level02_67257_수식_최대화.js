@@ -32,8 +32,8 @@ import { generateTestPair } from '../../utils.js';
  * 같은 연산자끼리는 앞에 있는 것의 우선순위가 더 높음
  */
 
-const getOps = exp => exp.match(/[*+-]/g);
-const getNums = exp => exp.match(/\d+/g).map(Number);
+const getOps = (exp) => exp.match(/[*+-]/g);
+const getNums = (exp) => exp.match(/\d+/g).map(Number);
 
 const operatorPerms = [
   ['-', '+', '*'],
@@ -54,11 +54,11 @@ const applyOperation = (a, b, op) => {
 function solution(expression) {
   const originalNums = getNums(expression);
 
-  const evaluation = priority => {
+  const evaluation = (priority) => {
     const nums = originalNums.slice();
     const ops = getOps(expression);
 
-    priority.forEach(op => {
+    priority.forEach((op) => {
       for (let i = 0; i < ops.length; i++) {
         if (ops[i] === op) {
           nums[i] = applyOperation(nums[i], nums[i + 1], op);

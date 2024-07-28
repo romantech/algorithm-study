@@ -1,7 +1,7 @@
 // 자연수 n이 주어졌을 때 n보다 큰 자연수 계산
 // 조건은 2진수로 변환했을 때 1의 개수가 같아야 함
 
-const getLen = n => n.toString(2).match(/1/g).length;
+const getLen = (n) => n.toString(2).match(/1/g).length;
 
 function solution(n) {
   let num = n;

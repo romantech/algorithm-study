@@ -33,15 +33,15 @@ class MinHeap {
   }
 
   // 부모 노드 인덱스 * 2 + 1
-  getLeftChildIdx = parentIdx => parentIdx * 2 + 1;
+  getLeftChildIdx = (parentIdx) => parentIdx * 2 + 1;
 
   // 부모 노드 인덱스 * 2 + 1
-  getRightChildIdx = parentIdx => this.getLeftChildIdx(parentIdx) + 1;
+  getRightChildIdx = (parentIdx) => this.getLeftChildIdx(parentIdx) + 1;
 
   // 부모 노드 인덱스
-  getParentIdx = idx => Math.floor((idx - 1) / 2);
+  getParentIdx = (idx) => Math.floor((idx - 1) / 2);
 
-  hasLeftChild = idx => this.getLeftChildIdx(idx) < this.heap.length;
+  hasLeftChild = (idx) => this.getLeftChildIdx(idx) < this.heap.length;
 
   swap(from, to) {
     [this.heap[from], this.heap[to]] = [this.heap[to], this.heap[from]];

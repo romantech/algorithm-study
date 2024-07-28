@@ -4,7 +4,7 @@
 // 최소공배수(공통된 배수 중 가장 작은 것) -> a * b / 최대공약수
 
 function solution(n, m) {
-  const factors = [n, m].map(num => {
+  const factors = [n, m].map((num) => {
     const result = [];
     for (let i = 1; i <= num; i += 1) {
       if (num % i === 0) {

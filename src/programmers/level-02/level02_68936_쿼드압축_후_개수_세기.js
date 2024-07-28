@@ -57,7 +57,7 @@ const compress = (arr, x, y, size, count) => {
     compress(arr, x + newSize, y + newSize, newSize, count),
   ];
 
-  if (results.some(value => value !== results[0])) return results;
+  if (results.some((value) => value !== results[0])) return results;
 
   count[results[0]] -= 3;
   return results[0];

@@ -26,7 +26,7 @@ function solution(new_id) {
   // 특수문자를 그대로 검색하고 싶을 땐 백슬레시로 이스케이프 \.
   // 1번 이상 일치하는걸 찾을 땐 + 사용
 
-  const removePeriod = str => {
+  const removePeriod = (str) => {
     if (str[0] === '.') {
       str = str.slice(1);
     }
@@ -44,7 +44,7 @@ function solution(new_id) {
   const stepFive = stepFour === '' ? 'a' : stepFour; // .replace(/^$/, 'a')
   const stepSix = removePeriod(stepFive.slice(0, 15));
 
-  const checkLength = str => {
+  const checkLength = (str) => {
     if (str.length < 3) {
       // 'aa' + 'a'
       return str + str[str.length - 1].repeat(3 - str.length);

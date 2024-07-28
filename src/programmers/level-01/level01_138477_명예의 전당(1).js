@@ -31,7 +31,7 @@ function solution(k, score) {
     temp.push(today);
   }
 
-  return temp.map(day => day.at(-1));
+  return temp.map((day) => day.at(-1));
 }
 
 solution(...cases[1].input);
@@ -40,7 +40,7 @@ solution(...cases[1].input);
 
 function solution2(k, score) {
   const stack = [];
-  const sortByAscending = arr => arr.sort((a, b) => a - b);
+  const sortByAscending = (arr) => arr.sort((a, b) => a - b);
 
   return score.reduce((a, c) => {
     stack.push(c);

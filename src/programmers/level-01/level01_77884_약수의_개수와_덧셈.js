@@ -5,7 +5,7 @@ function solution1(left, right) {
   // 약수인지 갯수 확인
   // 약수 갯수가 짝수 여부 확인
   let result = 0;
-  const checkFactorsNum = num => {
+  const checkFactorsNum = (num) => {
     let factors = 0;
     for (let i = 1; i <= num; i += 1) {
       if (num % i === 0) {

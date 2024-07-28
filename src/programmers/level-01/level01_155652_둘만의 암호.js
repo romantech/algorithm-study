@@ -18,8 +18,8 @@ const cases = [
 function solution(s, skip, index) {
   const answer = [];
   const alphabet = 'abcdefghijklmnopqrstuvwxyz';
-  const getOffset = i => i % alphabet.length;
-  const checkIncludes = idx => skip.includes(alphabet[idx]);
+  const getOffset = (i) => i % alphabet.length;
+  const checkIncludes = (idx) => skip.includes(alphabet[idx]);
 
   for (let i = 0; i < s.length; i++) {
     let count = index;

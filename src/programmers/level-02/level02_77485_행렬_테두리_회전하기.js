@@ -47,7 +47,7 @@ export function solution(rows, columns, queries) {
   };
 
   for (const query of queries) {
-    const [x1, y1, x2, y2] = query.map(coord => coord - 1);
+    const [x1, y1, x2, y2] = query.map((coord) => coord - 1);
     let prevValue = board[x1][y1];
     let minValue = prevValue;
 

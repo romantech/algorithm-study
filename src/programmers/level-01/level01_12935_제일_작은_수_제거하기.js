@@ -3,7 +3,7 @@
 function solution(arr) {
   if (arr.length <= 1) return [-1];
   const minNum = Math.min(...arr);
-  return arr.filter(el => el !== minNum);
+  return arr.filter((el) => el !== minNum);
 }
 
 const c1 = {

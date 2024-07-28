@@ -36,7 +36,7 @@ import { generateTestPair } from '../../utils.js';
 const LB = '(';
 const RB = ')';
 
-const isBalanced = str => {
+const isBalanced = (str) => {
   let balance = 0;
 
   for (const char of str) {
@@ -50,7 +50,7 @@ const isBalanced = str => {
   return balance === 0;
 };
 
-const splitBalancedBrackets = str => {
+const splitBalancedBrackets = (str) => {
   let count = 0;
   const result = { u: '', v: '' };
 
@@ -67,7 +67,7 @@ const splitBalancedBrackets = str => {
   return result;
 };
 
-const reverseBracket = str => {
+const reverseBracket = (str) => {
   return str.split('').reduce((acc, cur) => {
     return acc + (cur === LB ? RB : LB);
   }, '');

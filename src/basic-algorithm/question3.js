@@ -1,5 +1,5 @@
 // 문제3. 승점 구하기, win 3점, draw 1점, lose 0점
-const getGameScore = games => {
+const getGameScore = (games) => {
   const tenGames = games.slice(0, 10);
 
   return tenGames.reduce((result, game) => {

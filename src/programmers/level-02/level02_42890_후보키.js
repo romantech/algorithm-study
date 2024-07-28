@@ -54,7 +54,7 @@ export function solution(relation) {
       // 1자리 조합일 때 e.g. [0] : 100, 200, 300, 400, 500, 600
       // 2자리 조합일 때 e.g. [0, 1]: 100.ryan, 200.apeach, 300.tube, ...
       // 3자리 조합일 때 e.g. [0, 1, 2]: 100.ryan.music, 200.apeach.math, ...
-      const key = combination.map(idx => row[idx]).join('.');
+      const key = combination.map((idx) => row[idx]).join('.');
       seen.add(key);
     }
     // 중복일 경우 seen 사이즈가 relation의 row보다 작아짐
@@ -67,7 +67,7 @@ export function solution(relation) {
   // 최소성을 만족하려면 비교하는 두 조합(키)이 서로 겹치는 키가 없어야 하기 때문
   for (const comb of uniqueCombs) {
     // every는 빈 배열일 때 항상 true를 반환한다. 따라서 첫 번째 조합은 항상 조건을 통과한다
-    const isCandidate = candidateKeys.every(key => !key.every(k => comb.includes(k)));
+    const isCandidate = candidateKeys.every((key) => !key.every((k) => comb.includes(k)));
     if (isCandidate) candidateKeys.push(comb);
   }
 

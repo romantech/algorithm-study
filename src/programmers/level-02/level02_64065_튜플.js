@@ -33,10 +33,10 @@ import { generateTestPair } from '../../utils.js';
  * - return 하는 배열 길이가 1 이상 500 이하인 경우만 입력으로 주어짐
  */
 
-const toArray = tupleString => {
+const toArray = (tupleString) => {
   const innerContent = tupleString.slice(2, -2);
   const tupleStrings = innerContent.split('},{');
-  return tupleStrings.map(tuple => tuple.split(','));
+  return tupleStrings.map((tuple) => tuple.split(','));
 };
 
 export function solution(s) {

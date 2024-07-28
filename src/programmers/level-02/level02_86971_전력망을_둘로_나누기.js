@@ -17,90 +17,90 @@ import { generateTestPair } from '../../utils.js';
  * */
 
 function solution(n, wires) {
-	const adjacencyList = {}; // 인접리스트
+  const adjacencyList = {}; // 인접리스트
 
-	for (const [n1, n2] of wires) {
-		if (!adjacencyList[n1]) adjacencyList[n1] = [];
-		if (!adjacencyList[n2]) adjacencyList[n2] = [];
-		adjacencyList[n1].push(n2);
-		adjacencyList[n2].push(n1);
-	}
+  for (const [n1, n2] of wires) {
+    if (!adjacencyList[n1]) adjacencyList[n1] = [];
+    if (!adjacencyList[n2]) adjacencyList[n2] = [];
+    adjacencyList[n1].push(n2);
+    adjacencyList[n2].push(n1);
+  }
 
-	let minDiff = n;
+  let minDiff = n;
 
-	const getSubtreeSizes = (rootNode, cutNode) => {
-		const visited = Array(n).fill(false);
-		const stack = [rootNode];
-		let size = 0;
+  const getSubtreeSizes = (rootNode, cutNode) => {
+    const visited = Array(n).fill(false);
+    const stack = [rootNode];
+    let size = 0;
 
-		while (stack.length > 0) {
-			const now = stack.pop();
-			size++;
-			visited[now] = true;
+    while (stack.length > 0) {
+      const now = stack.pop();
+      size++;
+      visited[now] = true;
 
-			adjacencyList[now].forEach((node) => {
-				if (!visited[node] && node !== cutNode) stack.push(node);
-			});
-		}
+      adjacencyList[now].forEach((node) => {
+        if (!visited[node] && node !== cutNode) stack.push(node);
+      });
+    }
 
-		return [size, n - size];
-	};
+    return [size, n - size];
+  };
 
-	for (const [n1, n2] of wires) {
-		const [size1, size2] = getSubtreeSizes(n1, n2);
-		const diff = Math.abs(size1 - size2);
-		minDiff = Math.min(minDiff, diff);
-	}
+  for (const [n1, n2] of wires) {
+    const [size1, size2] = getSubtreeSizes(n1, n2);
+    const diff = Math.abs(size1 - size2);
+    minDiff = Math.min(minDiff, diff);
+  }
 
-	return minDiff;
+  return minDiff;
 }
 
 const cases = [
-	generateTestPair(
-		[
-			9,
-			[
-				[1, 3],
-				[2, 3],
-				[3, 4],
-				[4, 5],
-				[4, 6],
-				[4, 7],
-				[7, 8],
-				[7, 9],
-			],
-		],
-		3,
-	),
-	generateTestPair(
-		[
-			4,
-			[
-				[1, 2],
-				[2, 3],
-				[3, 4],
-			],
-		],
-		0,
-	),
-	generateTestPair(
-		[
-			7,
-			[
-				[1, 2],
-				[2, 7],
-				[3, 7],
-				[3, 4],
-				[4, 5],
-				[6, 7],
-			],
-		],
-		1,
-	),
+  generateTestPair(
+    [
+      9,
+      [
+        [1, 3],
+        [2, 3],
+        [3, 4],
+        [4, 5],
+        [4, 6],
+        [4, 7],
+        [7, 8],
+        [7, 9],
+      ],
+    ],
+    3,
+  ),
+  generateTestPair(
+    [
+      4,
+      [
+        [1, 2],
+        [2, 3],
+        [3, 4],
+      ],
+    ],
+    0,
+  ),
+  generateTestPair(
+    [
+      7,
+      [
+        [1, 2],
+        [2, 7],
+        [3, 7],
+        [3, 4],
+        [4, 5],
+        [6, 7],
+      ],
+    ],
+    1,
+  ),
 ];
 
 cases.forEach(({ input, output }, i) => {
-	const isPassed = solution(...input) === output;
-	const resultMsg = isPassed ? '통과' : '실패';
-	console.log(`${i + 1}번 케이스 ${resultMsg}`);
+  const isPassed = solution(...input) === output;
+  const resultMsg = isPassed ? '통과' : '실패';
+  console.log(`${i + 1}번 케이스 ${resultMsg}`);
 });

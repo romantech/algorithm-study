@@ -39,7 +39,7 @@ function reference(cacheSize, cities) {
   let answer = 0;
   const cache = [];
 
-  cities.forEach(city => {
+  cities.forEach((city) => {
     city = city.toUpperCase();
     const idx = cache.indexOf(city);
 
