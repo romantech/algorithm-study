@@ -16,6 +16,9 @@ import { generateTestPair } from '../../utils.js';
  * dungeons: 가로 길이 2, 세로 길이 1 이상 8 이하, 각 행은 [최소 필요 피로도, 소모 피로도]
  * 피로도: 1 이상 1000 이하 자연수
  * 최소 피로도는 항상 소모 피로도보다 크거나 같음
+ *
+ * [스터디 노트]
+ * https://colorfilter.notion.site/TIL-88b6d8dc48b94753867ef0234bef34bb?pvs=4
  * */
 
 const getPermutation = (arr, perm = [], max = 3) => {
