@@ -1,4 +1,5 @@
 import { generateTestPair } from '../../utils.js';
+import { isPrime } from '../../math.js';
 
 /**
  * [요구사항]
@@ -15,7 +16,7 @@ import { generateTestPair } from '../../utils.js';
  * P0: 211
  * 0P: 11
  *
- * 110011을 3진로 바꾸면 12120220111 되고, 조건에 맞는 소수는...
+ * 110011을 10진수로 바꾸면 110011을 되고, 조건에 맞는 소수는...
  * P0: 11
  * 0P: 11
  *
@@ -26,9 +27,35 @@ import { generateTestPair } from '../../utils.js';
  * 3 <= k <= 10
  * */
 
+const isZero = (n) => n === '0';
+
 function solution(n, k) {
-  const answer = -1;
-  return answer;
+  const convertedNumStr = n.toString(k);
+  let curNumStr = '';
+  let lastZeroIdx = 0;
+  let result = 0;
+
+  for (let i = 0; i < convertedNumStr.length; i++) {
+    const cur = convertedNumStr[i];
+    if (!isZero(cur)) curNumStr += cur;
+    if (isZero(cur) || i === convertedNumStr.length - 1) {
+      let j = i;
+
+      while (j-- >= lastZeroIdx) {
+        const charBeforeZero = convertedNumStr[j];
+
+        if ((!charBeforeZero || isZero(charBeforeZero)) && isPrime(+curNumStr)) {
+          result++;
+          lastZeroIdx = j;
+          break;
+        }
+      }
+
+      curNumStr = '';
+    }
+  }
+
+  return result;
 }
 
 const cases = [
@@ -36,4 +63,8 @@ const cases = [
   generateTestPair([110011, 10], 2), // 2개
 ];
 
-solution(...cases[0].input);
+cases.forEach(({ input, output }, i) => {
+  const res = solution(...input);
+  const msg = res === output ? '통과' : '실패';
+  console.log(`${i + 1}번 케이스 ${msg}`);
+});
