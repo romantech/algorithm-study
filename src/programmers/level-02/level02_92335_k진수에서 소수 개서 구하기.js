@@ -58,6 +58,22 @@ function solution(n, k) {
   return result;
 }
 
+const reference = (n, k) => {
+  const convertedNumStr = n.toString(k);
+  /**
+   * 0을 기준으로 분할하면 조건에 맞는 소수만 추출할 수 있다.
+   * 110011을 처럼 0이 이어져 있는 경우엔 빈 문자열이 생성되므로 조건 검사시 제외해야 한다.
+   * e.g., 211020101011 -> [ '211', '2', '1', '1', '11' ]
+   * e.g., 110011 -> ["11", "", "11"]
+   * */
+  const parts = convertedNumStr.split('0');
+  return parts.reduce((acc, cur) => {
+    // 빈 문자열이 아니고 소수이면 카운트 증가
+    if (cur && isPrime(+cur)) return acc + 1;
+    return acc;
+  }, 0);
+};
+
 const cases = [
   generateTestPair([437674, 3], 3), // 3개
   generateTestPair([110011, 10], 2), // 2개
