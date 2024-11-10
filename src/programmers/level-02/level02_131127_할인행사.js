@@ -161,4 +161,8 @@ const cases = [
   ),
 ];
 
-console.log(reference(...cases[0].input));
+cases.forEach(({ input, output }, i) => {
+  const solResult = solution(...input) === output ? '통과' : '실패';
+  const refResult = reference(...input) === output ? '통과' : '실패';
+  console.log(`${i + 1}번 테스트, solution ${solResult}, reference ${refResult}`);
+});
