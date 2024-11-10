@@ -123,19 +123,19 @@ const cases = [
       // discount
       [
         'chicken',
-        'apple', // a1
-        'apple', // a2
-        'banana', // b1
-        'rice', // r1
-        'apple', // a3
-        'pork', // p1
-        'banana', // b2
-        'pork', // p2
-        'rice', // r2
-        'pot', // p1
-        'banana', //  b3
-        'apple', // a4
-        'banana', // b4
+        'apple',
+        'apple',
+        'banana',
+        'rice',
+        'apple',
+        'pork',
+        'banana',
+        'pork',
+        'rice',
+        'pot',
+        'banana',
+        'apple',
+        'banana',
       ],
     ],
     3,
