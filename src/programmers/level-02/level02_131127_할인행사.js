@@ -27,6 +27,9 @@ import { generateTestPair } from '../../utils.js';
  * 가능한 날이 없으면 0반환
  * */
 
+/**
+ * 시간복잡도 O(n × m)
+ * */
 function solution(want, number, discount) {
   const discountMap = new Map();
   want.forEach((e, i) => discountMap.set(e, number[i]));
@@ -55,11 +58,69 @@ function solution(want, number, discount) {
   }, 0);
 }
 
+/**
+ * 슬라이딩 윈도우 방식으로 해결한 코드. 시간복잡도 O(n)
+ * 슬라이딩 윈도우: 고정된 크기의 구간을 한 칸씩 이동하면서 배열이나 문자열을 탐색하는 기법
+ * 예를들어 요소가 13개인 배열에서 크기 5의 슬라이딩 윈도우(소괄호 부분)로 탐색하면...
+ * (1, 2, 3, 4, 5), 6, 7, 8, 9, 10, 11, 12, 13
+ * 1, (2, 3, 4, 5, 6), 7, 8, 9, 10, 11, 12, 13
+ * 1, 2, (3, 4, 5, 6, 7), 8, 9, 10, 11, 12, 13
+ * 1, 2, 3, (4, 5, 6, 7, 8), 9, 10, 11, 12, 13
+ * ...
+ * 이렇게 한칸씩 오른쪽으로 이동하면서, 각 구간에서 필요한 연산 수행
+ * */
+function reference(want, number, discount) {
+  const wantMap = new Map();
+  want.forEach((item, i) => wantMap.set(item, number[i]));
+
+  const windowMap = new Map();
+  let count = 0;
+
+  // 초기 윈도우 설정 (첫 10일)
+  // chicken => 1, apple => 3, banana => 2, rice => 2, pork => 2
+  for (let i = 0; i < 10; i++) {
+    windowMap.set(discount[i], (windowMap.get(discount[i]) ?? 0) + 1);
+  }
+
+  // 현재 윈도우가 조건을 만족하는지 확인
+  const checkIfValid = () => {
+    for (const [item, qty] of wantMap.entries()) {
+      if ((windowMap.get(item) ?? 0) < qty) return false;
+    }
+    return true;
+  };
+
+  // 첫 10일 체크
+  if (checkIfValid()) count++;
+
+  // 슬라이딩 윈도우로 탐색
+  for (let i = 10; i < discount.length; i++) {
+    const startItem = discount[i - 10]; // 이전 항목 제거
+    const newItem = discount[i]; // 새로 추가된 항목 추가
+
+    // 윈도우 업데이트
+    // i10 = chicken => 1, apple => 3, banana => 2, rice => 2, pork => 2
+    // i11 = chicken => 0, apple => 3, banana => 2, rice => 2, pork => 2, pot => 1
+    // i12 = chicken => 0, apple => 3, banana => 3, rice => 2, pork => 2, pot => 1
+    // ...
+    windowMap.set(startItem, windowMap.get(startItem) - 1);
+    windowMap.set(newItem, (windowMap.get(newItem) ?? 0) + 1);
+
+    // 조건 만족 여부 체크
+    if (checkIfValid()) count++;
+  }
+
+  return count;
+}
+
 const cases = [
   generateTestPair(
     [
+      // want
       ['banana', 'apple', 'rice', 'pork', 'pot'],
+      // number
       [3, 2, 2, 2, 1],
+      // discount
       [
         'chicken',
         'apple', // a1
@@ -100,4 +161,4 @@ const cases = [
   ),
 ];
 
-console.log(solution(...cases[0].input));
+console.log(reference(...cases[0].input));
