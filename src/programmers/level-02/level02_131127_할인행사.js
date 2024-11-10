@@ -1,3 +1,5 @@
+import { generateTestPair } from '../../utils.js';
+
 /**
  * [요구사항]
  * XYZ 마트는 일정 금액을 지불하면 10일 동안 회원 자격을 부여함
@@ -16,22 +18,41 @@
  * 5일차부터 10일: 모두 구매 가능
  *
  * [매개변수]
- * number: 정현이가 원하는 제품의 수량을 나타내는 정수 배열.
- *         제한사항: 1 <= number <= 10
- * want: 정현이가 원하는 제품을 나타내는 문자열 배열.
- *       제한사항: 1 <= want = number <= 10
- * discount: 마트에서 할인하는 제품을 나타내는 문자열 배열.
- *           제한사항: 10 <= discount <= 10000
+ * number: 정현이가 원하는 제품의 수량을 나타내는 정수 배열. 1 <= number <= 10
+ * want: 정현이가 원하는 제품을 나타내는 문자열 배열. 1 <= want = number <= 10
+ * discount: 마트에서 할인하는 제품을 나타내는 문자열 배열. 10 <= discount <= 10000
  *
  * [반환]
  * 정현이가 원하는 제품을 모두 할인 받을 수 있는 회원등록 날짜의 총 일수
  * 가능한 날이 없으면 0반환
  * */
-import { generateTestPair } from '../../utils.js';
 
 function solution(want, number, discount) {
-  const answer = 0;
-  return answer;
+  const discountMap = new Map();
+  want.forEach((e, i) => discountMap.set(e, number[i]));
+
+  const result = [];
+
+  for (let i = 0; i <= discount.length; i++) {
+    const sliced = discount.slice(i, i + 10);
+    if (sliced.length >= 10) {
+      const dMap = sliced.reduce((acc, cur) => {
+        acc[cur] = (acc[cur] ?? 0) + 1;
+        return acc;
+      }, {});
+
+      result.push(dMap);
+    }
+  }
+
+  return result.reduce((acc, cur) => {
+    for (const [k, v] of discountMap.entries()) {
+      const count = cur[k] ?? 0;
+      if (count < v) return acc;
+    }
+
+    return acc + 1;
+  }, 0);
 }
 
 const cases = [
@@ -40,20 +61,20 @@ const cases = [
       ['banana', 'apple', 'rice', 'pork', 'pot'],
       [3, 2, 2, 2, 1],
       [
-        ('chicken',
-        'apple',
-        'apple',
-        'banana',
-        'rice',
-        'apple',
-        'pork',
-        'banana',
-        'pork',
-        'rice',
-        'pot',
-        'banana',
-        'apple',
-        'banana'),
+        'chicken',
+        'apple', // a1
+        'apple', // a2
+        'banana', // b1
+        'rice', // r1
+        'apple', // a3
+        'pork', // p1
+        'banana', // b2
+        'pork', // p2
+        'rice', // r2
+        'pot', // p1
+        'banana', //  b3
+        'apple', // a4
+        'banana', // b4
       ],
     ],
     3,
@@ -61,7 +82,7 @@ const cases = [
   generateTestPair(
     [
       ['apple'],
-      10,
+      [10],
       [
         'banana',
         'banana',
@@ -79,4 +100,4 @@ const cases = [
   ),
 ];
 
-solution(...cases[0].input);
+console.log(solution(...cases[0].input));
