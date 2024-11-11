@@ -39,12 +39,12 @@ function solution(want, number, discount) {
   for (let i = 0; i <= discount.length; i++) {
     const sliced = discount.slice(i, i + 10);
     if (sliced.length >= 10) {
-      const dMap = sliced.reduce((acc, cur) => {
+      const wantMap = sliced.reduce((acc, cur) => {
         acc[cur] = (acc[cur] ?? 0) + 1;
         return acc;
       }, {});
 
-      result.push(dMap);
+      result.push(wantMap);
     }
   }
 
@@ -70,9 +70,7 @@ function solution(want, number, discount) {
  * 이렇게 한칸씩 오른쪽으로 이동하면서, 각 구간에서 필요한 연산 수행
  * */
 function reference(want, number, discount) {
-  const wantMap = new Map();
-  want.forEach((item, i) => wantMap.set(item, number[i]));
-
+  const wantMap = want.reduce((map, item, i) => map.set(item, number[i]), new Map());
   const windowMap = new Map();
   let count = 0;
 
@@ -95,15 +93,15 @@ function reference(want, number, discount) {
 
   // 슬라이딩 윈도우로 탐색
   for (let i = 10; i < discount.length; i++) {
-    const startItem = discount[i - 10]; // 이전 항목 제거
-    const newItem = discount[i]; // 새로 추가된 항목 추가
+    const oldItem = discount[i - 10]; // 이전 항목 제거(start)
+    const newItem = discount[i]; // 새로 추가된 항목 추가(end)
 
     // 윈도우 업데이트
     // i10 = chicken => 1, apple => 3, banana => 2, rice => 2, pork => 2
     // i11 = chicken => 0, apple => 3, banana => 2, rice => 2, pork => 2, pot => 1
-    // i12 = chicken => 0, apple => 3, banana => 3, rice => 2, pork => 2, pot => 1
+    // i12 = chicken => 0, apple => 2, banana => 3, rice => 2, pork => 2, pot => 1
     // ...
-    windowMap.set(startItem, windowMap.get(startItem) - 1);
+    windowMap.set(oldItem, windowMap.get(oldItem) - 1);
     windowMap.set(newItem, (windowMap.get(newItem) ?? 0) + 1);
 
     // 조건 만족 여부 체크
