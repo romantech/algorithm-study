@@ -70,6 +70,8 @@ function solution(want, number, discount) {
  * 1, 2, 3, (4, 5, 6, 7, 8), 9, 10, 11, 12, 13
  * ...
  * 이렇게 한칸씩 오른쪽으로 이동하면서, 각 구간에서 필요한 연산 수행
+ *
+ * [블로그 포스팅]{@link https://romantech.net/1301}
  * */
 function reference(want, number, discount) {
   const wantMap = want.reduce((map, item, i) => map.set(item, number[i]), new Map());
