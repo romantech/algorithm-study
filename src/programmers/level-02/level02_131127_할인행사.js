@@ -27,6 +27,8 @@ import { generateTestPair } from '../../utils.js';
  * 가능한 날이 없으면 0반환
  * */
 
+const WINDOW_SIZE = 10;
+
 /**
  * 시간복잡도 O(n × m)
  * */
@@ -37,14 +39,14 @@ function solution(want, number, discount) {
   const result = [];
 
   for (let i = 0; i <= discount.length; i++) {
-    const sliced = discount.slice(i, i + 10);
-    if (sliced.length >= 10) {
-      const dMap = sliced.reduce((acc, cur) => {
+    const sliced = discount.slice(i, i + WINDOW_SIZE);
+    if (sliced.length >= WINDOW_SIZE) {
+      const wantMap = sliced.reduce((acc, cur) => {
         acc[cur] = (acc[cur] ?? 0) + 1;
         return acc;
       }, {});
 
-      result.push(dMap);
+      result.push(wantMap);
     }
   }
 
@@ -68,17 +70,17 @@ function solution(want, number, discount) {
  * 1, 2, 3, (4, 5, 6, 7, 8), 9, 10, 11, 12, 13
  * ...
  * 이렇게 한칸씩 오른쪽으로 이동하면서, 각 구간에서 필요한 연산 수행
+ *
+ * [블로그 포스팅]{@link https://romantech.net/1301}
  * */
 function reference(want, number, discount) {
-  const wantMap = new Map();
-  want.forEach((item, i) => wantMap.set(item, number[i]));
-
+  const wantMap = want.reduce((map, item, i) => map.set(item, number[i]), new Map());
   const windowMap = new Map();
   let count = 0;
 
   // 초기 윈도우 설정 (첫 10일)
   // chicken => 1, apple => 3, banana => 2, rice => 2, pork => 2
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < WINDOW_SIZE; i++) {
     windowMap.set(discount[i], (windowMap.get(discount[i]) ?? 0) + 1);
   }
 
@@ -94,16 +96,16 @@ function reference(want, number, discount) {
   if (checkIfValid()) count++;
 
   // 슬라이딩 윈도우로 탐색
-  for (let i = 10; i < discount.length; i++) {
-    const startItem = discount[i - 10]; // 이전 항목 제거
-    const newItem = discount[i]; // 새로 추가된 항목 추가
+  for (let i = WINDOW_SIZE; i < discount.length; i++) {
+    const oldItem = discount[i - WINDOW_SIZE]; // 이전 항목 제거(start)
+    const newItem = discount[i]; // 새로 추가된 항목 추가(end)
 
     // 윈도우 업데이트
     // i10 = chicken => 1, apple => 3, banana => 2, rice => 2, pork => 2
     // i11 = chicken => 0, apple => 3, banana => 2, rice => 2, pork => 2, pot => 1
-    // i12 = chicken => 0, apple => 3, banana => 3, rice => 2, pork => 2, pot => 1
+    // i12 = chicken => 0, apple => 2, banana => 3, rice => 2, pork => 2, pot => 1
     // ...
-    windowMap.set(startItem, windowMap.get(startItem) - 1);
+    windowMap.set(oldItem, windowMap.get(oldItem) - 1);
     windowMap.set(newItem, (windowMap.get(newItem) ?? 0) + 1);
 
     // 조건 만족 여부 체크
