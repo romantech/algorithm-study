@@ -27,6 +27,8 @@ import { generateTestPair } from '../../utils.js';
  * 가능한 날이 없으면 0반환
  * */
 
+const WINDOW_SIZE = 10;
+
 /**
  * 시간복잡도 O(n × m)
  * */
@@ -37,8 +39,8 @@ function solution(want, number, discount) {
   const result = [];
 
   for (let i = 0; i <= discount.length; i++) {
-    const sliced = discount.slice(i, i + 10);
-    if (sliced.length >= 10) {
+    const sliced = discount.slice(i, i + WINDOW_SIZE);
+    if (sliced.length >= WINDOW_SIZE) {
       const wantMap = sliced.reduce((acc, cur) => {
         acc[cur] = (acc[cur] ?? 0) + 1;
         return acc;
@@ -76,7 +78,7 @@ function reference(want, number, discount) {
 
   // 초기 윈도우 설정 (첫 10일)
   // chicken => 1, apple => 3, banana => 2, rice => 2, pork => 2
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < WINDOW_SIZE; i++) {
     windowMap.set(discount[i], (windowMap.get(discount[i]) ?? 0) + 1);
   }
 
@@ -92,8 +94,8 @@ function reference(want, number, discount) {
   if (checkIfValid()) count++;
 
   // 슬라이딩 윈도우로 탐색
-  for (let i = 10; i < discount.length; i++) {
-    const oldItem = discount[i - 10]; // 이전 항목 제거(start)
+  for (let i = WINDOW_SIZE; i < discount.length; i++) {
+    const oldItem = discount[i - WINDOW_SIZE]; // 이전 항목 제거(start)
     const newItem = discount[i]; // 새로 추가된 항목 추가(end)
 
     // 윈도우 업데이트
