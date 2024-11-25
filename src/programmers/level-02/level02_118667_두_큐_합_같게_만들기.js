@@ -103,5 +103,7 @@ const cases = [
   ),
 ];
 
-const res = solution(...cases[2].input);
-console.log(res);
+cases.forEach(({ input, output }, i) => {
+  const msg = solution(...input) === output ? '통과' : '실패';
+  console.log(`${i + 1}번 테스트 ${msg}`);
+});
