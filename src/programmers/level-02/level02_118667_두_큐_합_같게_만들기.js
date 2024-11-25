@@ -20,53 +20,67 @@ import { generateTestPair } from '../../utils.js';
  * 1 <= queue1 원소, queue2 원소 <= 10⁹
  * */
 
-const arraySum = (arr) => arr.reduce((acc, cur) => acc + cur);
+const sum = (arr) => arr.reduce((acc, cur) => acc + cur);
 
 function solution(queue1, queue2) {
   const answer = -1;
   const merged = queue1.concat(queue2);
-  const sum = arraySum(merged);
-  if (sum % 2 !== 0) return answer;
+  const mergedSum = sum(merged);
 
-  const goal = sum / 2;
+  if (mergedSum % 2 !== 0) return answer;
 
-  for (let i = 0; i < queue1.length; i++) {
-    const p = queue1.shift();
-    queue2.push(p);
+  const halfSum = mergedSum / 2;
+  let left = 0;
+  let right = queue1.length;
+  let count = 0;
+  let windowSum = sum(queue1);
+
+  while (left < merged.length && right < merged.length) {
+    if (windowSum === halfSum) return count;
+
+    // queue2 첫번째 요소 빼서 queue1 마지막 요소로 추가
+    if (windowSum < halfSum) windowSum += merged[right++];
+    // queue1 첫번째 요소 빼소 queue2 마지막 요소로 추가
+    else if (windowSum > halfSum) windowSum -= merged[left++];
+    count++;
   }
 
   return answer;
 }
 
 /*
+ * 한쪽 큐의 합이 두 큐 합의 절반이 되도록 만들면 나머지 큐의 합도 동일해지므로,
+ * 한쪽 큐를 윈도우로 설정해서 left/right를 조정하는 방식으로 목표 값을 찾음
+ *
  * 슬라이딩 윈도우(queue1의 윈도우)를 활용한 해결 과정 (1)
  *
- * [3, 2, 7, 2, 4, 6, 5, 1]
- *  |        |              -> 14 작음 right + 1 (q2 빼서 q1에 추가)
- * [3, 2, 7, 2, 4, 6, 5, 1]
- *  |           |           -> 18 큼   left + 1  (q1 빼서 q2에 추가)
- * [3, 2, 7, 2, 4, 6, 5, 1]
+ * [3, 2, 7, 2, 4, 6, 5, 1] 절반값 15
+ *  |        |              -> 14 < 15 -> right + 1 (q2 빼서 q1에 추가)
+ *  |           |           -> 18 > 15 ->  left + 1 (q1 빼서 q2에 추가)
  *     |        |           -> 15 일치
  *
  *
  * 슬라이딩 윈도우(queue1의 윈도우)를 활용한 해결 과정 (2)
  *
- * [1, 2, 1, 2, 1, 10, 1, 2]
- *  |        |              -> 6  작음 right + 1 (q2 빼서 q1에 추가)
- * [1, 2, 1, 2, 1, 10, 1, 2]
- *  |           |           -> 7  작음 right + 1 (q2 빼서 q1에 추가)
- * [1, 2, 1, 2, 1, 10, 1, 2]
- *  |               |       -> 17 큼   left + 1  (q1 빼서 q2에 추가)
- * [1, 2, 1, 2, 1, 10, 1, 2]
- *     |            |       -> 16 큼   left + 1  (q1 빼서 q2에 추가)
- * [1, 2, 1, 2, 1, 10, 1, 2]
- *        |         |       -> 14 큼   left + 1  (q1 빼서 q2에 추가)
- * [1, 2, 1, 2, 1, 10, 1, 2]
- *           |      |       -> 13 큼   left + 1  (q1 빼서 q2에 추가)
- * [1, 2, 1, 2, 1, 10, 1, 2]
- *              |   |       -> 11 큼   left + 1  (q1 빼서 q2에 추가)
- * [1, 2, 1, 2, 1, 10, 1, 2]
+ * [1, 2, 1, 2, 1, 10, 1, 2] 절반값 10
+ *  |        |              -> 6 < 10  -> right + 1
+ *  |           |           -> 7 < 10  -> right + 1
+ *  |               |       -> 17 > 10 ->  left + 1
+ *     |            |       -> 16 > 10 ->  left + 1
+ *        |         |       -> 14 > 10 ->  left + 1
+ *           |      |       -> 13 > 10 ->  left + 1
+ *              |   |       -> 11 > 10 ->  left + 1
  *                  |       -> 10 일치
+ *
+ * 슬라이딩 윈도우(queue1의 윈도우)를 활용한 해결 과정 (3)
+ * [1, 1, 1, 5] 절반값 4
+ *  |  |       -> 2 < 4 -> right + 1 -> l0 r2
+ *  |     |    -> 3 < 4 -> right + 1 -> l0 r3
+ *  |        | -> 8 > 4 -> left  + 1 -> l1 r3
+ *     |     | -> 7 > 4 -> left  + 1 -> l2 r3
+ *        |  | -> 6 > 4 -> left  + 1 -> l3 r3
+ *           | -> 5 > 4 -> left  + 1 -> l4 r3 -> l4 > queue.length 반복 종료
+ *
  * */
 
 const cases = [
@@ -93,4 +107,5 @@ const cases = [
   ),
 ];
 
-const res = solution(...cases[0].input);
+const res = solution(...cases[1].input);
+console.log(res);
