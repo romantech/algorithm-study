@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
-import { generateTestPair } from '../../utils.js';
+
 import { LRUCache } from '../../data-structure/index.js';
+import { generateTestPair } from '../../utils.js';
 
 /**
  * [문제 설명]

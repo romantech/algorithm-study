@@ -36,10 +36,10 @@ const testCase8 = [
   },
 ];
 
-testCase8.forEach(({ input, expectedResult }) =>
+testCase8.forEach(({ input, expectedResult }) => {
   console.log('문제8', {
     input,
     output: findLonelyNumber(input),
     passed: findLonelyNumber(input) === expectedResult,
-  }),
-);
+  });
+});

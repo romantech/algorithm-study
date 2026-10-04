@@ -6,7 +6,12 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "lint": "biome lint .",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format --write .",
+    "check": "biome check .",
+    "check:fix": "biome check --write ."
   },
   "repository": {
     "type": "git",
@@ -22,6 +27,7 @@
   "devDependencies": {
     "@babel/core": "^8.0.6",
     "@babel/preset-env": "^8.0.6",
+    "@biomejs/biome": "2.5.15",
     "babel-jest": "^30.5.2",
     "jest": "^30.5.2"
   }

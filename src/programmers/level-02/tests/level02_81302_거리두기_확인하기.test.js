@@ -1,4 +1,4 @@
-import { cases, iterativeSolution, bfsSolution } from '../level02_81302_거리두기_확인하기';
+import { bfsSolution, cases, iterativeSolution } from '../level02_81302_거리두기_확인하기';
 
 describe('프로그래머스 | 레벨 2 | 거리두기 확인하기', () => {
   cases.forEach(({ input, output, desc }, i) => {

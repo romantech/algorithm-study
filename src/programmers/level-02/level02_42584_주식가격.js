@@ -78,4 +78,4 @@ const cases = [
 //   console.log(solution(...input).every((p, i) => p === output[i]));
 // });
 
-export { solution, reference, cases };
+export { cases, reference, solution };

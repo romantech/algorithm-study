@@ -39,6 +39,7 @@ function lostFilter(lost, reserve, findT) {
     if (existI === -1) return true;
     reserve.splice(existI, 1);
     // reserve 배열을 splice로 변경하면 원본 배열을 변경하므로, 다음 함수호출에도 변경된 배열 그대로 사용
+    return false;
   });
 }
 

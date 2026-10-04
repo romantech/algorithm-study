@@ -1,4 +1,4 @@
-import { cases, solution, reference } from '../level02_84512_모음사전';
+import { cases, reference, solution } from '../level02_84512_모음사전';
 
 describe('프로그래머스 | 레벨 2 | 모음사전', () => {
   cases.forEach(({ input, output, desc }, i) => {

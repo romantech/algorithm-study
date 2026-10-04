@@ -20,10 +20,10 @@ const testCase6 = [
   },
 ];
 
-testCase6.forEach(({ input, expectedResult }) =>
+testCase6.forEach(({ input, expectedResult }) => {
   console.log('문제6', {
     input,
     output: findMiddleNum(input),
     passed: findMiddleNum(input) === expectedResult,
-  }),
-);
+  });
+});

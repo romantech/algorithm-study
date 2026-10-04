@@ -43,4 +43,4 @@ const cases = [
 
 console.log(solution(cases[3].input));
 
-export { solution, cases };
+export { cases, solution };

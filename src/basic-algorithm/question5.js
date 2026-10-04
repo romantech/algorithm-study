@@ -24,10 +24,10 @@ const testCase5 = [
   },
 ];
 
-testCase5.forEach(({ input, expectedResult }) =>
+testCase5.forEach(({ input, expectedResult }) => {
   console.log('문제5', {
     input,
     output: getVowels(input),
     passed: getVowels(input) === expectedResult,
-  }),
-);
+  });
+});

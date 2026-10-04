@@ -44,10 +44,10 @@ const testCase3 = [
   },
 ];
 
-testCase3.forEach(({ input, expectedResult }) =>
+testCase3.forEach(({ input, expectedResult }) => {
   console.log('문제3', {
     input,
     output: getGameScore(input),
     passed: getGameScore(input) === expectedResult,
-  }),
-);
+  });
+});

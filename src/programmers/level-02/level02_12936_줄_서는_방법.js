@@ -41,7 +41,7 @@ const cases = [
   },
 ];
 
-export { solution, cases };
+export { cases, solution };
 
 cases.forEach(({ input, output }) => {
   const result = solution(...input);

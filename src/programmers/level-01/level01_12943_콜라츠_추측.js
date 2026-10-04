@@ -10,7 +10,7 @@ function solution(num) {
   }
 
   for (let i = 1; i <= 500; i += 1) {
-    num = num % 2 === 0 ? (num /= 2) : (num = num * 3 + 1);
+    num = num % 2 === 0 ? num / 2 : num * 3 + 1;
     if (num === 1) return i;
   }
 
@@ -32,13 +32,13 @@ const testCase = [
   },
 ];
 
-testCase.forEach(({ input, expectedResult }) =>
+testCase.forEach(({ input, expectedResult }) => {
   console.log({
     input,
     output: solution(input),
     passed: solution(input) === expectedResult,
-  }),
-);
+  });
+});
 
 // 레퍼런스1 (재귀함수 활용)
 function solution2(num, count = 0) {
@@ -51,7 +51,7 @@ function solution2(num, count = 0) {
 function solution3(num) {
   let answer = 0;
   while (num !== 1 && answer <= 500) {
-    num % 2 === 0 ? (num /= 2) : (num = num * 3 + 1);
+    num = num % 2 === 0 ? num / 2 : num * 3 + 1;
     answer++;
   }
   return num === 1 ? answer : -1;

@@ -27,10 +27,10 @@ const testCase = [
   },
 ];
 
-testCase.forEach(({ input, expectedResult }) =>
+testCase.forEach(({ input, expectedResult }) => {
   console.log('핸드폰 번호 가리기', {
     input,
     output: solution2(input),
     passed: solution2(input) === expectedResult,
-  }),
-);
+  });
+});

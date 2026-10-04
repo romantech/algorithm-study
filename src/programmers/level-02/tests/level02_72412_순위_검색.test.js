@@ -1,4 +1,4 @@
-import { cases, solution, reference } from '../level02_72412_순위_검색';
+import { cases, reference, solution } from '../level02_72412_순위_검색';
 
 describe('프로그래머스 | 레벨 2 | 순위 검색', () => {
   cases.forEach(({ input, output, desc }, i) => {

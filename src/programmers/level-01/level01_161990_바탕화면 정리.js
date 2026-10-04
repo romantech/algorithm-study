@@ -89,10 +89,10 @@ function solution2(wallpaper) {
   return [Math.min(...left), Math.min(...top), Math.max(...right), Math.max(...bottom)];
 }
 
-cases.forEach(({ input, expectedResult }, i) =>
+cases.forEach(({ input, expectedResult }, i) => {
   console.log({
     index: i,
     output: solution2(input),
     passed: solution2(input).every((el, idx) => el === expectedResult[idx]),
-  }),
-);
+  });
+});

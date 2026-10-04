@@ -30,10 +30,10 @@ const testCase = [
   },
 ];
 
-testCase.forEach(({ input, expectedResult }) =>
+testCase.forEach(({ input, expectedResult }) => {
   console.log('level01_12954', {
     input,
     output: solution(input.x, input.n),
     passed: solution(input.x, input.n).every((num, idx) => num === expectedResult[idx]),
-  }),
-);
+  });
+});
