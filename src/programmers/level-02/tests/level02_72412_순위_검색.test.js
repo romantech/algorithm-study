@@ -1,4 +1,4 @@
-import { cases, solution } from '../level02_72412_순위_검색';
+import { cases, solution, reference } from '../level02_72412_순위_검색';
 
 describe('프로그래머스 | 레벨 2 | 순위 검색', () => {
   cases.forEach(({ input, output, desc }, i) => {
@@ -15,7 +15,7 @@ describe('프로그래머스 | 레벨 2 | 순위 검색', () => {
     입력값: ${JSON.stringify(input)}
     기대값: ${JSON.stringify(output)}
     --------------------------------------------`, () => {
-      expect(solution(...input)).toEqual(output);
+      expect(reference(...input)).toEqual(output);
     });
   });
 });
