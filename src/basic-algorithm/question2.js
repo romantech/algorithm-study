@@ -31,10 +31,10 @@ const testCase2 = [
   },
 ];
 
-testCase2.forEach(({ input, expectedResult }) =>
+testCase2.forEach(({ input, expectedResult }) => {
   console.log('문제2', {
     input,
     output: findUnusedMinNum(input),
     passed: findUnusedMinNum(input) === expectedResult,
-  }),
-);
+  });
+});

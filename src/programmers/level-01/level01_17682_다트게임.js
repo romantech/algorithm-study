@@ -55,7 +55,7 @@ solution1(c7); /* ? */
 
 function solution(dartResult) {
   const bonus = { S: 1, D: 2, T: 3 };
-  const options = { '*': 2, '#': -1, 'undefined': 1 };
+  const options = { '*': 2, '#': -1, undefined: 1 };
 
   const darts = dartResult.match(/\d.?\D/g); // [ '1D', '2S#', '10S' ]
   // g 플래그 붙이면 배열로 반환

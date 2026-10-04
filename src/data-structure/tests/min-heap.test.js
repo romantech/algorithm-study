@@ -24,5 +24,3 @@ describe('MinHeap', () => {
     expect(minHeap.peek().value).toBe('A');
   });
 });
-
-export default MinHeap;

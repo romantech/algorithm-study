@@ -28,10 +28,10 @@ const testCase = [
   },
 ];
 
-testCase.forEach(({ input, expectedResult }) =>
+testCase.forEach(({ input, expectedResult }) => {
   console.log('12947', {
     input,
     output: solution(input),
     passed: solution(input) === expectedResult,
-  }),
-);
+  });
+});

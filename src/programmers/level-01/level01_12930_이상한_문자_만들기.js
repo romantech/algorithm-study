@@ -19,9 +19,7 @@ solution(c1); /* ? */
 
 // 레퍼런스
 function toWeirdCase(s) {
-  return s.toUpperCase().replace(/(\w)(\w)/g, function (a) {
-    return a[0].toUpperCase() + a[1].toLowerCase();
-  });
+  return s.toUpperCase().replace(/(\w)(\w)/g, (a) => a[0].toUpperCase() + a[1].toLowerCase());
 
   // 'TRY HELLO WORLD'.match(/(\w\)(w/)g) -> 'TR', 'HE', 'LL', 'WO', 'RL'
   // \w는 단어문자(대소문자a~z, 0~9, _)만 매칭됨

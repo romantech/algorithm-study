@@ -70,7 +70,9 @@ export function solution(info, query) {
   });
 
   // 이진 탐색을 위해 각 조합의 score 오름차순 정렬
-  criteriaMap.forEach((scores) => scores.sort((a, b) => a - b));
+  criteriaMap.forEach((scores) => {
+    scores.sort((a, b) => a - b);
+  });
 
   // ⑶ 이진 탐색으로 조건에 맞는 인원 검색
   return query.map((q) => {
@@ -158,7 +160,7 @@ function convertToBitmaskAndScore(list, table, adjust = (x) => x) {
 export function reference(info, query) {
   // 각 조건을 최대 3비트로 표현한 테이블 : 3 = 011(2), 5 = 101(2), 6 = 110(2), 0 = 000(2)
   // 각 조건의 최대값은 7 = 111(2) / 참고로 십진수 8부터 이진수는 1000이 돼서 4비트를 넘어감
-  const table = { 'c': 3, 'j': 5, 'p': 6, 'b': 6, 'f': 5, 's': 6, '-': 0 }; // c, j 등은 모든 조건의 앞 글자
+  const table = { c: 3, j: 5, p: 6, b: 6, f: 5, s: 6, '-': 0 }; // c, j 등은 모든 조건의 앞 글자
 
   // 3비트로 변환한 info/query를 AND 연산자로 비교하기 위해 info 조건은 x => 7 - x 함수를 통해 역순으로 변환
   // 여기서 역순 변환은 각 비트 그룹의 최대값인 7을 기준으로 값을 반대로 변환하는 작업을 가리킴

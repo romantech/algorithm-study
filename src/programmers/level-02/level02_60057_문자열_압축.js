@@ -23,14 +23,14 @@ function solution(s) {
       if (tempStr === nextStr) {
         count += 1; // 더 압축할 수 있으므로 카운트 + 1
       } else {
-        count === 1 ? (str += tempStr) : (str += count + tempStr);
+        str += count === 1 ? tempStr : count + tempStr;
         count = 1;
         tempStr = nextStr;
       }
     }
     // 나머지 문자열 붙여주기
 
-    count === 1 ? (str += tempStr) : (str += count + tempStr);
+    str += count === 1 ? tempStr : count + tempStr;
     answer = Math.min(answer, str.length);
   }
 
@@ -155,10 +155,10 @@ const testCase = [
 
 solution2('abcabcdede');
 
-testCase.forEach(({ input, expectedResult }) =>
+testCase.forEach(({ input, expectedResult }) => {
   console.log('문자열 압축', {
     input,
     output: solution(input),
     passed: solution(input) === expectedResult,
-  }),
-);
+  });
+});

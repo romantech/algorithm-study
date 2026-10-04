@@ -43,9 +43,9 @@ function solution(numbers, hand) {
 
   for (let i = 0; i < numbers.length; i += 1) {
     if (isMiddleNum(numbers[i]) === false) {
-      ['left', 'right'].forEach((type) =>
-        padNum[type].includes(numbers[i]) ? setHand(type, numbers[i]) : '',
-      );
+      ['left', 'right'].forEach((type) => {
+        padNum[type].includes(numbers[i]) ? setHand(type, numbers[i]) : '';
+      });
     } else {
       // 현재 number[i]가 keyPad 몇번째 인덱스에 있는지 확인
       const currentNumIdx = checkIndex(numbers[i]);

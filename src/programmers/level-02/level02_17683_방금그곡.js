@@ -37,7 +37,14 @@ import { generateTestPair } from '../../utils.js';
  * 두 번째 곡: ABCDE (5분) -> (O)
  */
 
-const noteToNumberMap = { 'C#': 1, 'D#': 2, 'F#': 3, 'G#': 4, 'A#': 5, 'B#': 6 };
+const noteToNumberMap = {
+  'C#': 1,
+  'D#': 2,
+  'F#': 3,
+  'G#': 4,
+  'A#': 5,
+  'B#': 6,
+};
 
 const convertTimeToMinutes = (timeString) => {
   const [hours, minutes] = timeString.split(':').map(Number);

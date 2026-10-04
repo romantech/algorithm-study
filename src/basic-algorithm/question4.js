@@ -33,13 +33,13 @@ const testCase4 = [
   },
 ];
 
-testCase4.forEach(({ input, expectedResult }) =>
+testCase4.forEach(({ input, expectedResult }) => {
   console.log('문제4', {
     input,
     output: findFruit(input),
     passed: findFruit(input) === expectedResult,
-  }),
-);
+  });
+});
 
 // archive
 const inputFruitMappingString = `1-kiwi

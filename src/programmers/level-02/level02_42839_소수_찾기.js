@@ -1,5 +1,5 @@
-import { generateTestPair } from '../../utils.js';
 import { getPermutations, isPrime } from '../../math.js';
+import { generateTestPair } from '../../utils.js';
 
 /**
  * [요구사항]

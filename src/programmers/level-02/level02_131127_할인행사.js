@@ -34,7 +34,9 @@ const WINDOW_SIZE = 10;
  * */
 function solution(want, number, discount) {
   const discountMap = new Map();
-  want.forEach((e, i) => discountMap.set(e, number[i]));
+  want.forEach((e, i) => {
+    discountMap.set(e, number[i]);
+  });
 
   const result = [];
 
